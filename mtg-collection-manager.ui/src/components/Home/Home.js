@@ -1,5 +1,4 @@
 import React from 'react'
-import MyNav from '../MyNav/MyNav';
 
 
 class Home extends React.Component {

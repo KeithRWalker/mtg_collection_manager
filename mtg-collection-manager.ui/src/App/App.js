@@ -7,12 +7,9 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import Firebase from 'firebase/app';
-import 'firebase/auth';
-import Auth from '../data/firebase/Auth';
-
 import Home from '../components/Home/Home';
 import MyNav from '../components/MyNav/MyNav';
+import RegisterUser from '../components/RegisterUser/RegisterUser';
 import CardView from '../components/CardView/CardView';
 
 import './App.scss';
@@ -37,10 +34,6 @@ class App extends React.Component {
     authed: false,
   }
 
-  componentDidMount() {
-    //Auth.firebaseInit();
-    //console.log();
-  }
   render() {
     const { authed } = this.state;
     return (
@@ -49,6 +42,7 @@ class App extends React.Component {
           <MyNav />
           <Switch>
             <PublicRoute path="/home" component={Home} authed={authed} />
+            <PublicRoute path="/registerUser" component={RegisterUser} authed={authed} />
             <PrivateRoute path="/cardView" component={CardView} authed={authed} />
           </Switch>
         </Router>

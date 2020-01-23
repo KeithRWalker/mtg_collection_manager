@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
-    Collapse,
+    //Collapse,
     Navbar,
-    NavbarToggler,
+    //NavbarToggler,
     NavbarBrand,
     Nav,
     NavItem,
@@ -35,17 +35,18 @@ class MyNav extends React.Component {
 
         let navItems;
 
-        if(authed){
+        if(authed){                             // LOGGED IN DROPDOWN
             navItems =  <DropdownMenu right>
                             <DropdownItem ><NavLink tag={RRNavLink} to="/home">Account</NavLink></DropdownItem>
                             <DropdownItem divider />
                             <DropdownItem><NavLink tag={RRNavLink} to="/home">Logout</NavLink></DropdownItem>
                         </DropdownMenu>
         }
-        else{
+        
+        else{                                   // LOGGED OUT DROP DOWN
             navItems =  <DropdownMenu right>
                             <DropdownItem><NavLink tag={RRNavLink} to="/home">Login</NavLink></DropdownItem>
-                            <DropdownItem><NavLink tag={RRNavLink} to="/home">Register</NavLink></DropdownItem>
+                            <DropdownItem><NavLink tag={RRNavLink} to="/registerUser">Register</NavLink></DropdownItem>
                             <DropdownItem divider />
                             <DropdownItem><NavLink tag={RRNavLink} to="/home">Login with Google</NavLink></DropdownItem>
                         </DropdownMenu>
@@ -55,34 +56,44 @@ class MyNav extends React.Component {
             <div className="MyNav">
                 <Navbar color="dark" dark expand="lg">
                     <NavbarBrand href="/">MTG Binder</NavbarBrand>
-
                         <Nav navbar className="col-8">
-
+{
+                                    // -- NAVIGATION BROWSE/DECKS  -- //  
+}
                             <NavItem className="col-1">
-                                <NavLink href="/components/">Browse</NavLink>
+                                <NavLink href="/components/">
+                                    Browse
+                                </NavLink>
                             </NavItem>
 
                             <NavItem className="col-1">
-                                <NavLink href="https://github.com/reactstrap/reactstrap">Search</NavLink>
+                                <NavLink href="https://github.com/reactstrap/reactstrap">
+                                    Decks
+                                </NavLink>
                             </NavItem>
-
+{ 
+                                    // -- SEARCH BAR  -- //  
+}
                             <NavItem className="col-12 mx-auto">
                                 <InputGroup>
-                                    <Input />
+                                <Input />
                                     <InputGroupAddon addonType="append">
-                                        <Button color="success">Search</Button>
+                                        <Button color="success">
+                                            Search
+                                        </Button>
                                     </InputGroupAddon>
                                 </InputGroup>
                             </NavItem>
                         </Nav>
-
+{ 
+                                    // -- LOGIN/REGISTER/ACCOUNT DROPDOWN -- //  
+}
                         <Nav navbar className="col-1 ml-auto">
                             <ButtonDropdown nav isOpen={!collapsed} toggle={this.toggleNavbar} className="col-1 mx-auto">
                                 <DropdownToggle caret color="info" className=""> Account </DropdownToggle>
                             {navItems}
                             </ButtonDropdown>
                         </Nav>
-
                 </Navbar>
             </div>
         );
