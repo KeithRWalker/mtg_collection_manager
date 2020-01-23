@@ -1,4 +1,5 @@
-var firebaseConfig = {
+var connectionInfo = {
+    firebaseConfig: {
     apiKey: "",
     authDomain: "",
     databaseURL: "",
@@ -7,6 +8,7 @@ var firebaseConfig = {
     messagingSenderId: "",
     appId: "",
     measurementId: ""
+}
 };
 
 export default firebaseConfig;

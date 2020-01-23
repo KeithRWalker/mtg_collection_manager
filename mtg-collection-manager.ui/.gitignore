@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # Firebase API stuff
-src/data/firebase/firebaseConfig.js
+src/auth/connectionInfo.js
 
 # dependencies
 /node_modules
