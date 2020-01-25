@@ -1,0 +1,21 @@
+.user-form{
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+    justify-content: center;
+    
+}
+
+.form-label{
+    font-weight: 600;
+    font-size: larger;
+}
+
+.fg {
+    margin: 1em;
+}
+
+.Login{
+    max-width: 25%;
+    margin: 0 auto;
+}

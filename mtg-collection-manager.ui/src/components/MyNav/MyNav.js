@@ -1,9 +1,6 @@
 import React from 'react';
-
 import {
-    //Collapse,
     Navbar,
-    //NavbarToggler,
     NavbarBrand,
     Nav,
     NavItem,
@@ -19,6 +16,8 @@ import {
 } from 'reactstrap';
 import { NavLink as RRNavLink } from 'react-router-dom';
 
+import auth from '../../auth/auth';
+
 import './MyNav.scss';
 
 class MyNav extends React.Component {
@@ -29,6 +28,12 @@ class MyNav extends React.Component {
         this.setState({ collapsed: !this.state.collapsed });
     }
 
+    logoutClickEvent = (e) => {
+        e.preventDefault();
+        auth.logoutUser()
+        this.props.logout();
+    };
+
     render() {
         const { collapsed } = this.state;
         const { authed } = this.props;
@@ -37,18 +42,24 @@ class MyNav extends React.Component {
 
         if(authed){                             // LOGGED IN DROPDOWN
             navItems =  <DropdownMenu right>
-                            <DropdownItem ><NavLink tag={RRNavLink} to="/home">Account</NavLink></DropdownItem>
-                            <DropdownItem divider />
-                            <DropdownItem><NavLink tag={RRNavLink} to="/home">Logout</NavLink></DropdownItem>
+                            <DropdownItem >
+                                <NavLink tag={RRNavLink} to="/home">Account</NavLink>
+                            </DropdownItem>
+                                <DropdownItem divider />
+                            <DropdownItem>
+                                <NavLink tag={RRNavLink} to="/landingPage" onClick={this.logoutClickEvent}>Logout</NavLink>
+                            </DropdownItem>
                         </DropdownMenu>
         }
         
         else{                                   // LOGGED OUT DROP DOWN
             navItems =  <DropdownMenu right>
-                            <DropdownItem><NavLink tag={RRNavLink} to="/home">Login</NavLink></DropdownItem>
-                            <DropdownItem><NavLink tag={RRNavLink} to="/registerUser">Register</NavLink></DropdownItem>
-                            <DropdownItem divider />
-                            <DropdownItem><NavLink tag={RRNavLink} to="/home">Login with Google</NavLink></DropdownItem>
+                            <DropdownItem>
+                                <NavLink tag={RRNavLink} to="/login">Login</NavLink>
+                            </DropdownItem>
+                            <DropdownItem>
+                                <NavLink tag={RRNavLink} to="/registerUser">Register</NavLink>
+                            </DropdownItem>
                         </DropdownMenu>
         }
 
