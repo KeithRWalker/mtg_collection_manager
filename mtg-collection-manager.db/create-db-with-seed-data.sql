@@ -147,8 +147,8 @@ VALUES
 (
     DEFAULT,
     '0000000000000000',
-    'Guttacat',
-    'KRW418@gmail.com',
+    'GuttacatTest',
+    'KRW418Test@gmail.com',
     'Clarksville',
     'TN',
     'Keith',

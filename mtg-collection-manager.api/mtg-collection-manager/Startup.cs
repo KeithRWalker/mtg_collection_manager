@@ -32,13 +32,15 @@ namespace mtg_collection_manager
             var authSettings = Configuration.GetSection("AuthenticationSettings");
             var connectionString = Configuration.GetValue<string>("ConnectionString");
 
-            #region asp.net stuff
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddCors(options =>
                 options.AddPolicy("ItsAllGood",
-                    builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin())
+                    builder => 
+                        builder.AllowAnyHeader()
+                               .AllowAnyMethod()
+                               .AllowAnyOrigin()
+                        )
                 );
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -56,8 +58,6 @@ namespace mtg_collection_manager
                     };
                 }
                 );
-
-            #endregion
 
             services.AddTransient<SqlConnection>(provider => new SqlConnection(connectionString));
             services.AddScoped<CardRepo>();
