@@ -31,12 +31,12 @@ class CardSingle extends React.Component {
                 <Col className="CardSingle" xs="6" sm="4">
                 <Card body inverse className={`${cardColor}`}>
                   <CardBody className={cardColor}>
-                    <CardTitle>{magicCard.name}</CardTitle>
+                    <CardTitle><h4>{magicCard.name}</h4></CardTitle>
+                    <CardSubtitle>Artist: {magicCard.artist}</CardSubtitle>
                   </CardBody>
                 <img className="magic-card-image" width="100%" src={images[1]} alt="Card image cap" />
                     <CardBody>
-                        <CardSubtitle>Artist: {magicCard.artist}</CardSubtitle>
-                        <CardText>{magicCard.oracle_text}</CardText>
+                        <CardText className={magicCard.rarity}>{magicCard.rarity}</CardText>
                     </CardBody>
                 </Card>
                 </Col>

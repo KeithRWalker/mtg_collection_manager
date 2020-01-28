@@ -20,12 +20,20 @@ code {
 
 .card-body >{
   background-color: rgba(46, 56, 46, 0.432);
+  
 }
 
 .CardSingle{
   background-color: rgba(11, 19, 12, 0.514);
   padding: 1em;
   margin: 0;
+}
+
+.magic-card-image{
+  
+}
+.magic-card-image:hover{
+  filter: drop-shadow(16px 16px 20px red) invert(75%);
 }
 
 a, .btn {
@@ -49,11 +57,10 @@ a:hover{
 }
 
 .MyNav{
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
+  //position: fixed;
+  //z-index: 1;
+  //width: 100%;
+  margin-bottom: 2em;
   background-color: rgba(20, 27, 25, 0.8);
   color: rgb(240, 248, 255);
 }

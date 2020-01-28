@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
+//import { Button } from 'reactstrap';
+//import { Link } from 'react-router-dom';
 import cardData from '../../data/cardData';
-import CardCon from '../CardCon/CardCon';
+import CardCon from './CardCon';
 
 import './BrowseCards.scss';
 

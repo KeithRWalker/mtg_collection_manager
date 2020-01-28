@@ -1,10 +1,8 @@
 import React from 'react';
-import { CardColumns, CardGroup, CardDeck, Container, Button, Row } from 'reactstrap';
+import {  Container, Button, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import cardData from '../../data/cardData';
+//import cardData from '../../data/cardData';
 import CardSingle from '../CardSingle/CardSingle';
-
-import './CardCon.scss';
 
 
 

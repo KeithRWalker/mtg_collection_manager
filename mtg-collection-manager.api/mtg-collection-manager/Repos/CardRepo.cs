@@ -28,7 +28,7 @@ namespace mtg_collection_manager.Repos
 
         public object BrowsePage(int pageNum)
         {
-            var apiUrl = $"cards?page={pageNum}";
+            var apiUrl = $"cards?page={pageNum}?unique?include_variations=false?include_multilingual=false?include_extras=false";
 
             var client = new RestClient(_apiConnection);
 
