@@ -28,10 +28,9 @@ code {
   margin: 0;
 }
 
-a, .dropdown-menu, .btn {
+a, .btn {
   background-color: rgba(0, 0, 0, 0);
   color: #888888;
-  margin: 5px;
 }
 
 a:hover{
@@ -43,4 +42,30 @@ a:hover{
 
 .btn:hover{
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.search-input{
+  height: 100%;
+}
+
+.MyNav{
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  background-color: rgba(20, 27, 25, 0.8);
+  color: rgb(240, 248, 255);
+}
+.MyNav:hover{
+  background-color: rgb(20, 27, 25);
+}
+.dropdown-menu,{
+  background-color: rgba(20, 27, 25, 0.75) ;
+}
+.dropdown-menu:hover, .dropdown-item:hover{
+  background-color: rgb(20, 27, 25)
+}
+.dropdown-menu{
+  margin-top: 9px;
 }
