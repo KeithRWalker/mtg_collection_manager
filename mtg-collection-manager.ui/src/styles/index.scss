@@ -11,3 +11,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.card{
+  background-color: rgb(68, 63, 63);
+  color: aliceblue;
+  padding: 0;
+}
+
+.card-body >{
+  background-color: rgba(46, 56, 46, 0.432);
+}
+
+.CardSingle{
+  background-color: rgba(11, 19, 12, 0.514);
+  padding: 1em;
+  margin: 0;
+}
+
+a, .dropdown-menu, .btn {
+  background-color: rgba(0, 0, 0, 0);
+  color: #888888;
+  margin: 5px;
+}
+
+a:hover{
+  color: rgba(155, 54, 54, 0.445);
+}
+.btn:hover{
+    color: rgba(155, 54, 54, 0.445);
+}
+
+.btn:hover{
+  background-color: rgba(0, 0, 0, 0.5);
+}

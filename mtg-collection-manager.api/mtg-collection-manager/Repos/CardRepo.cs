@@ -25,5 +25,20 @@ namespace mtg_collection_manager.Repos
 
             return card;
         }
+
+        public object BrowsePage(int pageNum)
+        {
+            var apiUrl = $"cards?page={pageNum}";
+
+            var client = new RestClient(_apiConnection);
+
+            var request = new RestRequest(apiUrl, DataFormat.Json);
+
+            var response = client.Get(request).Content;
+
+            var collection = JsonConvert.DeserializeObject(response);
+
+            return collection;
+        }
     }
 }
