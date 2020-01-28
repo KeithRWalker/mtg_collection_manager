@@ -1,7 +1,7 @@
 import React from 'react';
 import { AvForm, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 import { Button, Label, FormGroup } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+//import { NavLink } from 'react-router-dom';
 
 import Auth from '../../auth/auth';
 

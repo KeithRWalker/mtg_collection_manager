@@ -1,8 +1,8 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import axios from 'axios';
-import { createConfigItem } from '@babel/core';
-import connectionInfo from './connectionInfo.js';
+//import { createConfigItem } from '@babel/core';
+//import connectionInfo from './connectionInfo.js';
 
 const baseUrl = 'https://localhost:44306/api';
 
@@ -21,14 +21,8 @@ axios.interceptors.request.use(function (request) {
 });
 
 const registerUser = (user) => {
-    //sub out whatever auth method firebase provides that you want to use.
     return firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
         .then(cred => {
-            //get email from firebase
-            let userInfo = {
-                email: user.email,
-                userName: user.userName,
-            };
             //get token from firebase
             cred.user.getIdToken()
             //save the token to the session storage
@@ -57,14 +51,6 @@ const loginWithGmail = () => {
             //save the token to the session storage
         .then((token) => {
             sessionStorage.setItem('token',token)
-            const fbUserInfo = firebase.auth().currentUser;
-            const name = fbUserInfo.displayName.split(" ");
-
-            const userInfoForDb = {
-                email: fbUserInfo.email,
-                firstName: name[0],
-                lastName: name[1]
-            }
 
         });
     });

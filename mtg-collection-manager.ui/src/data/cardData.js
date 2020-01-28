@@ -6,6 +6,12 @@ var getRandomCard = () => new Promise((resolve, reject) => {
     Axios.get(`${baseUrl}/random`)
         .then(resp => resolve(resp.data))
         .catch(err => reject(err))
-})
+});
 
-export default { getRandomCard }
+var getPage = (pageNum) => new Promise((resolve, reject) => {
+    Axios.get(`${baseUrl}/browse/${pageNum}`)
+        .then(resp => resolve(resp.data))
+        .catch(err => reject(err))
+});
+
+export default { getRandomCard, getPage }

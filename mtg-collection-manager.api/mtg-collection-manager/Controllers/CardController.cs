@@ -12,13 +12,19 @@ namespace mtg_collection_manager.Controllers
     [ApiController]
     public class CardController : ControllerBase
     {
+        private readonly CardRepo _cardRepo = new CardRepo();
         // GET: api/Card
         [HttpGet("random")]
         public object Get()
         {
-            var _repo = new CardRepo();
+            return _cardRepo.GetRandomCard();
+        }
 
-            return _repo.GetRandomCard();
+
+        [HttpGet("browse/{pageNum:int}")]
+        public object BrowsePage(int pageNum)
+        {
+            return _cardRepo.BrowsePage(pageNum);
         }
     }
 }

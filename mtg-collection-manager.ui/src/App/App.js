@@ -20,6 +20,7 @@ import RegisterUser from '../components/RegisterUser/RegisterUser';
 
 // PRIVATE COMPONENTS
 import Home from '../components/Home/Home';
+import BrowseCards from '../components/BrowseCards/BrowseCards';
 import CardView from '../components/CardView/CardView';
 
 //STYLING
@@ -81,8 +82,9 @@ class App extends React.Component {
 
             <PrivateRoute path="/home" component={Home} authed={authed} />
             <PrivateRoute path="/cardView" component={CardView} authed={authed} />
+            <PrivateRoute path="/browse/:pageNum" component={BrowseCards} authed={authed} />
 
-            <Redirect from="*" to="/landingPage" />
+            <Redirect from="/browse" to="/browse/1" />
           </Switch>
         </Router>
       </div>
