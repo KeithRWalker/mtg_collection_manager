@@ -15,30 +15,25 @@ code {
 
 a, .btn {
   background-color: rgba(0, 0, 0, 0);
-  color: #888888;
+  color: #ffffff;
 }
 
-a:hover{
-  color: rgba(155, 54, 54, 0.445);
-}
-.btn:hover{
-    color: rgba(155, 54, 54, 0.445);
+a:hover, .btn:hover{
+  color: rgba(155, 54, 54, 0.815);
 }
 
 .btn:hover{
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
-.search-input{
-  height: 100%;
-}
-
-.dropdown-menu,{
-  background-color: rgba(20, 27, 25, 0.75) ;
-}
-.dropdown-menu:hover, .dropdown-item:hover{
-  background-color: rgb(20, 27, 25)
-}
 .dropdown-menu{
+  color: aliceblue;
+  background-color: rgba(0, 0, 0, 0.856) ;
   margin-top: 9px;
+}
+.dropdown-item{
+  color:aliceblue;
+}
+.dropdown-item:hover{
+  background-color: rgb(32, 70, 48)
 }

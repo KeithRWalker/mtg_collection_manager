@@ -29,7 +29,7 @@ namespace mtg_collection_manager.Controllers
         {
             return _cardRepo.BrowsePage(pageNum);
         }
-
+        0
         [HttpPost("search")]
         [Authorize]
         public object SubmitSearch(SearchParameterCommand searchObject)

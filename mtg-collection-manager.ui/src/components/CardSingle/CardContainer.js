@@ -4,10 +4,7 @@ import { Link } from 'react-router-dom';
 import CardSingle from './CardSingle';
 
 class CardContainer extends React.Component {
-
-
     render() {
-
       const { cardsReturned } = this.props;
       const cardstoPrint = cardsReturned.map(card => (
         <CardSingle key={card.id} magicCard={card} />
