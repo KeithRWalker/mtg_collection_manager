@@ -1,0 +1,11 @@
+@import'../../styles//variables.scss';
+
+.MyNav{
+  font-family: $Uncial-Antiqua;
+  margin-bottom: 2em;
+  background-color: rgba(20, 27, 25, 0.8);
+  color: rgb(240, 248, 255);
+}
+.MyNav:hover{
+  background-color: rgb(20, 27, 25);
+}

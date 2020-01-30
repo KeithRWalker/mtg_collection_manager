@@ -101,9 +101,14 @@ class MyNav extends React.Component {
                   Your Collection
                 </NavLink>
               </NavItem>
+              <NavItem className="col-2">
+                <NavLink tag={RRNavLink} to="/search">
+                  Search
+                </NavLink>
+              </NavItem>
 
               {/* --  SEARCH BAR  -- */}
-              <NavItem className="col-5">
+              {/*<NavItem className="col-5">
               
                 <InputGroup className="">
                 <Input
@@ -123,7 +128,9 @@ class MyNav extends React.Component {
                       Search
                     </Button>
                 </InputGroup>
-              </NavItem>
+              </NavItem>*/}
+
+
             </Nav>
 
             {/* --  LOGIN/REGISTER/ACCOUNT DROPDOWN  -- */}
@@ -139,9 +146,9 @@ class MyNav extends React.Component {
             </Nav>
         </Navbar>
 
-        {fireRedirect && (
+        {/*fireRedirect && (
           <Redirect to={searchUrl}/>
-        )}
+        )*/}
       </div>
     );
   }

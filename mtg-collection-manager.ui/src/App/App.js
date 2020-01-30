@@ -22,7 +22,7 @@ import RegisterUser from '../components/RegisterUser/RegisterUser';
 import Home from '../components/Home/Home';
 import BrowseCards from '../components/BrowseCards/BrowseCards';
 import CardView from '../components/CardView/CardView';
-import SearchResults from '../components/SearchResults/SearchResults';
+import SearchPage from '../components/SearchPage/SearchPage';
 
 //STYLING
 import './App.scss';
@@ -84,7 +84,8 @@ class App extends React.Component {
             <PrivateRoute path="/home" component={Home} authed={authed} />
             <PrivateRoute path="/cardView" component={CardView} authed={authed} />
             <PrivateRoute path="/browse/:pageNum" component={BrowseCards} authed={authed} />
-            <PrivateRoute path="/search/:searchText" component={SearchResults} authed={authed} />
+            <PrivateRoute path="/search" component={SearchPage} authed={authed} />
+            {/*<PrivateRoute path="/search/:searchText" component={SearchResults} authed={authed} />*/}
 
             <Redirect from="/browse" to="/browse/1" />
           </Switch>
