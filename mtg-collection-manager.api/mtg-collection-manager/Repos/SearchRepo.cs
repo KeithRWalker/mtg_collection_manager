@@ -11,44 +11,36 @@ using RestSharp;
 
 namespace mtg_collection_manager.Repos
 {
-    public class CardRepo
+    public class SearchRepo
     {
         public readonly RestClient _client = new RestClient("https://api.scryfall.com");
 
-
-        public object GetRandomCard()
+        public SearchResults SubmitSearch(SearchParameterCommand searchObject)
         {
-            var requestPath = "/cards/random";
+            var requestPath = $"/cards/search?order=name&q=name={searchObject.Name}";
 
             var request = new RestRequest(requestPath, DataFormat.Json);
 
             var response = _client.Get(request).Content;
 
-            var card = JsonConvert.DeserializeObject(response);
+            var searchResults = SearchResults.FromJson(response);
 
-            return card;
+
+            return searchResults;
         }
 
-        public object BrowsePage(int pageNum)
+        public SearchResults SubmitNewSearch(SearchParameterCommand searchObject)
         {
-            var requestPath = $"/cards?page={pageNum}";
+            var requestPath = $"/cards/search?order=name&q=name={searchObject.Name}";
 
             var request = new RestRequest(requestPath, DataFormat.Json);
 
             var response = _client.Get(request).Content;
 
-            var collection = JsonConvert.DeserializeObject(response);
+            var searchResults = SearchResults.FromJson(response);
 
-            return collection;
-        }
 
-        internal Card GetCardDetails(Guid cardId)
-        {
-            var requestPath = $"/cards/{cardId}";
-            var request = new RestRequest(requestPath, DataFormat.Json);
-            var jsonString = _client.Get(request).Content;
-            var cardData = Card.FromJson(jsonString);
-            return cardData;
+            return searchResults;
         }
     }
 }

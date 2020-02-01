@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using mtg_collection_manager.Commands;
+using mtg_collection_manager.Models;
 using mtg_collection_manager.Repos;
 
 namespace mtg_collection_manager.Controllers
@@ -29,13 +30,13 @@ namespace mtg_collection_manager.Controllers
         {
             return _cardRepo.BrowsePage(pageNum);
         }
-        0
-        [HttpPost("search")]
-        [Authorize]
-        public object SubmitSearch(SearchParameterCommand searchObject)
-        {
-            return _cardRepo.SubmitSearch(searchObject);
-        }
 
+        [HttpGet("id/{cardId:Guid}")]
+        public Card GetCardDetails(Guid cardId)
+        {
+            var matchingCard = _cardRepo.GetCardDetails(cardId);
+
+            return matchingCard;
+        }
     }
 }

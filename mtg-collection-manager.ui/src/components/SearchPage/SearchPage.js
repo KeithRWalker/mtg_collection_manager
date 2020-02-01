@@ -13,10 +13,11 @@ import {
   Row
 } from 'reactstrap';
 import CardContainer from '../CardSingle/CardContainer';
-import cardData from '../../data/cardData';
+import searchData from '../../data/searchData';
 import AdvSearchForm from './AdvSearchForm';
 
 import './SearchPage.scss';
+import NoResults from './NoResults';
 
 const emptySearch = {
   name: '',
@@ -28,6 +29,7 @@ class SearchPage extends React.Component {
     searchState: emptySearch,
     totalCards: 0,
     hasMore: false,
+    invalidSearch: false,
     cardsReturned: [],
     advIsOpen: false,
     dropdownOpen: false
@@ -48,23 +50,43 @@ class SearchPage extends React.Component {
   submitSearch = (e) => {
     e.preventDefault();
     const searchObject = { ...this.state.searchState };
-    const parsedSearchObject = cardData.translateSearch(searchObject);
-    cardData.submitSearch(parsedSearchObject)
+    const parsedSearchObject = searchData.translateSearch(searchObject);
+    searchData.submitSearch(parsedSearchObject)
       .then((resp) => {
-        const totalCards = resp.total_cards;
-        const hasMore = resp.has_more;
-        const cardsReturned = resp.data;
-        this.setState({ 
-          totalCards,
-          hasMore,
-          cardsReturned
-        })
+        if(resp === false){
+          this.setState({invalidSearch: true})
+        }else{
+          
+          const totalCards = resp.total_cards;
+          const hasMore = resp.has_more;
+          const cardsReturned = resp.data;
+          this.setState({ 
+            invalidSearch: false,
+            totalCards,
+            hasMore,
+            cardsReturned,
+          })
+        }
+
       })
       .catch(err => console.error("Error in SearchPage.js/submitSearch()", err))
   }
 
   render() {
-    const { searchState, totalCards, hasMore, cardsReturned, advIsOpen } = this.state;
+    const { searchState, totalCards, hasMore, cardsReturned, advIsOpen, invalidSearch } = this.state;
+    let results;
+    if(invalidSearch){
+      results = <NoResults />
+    }else{
+      results = <CardContainer
+      key="abc"
+      totalCards={totalCards}
+      hasMore={hasMore}
+      cardsReturned={cardsReturned}
+      invalidSearch={invalidSearch}
+    />
+    }
+
     return(
       <div className="SearchPage">
         <Container>
@@ -95,7 +117,7 @@ class SearchPage extends React.Component {
           <Row>
             <Col>
               <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>
-                Advance Search
+                Advanced Search
               </Button>
             </Col>
           </Row>   
@@ -106,13 +128,9 @@ class SearchPage extends React.Component {
             />
           </Collapse>
         </Container>
-        
-        <CardContainer
-          key="abc"
-          totalCards={totalCards}
-          hasMore={hasMore}
-          cardsReturned={cardsReturned}
-        />
+
+        {results}
+
         
       </div>
     );

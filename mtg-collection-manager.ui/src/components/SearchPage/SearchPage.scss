@@ -1,27 +1,32 @@
 .SearchPage{
   border: 5px solid black;
-  display: flex;
-  flex-flow: row wrap;
-  margin: 0 auto;
 }
 
 .AdvSearchForm{
-  display: flex;
-  flex-flow: column nowrap;
-  margin: 0 auto;
   width: 100%;
 }
 
 .adv-search-form{
   border: 5px solid black;
-  width: 150%;
-  display: flex;
-  flex-flow: column wrap;
-  align-self: center;
+  width: 100%;
 }
 
 .form-g{
-  width: 50%;
-  align-content: center;
+  width:175%;
   border: 3px solid black;
+  padding: 1em;
+}
+
+div.multiselect, div.multiselect > * {
+  background-color: rgb(57, 59, 59);
+  color: aliceblue;
+}
+
+.mana-img{
+  width: 30px;
+  height: 30px;
+}
+
+.custom-control{
+  padding: 5px;
 }

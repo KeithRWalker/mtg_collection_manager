@@ -7,8 +7,8 @@ class CardContainer extends React.Component {
     render() {
       const { cardsReturned } = this.props;
       const cardstoPrint = cardsReturned.map(card => (
-        <CardSingle key={card.id} magicCard={card} />
-      ));
+          <CardSingle key={card.id} magicCard={card} />
+        ));
 
         return(
             <div className="CardContainer">

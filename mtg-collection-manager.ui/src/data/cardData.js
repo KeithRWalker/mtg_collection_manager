@@ -14,17 +14,41 @@ var getPage = (pageNum) => new Promise((resolve, reject) => {
         .catch(console.error("error in cardData/getPage()"), err => reject(err))
 });
 
-var submitSearch = (searchObject) => new Promise((resolve, reject) => {
-  Axios.post(`${baseUrl}/search`, searchObject)
-    .then(resp => resolve(resp.data))
-    .catch(err => reject(console.error("error in cardData/basicSearch()"), err))
+var getCardDetails = (cardId) => new Promise((resolve, reject) => {
+  Axios.get(`${baseUrl}/id/${cardId}`)
+    .then((resp) => {
+
+      for(let[key, value] of Object.entries(resp.data)){
+
+        if(value === null || value === undefined){
+          resp.data[key] = 'Not Avalible'
+        }
+
+        if(typeof value === 'object' && value !== null){
+          for(let[nestedKey, nestedValue] of Object.entries(value)){
+
+            if(nestedValue === null){
+              const parent = resp.data[key]
+              parent[nestedKey] = 'Not Avalible';
+            }
+          }
+        }
+      }
+      resolve(resp.data);
+    }).catch(err => reject(console.error("error in cardData/getCardDetails()"), err))
 })
 
-var translateSearch = (searchObject) => {
-  Object.keys(searchObject).forEach((key) => {
-    searchObject[key] = searchObject[key].replace(/ /g, "+")
-  })
-  return searchObject;
-}
+export default { getRandomCard, getPage, getCardDetails }
 
-export default { getRandomCard, getPage, submitSearch, translateSearch }
+// const cardObj = resp.data;
+
+
+//   const arrayCheck = Array.isArray(value)
+//   if(arrayCheck === true){
+//     value.forEach(item => {
+//       if(item === null){
+//         item='Not Avalible'
+//       }
+//     });
+//   }
+// }
