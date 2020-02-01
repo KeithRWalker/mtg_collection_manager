@@ -56,7 +56,6 @@ class SearchPage extends React.Component {
         if(resp === false){
           this.setState({invalidSearch: true})
         }else{
-          
           const totalCards = resp.total_cards;
           const hasMore = resp.has_more;
           const cardsReturned = resp.data;

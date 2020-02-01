@@ -18,4 +18,12 @@ const getSimpleSymbolData = () => new Promise((resolve, reject) => {
   })).catch(err => reject("error in symbolData.js/getSimpleSymbols()", err));
 })
 
-export default { getAllSymbolData, getSimpleSymbolData }
+const getBasicMana = () => new Promise((resolve, reject) => {
+  Axios.get(`${baseUrl}/simple/basic`)
+  .then((resp => {
+    const response = resp.data;
+    resolve(response);
+  })).catch(err => reject("error in symbolData.js/getSimpleSymbols()", err));
+})
+
+export default { getAllSymbolData, getSimpleSymbolData, getBasicMana }

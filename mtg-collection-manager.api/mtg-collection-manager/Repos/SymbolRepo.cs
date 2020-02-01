@@ -11,7 +11,7 @@ namespace mtg_collection_manager.Repos
     {
         public readonly RestClient _client = new RestClient("https://api.scryfall.com");
 
-        public Symbol GetAllSymbols()
+        public SymbolContainer GetAllSymbols()
         {
             var requestPath = $"/symbology";
 
@@ -19,12 +19,12 @@ namespace mtg_collection_manager.Repos
 
             var jsonString = _client.Get(request).Content;
 
-            var symbolData = Symbol.FromJson(jsonString);
+            var symbolData = SymbolContainer.FromJson(jsonString);
 
             return symbolData;
         }
-        
-        public List<SymbolValues> GetSimpleSymbols()
+
+        public List<SimpleSymbol> GetSimpleSymbols()
         {
             var requestPath = $"/symbology";
 
@@ -32,23 +32,91 @@ namespace mtg_collection_manager.Repos
 
             var jsonString = _client.Get(request).Content;
 
-            var symbolData = Symbol.FromJson(jsonString);
+            var symbolData = SymbolContainer.FromJson(jsonString);
 
-            var symbolValues = symbolData.SymbolValues;
+            var symbols = symbolData.Symbols;
 
-            var newSymbolList = new List<SymbolValues>();
+            var simpleSymbols = new List<SimpleSymbol>();
 
-            foreach (var currentSymbol in symbolValues)
+            foreach (var symbol in symbols)
             {
-                var newSymbol = new SymbolValues();
-                newSymbol.Symbol = currentSymbol.Symbol;
-                newSymbol.SvgUri = currentSymbol.SvgUri;
-                newSymbol.RepresentsMana = currentSymbol.RepresentsMana;
-                newSymbol.Colors = currentSymbol.Colors;
-                newSymbolList.Add(newSymbol);
+                var simpleSymbol = new SimpleSymbol
+                {
+                    SymbolCode = symbol.SymbolCode,
+                    SymbolText = symbol.SymbolText,
+                    ImgUri = symbol.SvgUri,
+                    SymbolColors = symbol.Colors
+                };
+                simpleSymbols.Add(simpleSymbol);
             }
 
-            return newSymbolList;
+            return simpleSymbols;
+        }
+
+
+
+        public List<SimpleSymbol> GetBasicMana()
+        {
+            var requestPath = $"/symbology";
+
+            var request = new RestRequest(requestPath, DataFormat.Json);
+
+            var jsonString = _client.Get(request).Content;
+
+            var symbolData = SymbolContainer.FromJson(jsonString);
+
+            var symbols = symbolData.Symbols;
+
+            var simpleSymbols = new List<SimpleSymbol>();
+
+            foreach (var symbol in symbols)
+            {
+                if (symbol.AppearsInManaCosts && symbol.Colors.Count == 1 && symbol.SymbolCode.Length == 3 || symbol.SymbolCode == "{C}")
+                {
+                    var simpleSymbol = new SimpleSymbol
+                    {
+                        SymbolCode = symbol.SymbolCode,
+                        SymbolText = symbol.SymbolText,
+                        ImgUri = symbol.SvgUri
+                    };
+                    simpleSymbols.Add(simpleSymbol);
+                }
+
+            }
+
+            return simpleSymbols;
+        }
+
+        public List<SimpleSymbol> GetDoubleMana()
+        {
+            var requestPath = $"/symbology";
+
+            var request = new RestRequest(requestPath, DataFormat.Json);
+
+            var jsonString = _client.Get(request).Content;
+
+            var symbolData = SymbolContainer.FromJson(jsonString);
+
+            var symbols = symbolData.Symbols;
+
+            var simpleSymbols = new List<SimpleSymbol>();
+
+            foreach (var symbol in symbols)
+            {
+                if (symbol.AppearsInManaCosts && symbol.Colors.Count != 2)
+                {
+                    var simpleSymbol = new SimpleSymbol
+                    {
+                        SymbolCode = symbol.SymbolCode,
+                        SymbolText = symbol.SymbolText,
+                        ImgUri = symbol.SvgUri,
+                        SymbolColors = symbol.Colors
+                    };
+                    simpleSymbols.Add(simpleSymbol);
+                }
+            }
+
+            return simpleSymbols;
         }
     }
 }

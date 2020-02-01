@@ -17,6 +17,7 @@ img{
   width: 100%;
   height: 100%;
   align-self: center;
+  border-radius: 5%;
 }
 .CardSingle > div{
   background-color: rgba(9, 228, 9, 0);
@@ -43,6 +44,9 @@ img.G {
   border-radius: 20px;
 }
 
+img:hover{
+  filter: drop-shadow(10px 10px 10px rgba(208, 188, 123, 0.75)) invert(1%);
+}
 img.W:hover{
   filter: drop-shadow(10px 10px 10px rgba(248, 231, 185, 0.75)) invert(1%);
 }
