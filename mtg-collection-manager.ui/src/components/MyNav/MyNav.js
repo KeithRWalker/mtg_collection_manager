@@ -11,21 +11,35 @@ import {
   ButtonDropdown,
   Input,
   InputGroup,
-  InputGroupAddon,
-  Button
+  Button,
+  Form
 } from 'reactstrap';
-import { NavLink as RRNavLink } from 'react-router-dom';
+import { NavLink as RRNavLink, Redirect } from 'react-router-dom';
 
 import auth from '../../auth/auth';
 
 import './MyNav.scss';
 
+const defaultSearchValue = '';
+
 class MyNav extends React.Component {
   state = {
-    collapsed: true
+    collapsed: true,
+    searchParams: defaultSearchValue,
+    fireRedirect: false,
   }
-  toggleNavbar = () => {
-    this.setState({ collapsed: !this.state.collapsed });
+  toggleNavbar = () => this.setState({ collapsed: !this.state.collapsed });
+
+  updateSearch = (e) => this.setState({ searchParams: e.target.value })
+
+  searchSubmit = () => {
+    this.setState({ fireRedirect: true });
+  }
+
+  handleKeyPress = (e) => {
+    if(e.key === 'Enter') {
+      this.setState({ fireRedirect: true });
+    }
   }
 
   logoutClickEvent = (e) => {
@@ -34,78 +48,107 @@ class MyNav extends React.Component {
     this.props.logout();
   };
 
+
+
   render() {
-    const { collapsed } = this.state;
+    const { collapsed, searchParams, fireRedirect } = this.state;
+    //const { from } = this.props.location.state || '/';
+    const searchUrl = `/search/${searchParams.replace(/\s/g,'+')}`;
     const { authed } = this.props;
-
     let navItems;
-
-    if(authed){                             // LOGGED IN DROPDOWN
-      navItems =  <DropdownMenu right>
-              <DropdownItem >
-                <NavLink tag={RRNavLink} to="/home">Account</NavLink>
-              </DropdownItem>
-                <DropdownItem divider />
-              <DropdownItem>
-                <NavLink tag={RRNavLink} to="/landingPage" onClick={this.logoutClickEvent}>Logout</NavLink>
-              </DropdownItem>
-            </DropdownMenu>
-    }
-        
-    else{                                   // LOGGED OUT DROP DOWN
-      navItems =  <DropdownMenu right>
-              <DropdownItem>
-                <NavLink tag={RRNavLink} to="/login">Login</NavLink>
-              </DropdownItem>
-              <DropdownItem>
-                <NavLink tag={RRNavLink} to="/registerUser">Register</NavLink>
-              </DropdownItem>
-            </DropdownMenu>
+    if(authed){
+                  /*  LOGGED IN DROPDOWN  */
+      navItems =  <DropdownMenu>
+                    <DropdownItem >
+                      <NavLink tag={RRNavLink} to="/home">Account</NavLink>
+                    </DropdownItem>
+                      <DropdownItem divider />
+                    <DropdownItem>
+                    <NavLink tag={RRNavLink} to="/landingPage" onClick={this.logoutClickEvent}>Logout</NavLink>
+                    </DropdownItem>
+                  </DropdownMenu>
+    } else{
+                  /*  LOGGED OUT DROP DOWN   */
+      navItems =  <DropdownMenu>
+                    <DropdownItem>
+                      <NavLink tag={RRNavLink} to="/login">Login</NavLink>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <NavLink tag={RRNavLink} to="/registerUser">Register</NavLink>
+                    </DropdownItem>
+                  </DropdownMenu>
     }
 
     return (
       <div className="MyNav">
-        <Navbar color="dark" dark expand="lg">
-          <NavbarBrand href="/">MTG Binder</NavbarBrand>
-            <Nav navbar className="col-8">
-{
-                  // -- NAVIGATION BROWSE/DECKS  -- //  
-}
-              <NavItem className="col-1">
-                <NavLink tag={RRNavLink} to="/browse/1">
+        <Navbar className="row wrap" expand="lg">
+          
+            <Nav navbar className="col">
+            <NavbarBrand className="col-1" href="/">MTG Binder</NavbarBrand>
+            {/* --  NAVIGATION BROWSE/DECKS  -- */}
+              <NavItem className="col-2">
+                <NavLink tag={RRNavLink} to="/browse">
                   Browse
                 </NavLink>
               </NavItem>
-
-              <NavItem className="col-1">
-                <NavLink href="https://github.com/reactstrap/reactstrap">
+              <NavItem className="col-2">
+                <NavLink href="/decks">
                   Decks
                 </NavLink>
               </NavItem>
-{ 
-                  // -- SEARCH BAR  -- //  
-}
-              <NavItem className="col-12 mx-auto">
-                <InputGroup>
-                <Input />
-                  <InputGroupAddon addonType="append">
-                    <Button color="success">
+              <NavItem className="col-2">
+                <NavLink href="/user/collection">
+                  Your Collection
+                </NavLink>
+              </NavItem>
+              <NavItem className="col-2">
+                <NavLink tag={RRNavLink} to="/search">
+                  Search
+                </NavLink>
+              </NavItem>
+
+              {/* --  SEARCH BAR  -- */}
+              {/*<NavItem className="col-5">
+              
+                <InputGroup className="">
+                <Input
+                  className ="search-bar"
+                  type="search"
+                  name="navSearch"
+                  id="navSearch"
+                  placeholder="Search"
+                  value={searchParams}
+                  onChange={this.updateSearch}
+                  onKeyPress={this.handleKeyPress}
+                  />
+                    <Button
+                      className="search-bar-submit"
+                      type="search"
+                      onClick={this.searchSubmit}>
                       Search
                     </Button>
-                  </InputGroupAddon>
                 </InputGroup>
-              </NavItem>
+              </NavItem>*/}
+
+
             </Nav>
-{ 
-                  // -- LOGIN/REGISTER/ACCOUNT DROPDOWN -- //  
-}
-            <Nav navbar className="col-1 ml-auto">
-              <ButtonDropdown nav isOpen={!collapsed} toggle={this.toggleNavbar} className="col-1 mx-auto">
-                <DropdownToggle caret color="info" className=""> Account </DropdownToggle>
+
+            {/* --  LOGIN/REGISTER/ACCOUNT DROPDOWN  -- */}
+            <Nav>
+            <NavItem className="col-3">
+            <ButtonDropdown nav isOpen={!collapsed} toggle={this.toggleNavbar} className="">
+              <DropdownToggle caret className="dropdown-account">
+                Account
+              </DropdownToggle>
               {navItems}
-              </ButtonDropdown>
+            </ButtonDropdown>
+          </NavItem>
             </Nav>
         </Navbar>
+
+        {/*fireRedirect && (
+          <Redirect to={searchUrl}/>
+        )*/}
       </div>
     );
   }

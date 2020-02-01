@@ -5,13 +5,50 @@ const baseUrl = 'https://localhost:44306/api/card';
 var getRandomCard = () => new Promise((resolve, reject) => {
     Axios.get(`${baseUrl}/random`)
         .then(resp => resolve(resp.data))
-        .catch(err => reject(err))
+        .catch(err => reject(console.error("error in cardData/getRandomCard()"), err))
 });
 
 var getPage = (pageNum) => new Promise((resolve, reject) => {
     Axios.get(`${baseUrl}/browse/${pageNum}`)
         .then(resp => resolve(resp.data))
-        .catch(err => reject(err))
+        .catch(console.error("error in cardData/getPage()"), err => reject(err))
 });
 
-export default { getRandomCard, getPage }
+var getCardDetails = (cardId) => new Promise((resolve, reject) => {
+  Axios.get(`${baseUrl}/id/${cardId}`)
+    .then((resp) => {
+
+      for(let[key, value] of Object.entries(resp.data)){
+
+        if(value === null || value === undefined){
+          resp.data[key] = 'Not Avalible'
+        }
+
+        if(typeof value === 'object' && value !== null){
+          for(let[nestedKey, nestedValue] of Object.entries(value)){
+
+            if(nestedValue === null){
+              const parent = resp.data[key]
+              parent[nestedKey] = 'Not Avalible';
+            }
+          }
+        }
+      }
+      resolve(resp.data);
+    }).catch(err => reject(console.error("error in cardData/getCardDetails()"), err))
+})
+
+export default { getRandomCard, getPage, getCardDetails }
+
+// const cardObj = resp.data;
+
+
+//   const arrayCheck = Array.isArray(value)
+//   if(arrayCheck === true){
+//     value.forEach(item => {
+//       if(item === null){
+//         item='Not Avalible'
+//       }
+//     });
+//   }
+// }
