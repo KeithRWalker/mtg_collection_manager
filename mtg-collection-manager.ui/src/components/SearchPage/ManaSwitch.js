@@ -10,7 +10,7 @@ class ManaSwitch extends React.Component {
     return(
       <div className="ManaSwitch switch-con">
         <img className="mana-img" src={mana.imgUri} />
-        <CustomInput className="color-swicth" type="switch" id={mana.symbolCode} value={mana.symbolCode} label={mana.symbolCode} />
+        <CustomInput className="color-swicth" type="switch" id={mana.symbolCode} value={mana.symbolCode} />
       </div>
     )
   }

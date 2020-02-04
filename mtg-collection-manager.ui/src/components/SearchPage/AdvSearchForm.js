@@ -62,19 +62,22 @@ class AdvSearchForm extends React.Component {
 
   handleSetChange = selectedSets => this.setState({ selectedSets })
 
-  testing = () => {
-    const { selectedCreatures, selectedPlaneswalkers, selectedSets} = this.state;
-  
-  };
-
-  arrayHandle = (ar) => {
-    const valueAr = [];
-    ar.forEach(item => {
-      const v = ar.value;
-      valueAr.push(v);
+  typeHandle = (type) => {
+    const values = [];
+    type.forEach(item => {
+      const value = item.value;
+      values.push(value);
     });
-    return valueAr;
+    return values;
   }
+
+  submitForm = () => {
+    const { selectedCreatures, selectedPlaneswalkers, selectedSets} = this.state;
+    const creatures = this.typeHandle(selectedCreatures);
+    const planeswalkers = this.typeHandle(selectedPlaneswalkers)
+    const sets = this.typeHandle(selectedSets);
+    
+  };
 
   
 
@@ -152,7 +155,7 @@ class AdvSearchForm extends React.Component {
                   />
                 </div>
               </FormGroup>
-              <Button className="test" onClick={this.testing}>Test</Button>
+              <Button className="test" onClick={this.submitForm}>Test</Button>
         </Form>
       </div>
     );
