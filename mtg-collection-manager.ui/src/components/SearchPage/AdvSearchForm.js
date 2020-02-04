@@ -13,118 +13,149 @@ import Select from 'react-select';
 
 import catalogData from '../../data/catalogData';
 import symbolData from '../../data/symbolData';
+import setData from '../../data/setData';
+
+import ManaSwitch from './ManaSwitch';
 
 import './SearchPage.scss'
-
+const valueArray = [ 1 ];
 
 class AdvSearchForm extends React.Component {
   state={
-    creatureOptions: [],
-    selectedOption: []
+    creatureTypeOptions: [],
+    planeswalkerTypeOptions: [],
+    setOptions: [],
+    selectedOption: [],
+    basicMana: [],
+    selectedCreatures: [],
+    selectedPlaneswalkers: [],
+    selectedSets: []
   }
 
   componentDidMount(){
     catalogData.getCreatureTypes()
       .then((resp) => {
-        const allCreatures = resp.data;
-        this.setState({ creatureOptions: allCreatures })
+        const creatureTypeOptions = resp.data;
+        this.setState({ creatureTypeOptions })
       }).catch(err => console.error("Error in AdvSearchForm.js / componentDidMount() / creature-type",err));
-    symbolData.getSimpleSymbolData()
+
+      catalogData.getPlaneswalkerTypes()
       .then((resp) => {
-        resp.forEach(item => {
-          if(item.symbol === "{W}"){
-            this.setState({ whiteMana: item.svg_uri });
-          } else if(item.symbol === "{U}"){
-            this.setState({ blueMana: item.svg_uri });
-          } else if(item.symbol === "{B}"){
-            this.setState({ blackMana: item.svg_uri });
-          } else if(item.symbol === "{R}"){
-            this.setState({ redMana: item.svg_uri });
-          } else if(item.symbol === "{G}"){
-            this.setState({ greenMana: item.svg_uri });
-          } else if(item.symbol === "{C}"){
-            this.setState({ colorlessMana: item.svg_uri });
-          }
-        });
-      }).catch(err => console.error("Error in AdvSearchForm.js / componentDidMount() / simple-symbol",err))
+        const planeswalkerTypeOptions = resp.data;
+        this.setState({ planeswalkerTypeOptions })
+      }).catch(err => console.error("Error in AdvSearchForm.js / componentDidMount() / planeswalker-type",err));
+    
+      symbolData.getBasicMana()
+      .then((basicMana) => {
+        this.setState({ basicMana })
+      }).catch(err => console.error("Error in AdvSearchForm.js / componentDidMount() / simple-symbol",err));
+
+    setData.getSetNames()
+      .then((setOptions) => {
+        this.setState({ setOptions })
+      }).catch(err => console.error("Error in AdvSearchForm.js / componentDidMount() / set-names",err));
   }
 
-  handleChange = selectedOption => {
-    this.setState({ selectedOption }, () => console.log(`Option selected:`, this.state.selectedOption));
+  handleCreatureChange = selectedCreatures => this.setState({ selectedCreatures });
+
+  handlePlaneswalkerChange = selectedPlaneswalkers => this.setState({ selectedPlaneswalkers });
+
+  handleSetChange = selectedSets => this.setState({ selectedSets })
+
+  typeHandle = (type) => {
+    const values = [];
+    type.forEach(item => {
+      const value = item.value;
+      values.push(value);
+    });
+    return values;
+  }
+
+  submitForm = () => {
+    const { selectedCreatures, selectedPlaneswalkers, selectedSets} = this.state;
+    const creatures = this.typeHandle(selectedCreatures);
+    const planeswalkers = this.typeHandle(selectedPlaneswalkers)
+    const sets = this.typeHandle(selectedSets);
+    
   };
 
+  
+
   render(){
-    const { creatureOptions, whiteMana, blueMana, blackMana, redMana, greenMana, colorlessMana } = this.state;
-    const options = creatureOptions.map(option =>(
-      { value: option, label: option }
-    ))
+
+    const { creatureTypeOptions, setOptions, planeswalkerTypeOptions } = this.state;
+
+    const creatureEoptions = creatureTypeOptions.map(option =>({ value: option, label: option }))
+
+    const planeswalkerEoptions = planeswalkerTypeOptions.map(option =>({ value: option, label: option }))
+
+    const setEOptions = setOptions.map(option => ({ value: { option }.option.setCode, label: { option }.option.name }))
+
+    const manaChoices = this.state.basicMana.map((x) => (<ManaSwitch mana={x} key={x.symbolCode}/>))
+
 
     return(
       <div className="AdvSearchForm">
         <Form className="adv-search-form">
-          <Col form>
-
-            {/* Rarity */}
-            <Col md={3}>
-              <FormGroup className="rarity-check-group form-g">
-              <Label for="rarityCheck">Rarity</Label>
-              <CustomInput type="switch" id="commonCheck" label="Common" />
-              <CustomInput type="switch" id="uncommonCheck" label="Uncommon" />
-              <CustomInput type="switch" id="rareCheck" label="Rare" />
-              <CustomInput type="switch" id="mythicCheck" label="Mythic Rare"/>
+              {/* Rarity */}
+              <FormGroup className="rarity-switch-group form-g">
+                <Label className="rarity-label" for="raritySwitch">Rarity</Label>
+                  <div className="main-switch-con">
+                    <div className="switch-con">
+                      <CustomInput className="rarity-switch" type="switch" id="commonCheck" label="Common" />
+                    </div>
+                    <div className="switch-con">
+                      <CustomInput className="rarity-switch" type="switch" id="uncommonCheck" label="Uncommon" />
+                    </div>
+                    <div className="switch-con">
+                      <CustomInput className="rarity-switch" type="switch" id="rareCheck" label="Rare" />
+                    </div>
+                    <div className="switch-con">
+                      <CustomInput className="rarity-switch" type="switch" id="mythicCheck" label="Mythic Rare"/>
+                    </div>
+                  </div>
               </FormGroup>
-            </Col>
 
-            
-
-
-            {/*Card Color */}
-            <Col className="mana-col" sm={2} md={2} lg={2}>
-            
-              <FormGroup className="color-check-group form-g">
-              <Label for="colorCheck">Color</Label>
-              <Row md={2} className="mx-auto">
-                <img className="mana-img" src={whiteMana} />
-                <CustomInput type="switch" id="whiteColor" label="White" />
-              </Row>
-              <Row md={2} className="mx-auto">
-                <img className="mana-img" src={blueMana} />
-                <CustomInput type="switch" id="blueColor" label="Blue" />
-              </Row>
-              <Row md={2} className="mx-auto">
-                <img className="mana-img" src={blackMana} /> 
-                <CustomInput type="switch" id="blackColor" label="Black" />
-              </Row>
-              <Row md={2} className="mx-auto">
-                <img className="mana-img" src={redMana} /> 
-                <CustomInput type="switch" id="redColor" label="Red"/>
-              </Row>
-              <Row md={2} className="mx-auto">
-                <img className="mana-img" src={greenMana} /> 
-                <CustomInput type="switch" id="greenColor" label="Green" />
-              </Row>
-              <Row md={2} className="mx-auto">
-                <img className="mana-img" src={colorlessMana} /> 
-                <CustomInput type="switch" id="colorlessColor" label="Colorless"/>
-              </Row>
+              {/*Card Color */}
+              <FormGroup className="color-switch-group form-g">
+                <Label className="color-label" for="colorSwitch">Color</Label>
+                {manaChoices}
               </FormGroup>
-            </Col>
 
             {/* Creature Type  */}
-            <Col md={4}>
-              <FormGroup className="creature-type-group form-g">
-                <Label for="creatureType">Creature Type:</Label>
-                <Select
-                  isMulti
-                  className="multiselect creature-types"
-                  id=""
-                  value={this.selectedOption}
-                  onChange={this.handleChange}
-                  options={options}
-                />
+              <FormGroup className="creature-type-group">
+                <Label className="creature-label" for="creatureType">Creature Type:</Label>
+                <div className="multi-select-con">
+                  <Select
+                    isMulti
+                    className="multiselect creature-types"
+                    value={this.selectedCreatures}
+                    onChange={this.handleCreatureChange}
+                    options={creatureEoptions}
+                  />
+                </div>
+                <Label className="set-label" for="setSelect">Card Set:</Label>
+                <div className="multi-select-con">
+                  <Select
+                    isMulti
+                    className="multiselect creature-types"
+                    value={this.selectedOption}
+                    onChange={this.handleSetChange}
+                    options={setEOptions}
+                  />
+                </div>
+                <Label className="set-label" for="setSelect">Planeswalker:</Label>
+                <div className="multi-select-con">
+                  <Select
+                    isMulti
+                    className="multiselect Planeswalker-types"
+                    value={this.selectedPlaneswalkers}
+                    onChange={this.handlePlaneswalkerChange}
+                    options={planeswalkerEoptions}
+                  />
+                </div>
               </FormGroup>
-            </Col>
-          </Col>
+              <Button className="test" onClick={this.submitForm}>Test</Button>
         </Form>
       </div>
     );
@@ -132,24 +163,3 @@ class AdvSearchForm extends React.Component {
 }
 
 export default AdvSearchForm;
-
-// <h4>Advanced Search:</h4>
-//           <Col>
-//             <FormGroup>
-//               <Label for="descriptionSearch">
-//                 Search By Description:
-//               </Label>
-//               <Input 
-//                 type="search"
-//                 name="descriptionSearch"
-//                 id="descriptionSearch"
-//                 placeholder="Card Description"
-//                 value={searchState.description}
-//                 onChange={this.descriptionUpdate}/>
-//             </FormGroup>
-//           </Col>
-
-// <Label for="creatureType"> Creature Type </Label>
-// <select value={} onChange={this.handleCreatureClick}>
-//   {creatureChecks}
-// </select>

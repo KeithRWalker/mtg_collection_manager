@@ -4,23 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using mtg_collection_manager.Commands;
 using mtg_collection_manager.Models;
-using mtg_collection_manager.Models.Json;
 using mtg_collection_manager.Repos;
 
 namespace mtg_collection_manager.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CatalogController : ControllerBase
+    public class SetController : FirebaseEnabledController
     {
-        private readonly CatalogRepo _catalogRepo = new CatalogRepo();
-
-        [HttpGet("{catalogName}")]
-        public Catalog GetCatalog(string catalogName)
+        private readonly SetRepo _setRepo = new SetRepo();
+        [HttpGet("names")]
+        public List<SimpleSet> GetSetNames()
         {
-            return _catalogRepo.GetCatalog(catalogName);
+            return _setRepo.GetSetNames();
         }
     }
 }

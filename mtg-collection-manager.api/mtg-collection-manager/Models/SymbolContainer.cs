@@ -15,7 +15,7 @@ namespace mtg_collection_manager.Models
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
-    public partial class Symbol
+    public partial class SymbolContainer
     {
         [JsonProperty("object", NullValueHandling = NullValueHandling.Ignore)]
         public string Object { get; set; }
@@ -24,16 +24,16 @@ namespace mtg_collection_manager.Models
         public bool HasMore { get; set; }
 
         [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
-        public List<SymbolValues> SymbolValues { get; set; }
+        public List<Symbol> Symbols { get; set; }
     }
 
-    public partial class SymbolValues
+    public partial class Symbol
     {
         [JsonProperty("object", NullValueHandling = NullValueHandling.Ignore)]
         public string Object { get; set; }
 
         [JsonProperty("symbol", NullValueHandling = NullValueHandling.Ignore)]
-        public string Symbol { get; set; }
+        public string SymbolCode { get; set; }
 
         [JsonProperty("svg_uri", NullValueHandling = NullValueHandling.Ignore)]
         public Uri SvgUri { get; set; }
@@ -42,7 +42,7 @@ namespace mtg_collection_manager.Models
         public object LooseVariant { get; set; }
 
         [JsonProperty("english", NullValueHandling = NullValueHandling.Ignore)]
-        public string English { get; set; }
+        public string SymbolText { get; set; }
 
         [JsonProperty("transposable", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Transposable { get; set; }
@@ -51,7 +51,7 @@ namespace mtg_collection_manager.Models
         public bool? RepresentsMana { get; set; }
 
         [JsonProperty("appears_in_mana_costs", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? AppearsInManaCosts { get; set; }
+        public bool AppearsInManaCosts { get; set; }
 
         [JsonProperty("cmc", NullValueHandling = NullValueHandling.Ignore)]
         public long? Cmc { get; set; }
@@ -66,8 +66,16 @@ namespace mtg_collection_manager.Models
         public List<string> GathererAlternates { get; set; }
     }
 
-    public partial class Symbol
+    public class SimpleSymbol
     {
-        public static Symbol FromJson(string json) => JsonConvert.DeserializeObject<Symbol>(json, mtg_collection_manager.Models.Json.Converter.Settings);
+        public string SymbolCode { get; set; }
+        public string SymbolText { get; set; }
+        public Uri ImgUri { get; set; }
+        public List<Object> SymbolColors { get; set; }
+    }
+
+    public partial class SymbolContainer
+    {
+        public static SymbolContainer FromJson(string json) => JsonConvert.DeserializeObject<SymbolContainer>(json, mtg_collection_manager.Models.Json.Converter.Settings);
     }
 }

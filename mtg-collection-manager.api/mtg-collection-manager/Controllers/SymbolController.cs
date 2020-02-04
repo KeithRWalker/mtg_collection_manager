@@ -15,17 +15,27 @@ namespace mtg_collection_manager.Controllers
     {
         private readonly SymbolRepo _symbolRepo = new SymbolRepo();
         [HttpGet]
-        public Symbol GetAllSymbols()
+        public SymbolContainer GetAllSymbols()
         {
-            var symbols = _symbolRepo.GetAllSymbols();
-            return symbols;
+            return _symbolRepo.GetAllSymbols();
         }
 
         [HttpGet("simple")]
-        public List<SymbolValues> GetSimpleSymbols()
+        public List<SimpleSymbol> GetSimpleSymbols()
         {
-            var symbolUris = _symbolRepo.GetSimpleSymbols();
-            return symbolUris;
+            return _symbolRepo.GetSimpleSymbols();
+        }
+
+        [HttpGet("simple/basic")]
+        public List<SimpleSymbol> GetBasicMana()
+        {
+            return _symbolRepo.GetBasicMana();
+        }
+
+        [HttpGet("simple/double")]
+        public List<SimpleSymbol> GetDoubleMana()
+        {
+            return _symbolRepo.GetDoubleMana();
         }
     }
 }
