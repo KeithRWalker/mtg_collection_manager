@@ -18,49 +18,77 @@ import setData from '../../data/setData';
 import ManaSwitch from './ManaSwitch';
 
 import './SearchPage.scss'
-
+const valueArray = [ 1 ];
 
 class AdvSearchForm extends React.Component {
   state={
-    creatureOptions: [],
+    creatureTypeOptions: [],
+    planeswalkerTypeOptions: [],
     setOptions: [],
     selectedOption: [],
     basicMana: [],
+    selectedCreatures: [],
+    selectedPlaneswalkers: [],
+    selectedSets: []
   }
 
   componentDidMount(){
     catalogData.getCreatureTypes()
       .then((resp) => {
-        const allCreatures = resp.data;
-        this.setState({ creatureOptions: allCreatures })
+        const creatureTypeOptions = resp.data;
+        this.setState({ creatureTypeOptions })
       }).catch(err => console.error("Error in AdvSearchForm.js / componentDidMount() / creature-type",err));
-    symbolData.getBasicMana()
+
+      catalogData.getPlaneswalkerTypes()
       .then((resp) => {
-        this.setState({ basicMana: resp })
+        const planeswalkerTypeOptions = resp.data;
+        this.setState({ planeswalkerTypeOptions })
+      }).catch(err => console.error("Error in AdvSearchForm.js / componentDidMount() / planeswalker-type",err));
+    
+      symbolData.getBasicMana()
+      .then((basicMana) => {
+        this.setState({ basicMana })
       }).catch(err => console.error("Error in AdvSearchForm.js / componentDidMount() / simple-symbol",err));
+
     setData.getSetNames()
-      .then((resp) => {
-        this.setState({ setOptions: resp })
+      .then((setOptions) => {
+        this.setState({ setOptions })
       }).catch(err => console.error("Error in AdvSearchForm.js / componentDidMount() / set-names",err));
   }
 
-  handleChange = selectedOption => {
-    this.setState({ selectedOption }, () => console.log(`Option selected:`, this.state.selectedOption));
+  handleCreatureChange = selectedCreatures => this.setState({ selectedCreatures });
+
+  handlePlaneswalkerChange = selectedPlaneswalkers => this.setState({ selectedPlaneswalkers });
+
+  handleSetChange = selectedSets => this.setState({ selectedSets })
+
+  testing = () => {
+    const { selectedCreatures, selectedPlaneswalkers, selectedSets} = this.state;
+  
   };
 
+  arrayHandle = (ar) => {
+    const valueAr = [];
+    ar.forEach(item => {
+      const v = ar.value;
+      valueAr.push(v);
+    });
+    return valueAr;
+  }
+
+  
+
   render(){
-    const { creatureOptions, setOptions } = this.state;
-    const options = creatureOptions.map(option =>(
-      { value: option, label: option }
-    ))
 
-    // const setNames = setOptions.map(option =>(
-    //   { value: option, label: option  }
-    // ))
+    const { creatureTypeOptions, setOptions, planeswalkerTypeOptions } = this.state;
 
-    const manaChoices = this.state.basicMana.map((x) => (
-      <ManaSwitch mana={x} key={x.symbolCode}/>
-    ))
+    const creatureEoptions = creatureTypeOptions.map(option =>({ value: option, label: option }))
+
+    const planeswalkerEoptions = planeswalkerTypeOptions.map(option =>({ value: option, label: option }))
+
+    const setEOptions = setOptions.map(option => ({ value: { option }.option.setCode, label: { option }.option.name }))
+
+    const manaChoices = this.state.basicMana.map((x) => (<ManaSwitch mana={x} key={x.symbolCode}/>))
 
 
     return(
@@ -95,15 +123,36 @@ class AdvSearchForm extends React.Component {
               <FormGroup className="creature-type-group">
                 <Label className="creature-label" for="creatureType">Creature Type:</Label>
                 <div className="multi-select-con">
-                <Select
-                  isMulti
-                  className="multiselect creature-types"
-                  value={this.selectedOption}
-                  onChange={this.handleChange}
-                  options={options}
-                />
+                  <Select
+                    isMulti
+                    className="multiselect creature-types"
+                    value={this.selectedCreatures}
+                    onChange={this.handleCreatureChange}
+                    options={creatureEoptions}
+                  />
+                </div>
+                <Label className="set-label" for="setSelect">Card Set:</Label>
+                <div className="multi-select-con">
+                  <Select
+                    isMulti
+                    className="multiselect creature-types"
+                    value={this.selectedOption}
+                    onChange={this.handleSetChange}
+                    options={setEOptions}
+                  />
+                </div>
+                <Label className="set-label" for="setSelect">Planeswalker:</Label>
+                <div className="multi-select-con">
+                  <Select
+                    isMulti
+                    className="multiselect Planeswalker-types"
+                    value={this.selectedPlaneswalkers}
+                    onChange={this.handlePlaneswalkerChange}
+                    options={planeswalkerEoptions}
+                  />
                 </div>
               </FormGroup>
+              <Button className="test" onClick={this.testing}>Test</Button>
         </Form>
       </div>
     );

@@ -2,13 +2,21 @@ import Axios from 'axios';
 
 const baseUrl = 'https://localhost:44306/api/catalog';
 
+
+
 const getCreatureTypes = () => new Promise((resolve, reject) => {
-  Axios.get(`${baseUrl}/creatures`)
+  Axios.get(`${baseUrl}/creature-types`)
     .then(resp => resolve(resp.data))
     .catch(err => reject(console.error("Error in catalogData.js/getCreatureTypes()", err)))
 }) 
 
-export default { getCreatureTypes }
+const getPlaneswalkerTypes = () => new Promise((resolve, reject) => {
+  Axios.get(`${baseUrl}/planeswalker-types`)
+    .then(resp => resolve(resp.data))
+    .catch(err => reject(console.error("Error in catalogData.js/getPlaneswalkerTypes()", err)))
+})
+
+export default { getCreatureTypes, getPlaneswalkerTypes }
 
 
 /* 
