@@ -80,7 +80,7 @@ CREATE TABLE [dbo].[Deck] (
     REFERENCES [User] (Id),
   [Name] NVARCHAR(255),
   [Description] NVARCHAR(255),
-  [DeckType] NVARCHAR(255),
+  [Type] NVARCHAR(255),
   [Rating] INT
 )
 GO
@@ -169,7 +169,7 @@ VALUES
 )
 --------------------------------------------------------------------------------
 INSERT INTO [dbo].[Deck]
-([Id], [UserId], [Name], [Description], [DeckType], [Rating])
+([Id], [UserId], [Name], [Description], [Type], [Rating])
 VALUES
 (
     DEFAULT,

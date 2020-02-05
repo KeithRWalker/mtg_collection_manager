@@ -24,6 +24,9 @@ import BrowseCards from '../components/BrowseCards/BrowseCards';
 import CardView from '../components/CardView/CardView';
 import SearchPage from '../components/SearchPage/SearchPage';
 import CardDetails from '../components/CardDetails/CardDetails';
+import CollectionPage from '../components/Collection/CollectionPage';
+import DeckDetail from '../components/Collection/DeckDetail';
+import BinderDetail from '../components/Collection/BinderDetail';
 
 //STYLING
 import './App.scss';
@@ -87,6 +90,9 @@ class App extends React.Component {
             <PrivateRoute path="/browse/:pageNum" component={BrowseCards} authed={authed} />
             <PrivateRoute path="/search" component={SearchPage} authed={authed} />
             <PrivateRoute path="/card/:cardId" component={CardDetails} authed={authed} />
+            <PrivateRoute path="/collection" component={CollectionPage} authed={authed} />
+            <PrivateRoute path="/deck/:deckId" component={DeckDetail} authed={authed} />
+            <PrivateRoute path="/binder/:binderId" component={BinderDetail} authed={authed} />
 
             {/*<PrivateRoute path="/search/:searchText" component={SearchResults} authed={authed} />*/}
 

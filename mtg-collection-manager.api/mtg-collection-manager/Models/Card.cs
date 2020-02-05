@@ -315,6 +315,12 @@ namespace mtg_collection_manager.Models
         public Uri Mtgtop8 { get; set; }
     }
 
+    public class UserCard
+    {
+        public Guid ScryId { get; set;  }
+        public string Name { get; set; }
+    }
+
     public partial class Card
     {
         public static Card FromJson(string json) => JsonConvert.DeserializeObject<Card>(json, mtg_collection_manager.Models.Json.Converter.Settings);

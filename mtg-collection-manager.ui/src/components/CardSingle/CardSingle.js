@@ -1,66 +1,32 @@
 import React from 'react';
 import {
-    Card,
-    CardImg,
-    Col,
-    CardTitle,
-    CardText,
-    CardSubtitle,
-    CardBody
+  Button,
+  Card,
+  CardImg,
+  Col,
+  CardTitle,
+  CardText,
+  CardSubtitle,
+  CardBody,
+  CardFooter
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import AddButton from './AddButton';
 
 import './CardSingle.scss';
+
+
+
 class CardSingle extends React.Component {
     render() {
       const { magicCard } = this.props;
+      const { userDecks, userBinders } = this.props;
       const {
         artist,
-        // booster,
-        // border_color,
-        // cardback_id,
-        // cmc,
-        // collector_number,
-        // digital,
-        // edhrec_rank,
-        // foil,
-        // frame,
-        // highres_image,
         id,
-        //illustration_id,
         image_uris,
-        // lang,
-        // layout,
-        // legalities,
-        // legality,
-        // loyalty,
-        // mana_cost,
         name,
-        // non_foil,
-        // object,
-        // oracle_text,
-        // oversized,
-        // prints_search_uri,
-        // promo,
         rarity,
-        // release_date,
-        // reprint,
-        // reserved,
-        // rulings_uri,
-        // scryfall_set_uri,
-        // scryfall_uri,
-        // set,
-        // set_name,
-        // set_search_uri,
-        // set_type,
-        // set_uri,
-        // story_spotlight,
-        // tcg_player_id,
-        // textless,
-        // type_line,
-        // uri,
-        // variation,
-        // full_art,oracle_id
       } = magicCard;
 
       const { prices, related_uris, purchase_uris } = magicCard
@@ -86,17 +52,24 @@ class CardSingle extends React.Component {
         cardColor = `${colorId[0]}`
       }
 
+      const addToDeck = <AddButton collection={userDecks} type="Deck" scryId={id} />
+      const addToBinder = <AddButton collection={userBinders} type="Binder" scryId={id}/>
+      
       return(
               <Col className="CardSingle" xs="1" sm="2" md="2">
               <Card body>
                 <CardBody className="card-header">
-                  <CardTitle><h4><Link to={`/card/${id}`}>{name}</Link></h4></CardTitle>
+                  <CardTitle><Link to={`/card/${id}`}>{name}</Link></CardTitle>
                   <CardSubtitle>Artist: {artist}</CardSubtitle>
                 </CardBody>
               <img className={`${cardColor} magic-card-image`} width="100%" src={images[1]} alt="Card image cap" />
                   <CardBody className="card-footer">
                       <CardText className={rarity}>{rarity}</CardText>
                   </CardBody>
+                  <CardFooter>
+                    {addToDeck}
+                    {addToBinder}
+                  </CardFooter>
               </Card>
               </Col>
       );
@@ -104,47 +77,3 @@ class CardSingle extends React.Component {
 }
 
 export default CardSingle;
-
-
-
-
-
-
-    //prices{
-    // eur
-    // tix
-    // usd
-    // usd_foil
-    //}
-
-
-    //relatedUris{
-    // edhrec
-    // gatherer
-    // mtgtop8
-    // tcgplayer_decks
-    //}
-
-    //purchase_uris{
-    // cardhoarder
-    // cardmarket
-    // tcgplayer
-    //}
-
-    //const games[]
-    //["arena", "mtgo", "paper"]
-
-    //const artist_ids[]
-    //["0", "1", "2", "3"]
-
-    //const Colors[]
-    //["W","U","B","R","G"]
-
-    //const ColorIdentity[]
-    //["W","U","B","R","G"]
-
-    //const MultiverseIds[]
-    //[0, 1, 2, 3, 4]
-
-
-

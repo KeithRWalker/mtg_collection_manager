@@ -97,7 +97,7 @@ class MyNav extends React.Component {
                 </NavLink>
               </NavItem>
               <NavItem className="col-2">
-                <NavLink href="/user/collection">
+                <NavLink tag={RRNavLink} to="/collection">
                   Your Collection
                 </NavLink>
               </NavItem>

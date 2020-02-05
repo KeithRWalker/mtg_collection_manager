@@ -38,5 +38,21 @@ namespace mtg_collection_manager.Controllers
 
             return matchingCard;
         }
+
+        [HttpPost("usercard")]
+        [Authorize]
+        public object AttachCardToUser(Guid scryId)
+        {
+            var scryCard = _cardRepo.GetCardDetails(scryId);
+
+            var newUserCard = new UserCard
+            {
+                ScryId = scryId,
+                Name = scryCard.Name
+            };
+
+            var addedCard = _cardRepo.AttachUserCardToUser(newUserCard);
+            return Created($"api/binder/{addedCard}", addedCard);
+        }
     }
 }
