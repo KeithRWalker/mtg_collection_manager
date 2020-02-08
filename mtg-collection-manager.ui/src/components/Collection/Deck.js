@@ -8,9 +8,9 @@ class Deck extends React.Component{
     const {userDeck} = this.props;
     return(
       <div className="Deck">
-        <Card>
-          <CardTitle><Link to={`/deck/${userDeck.id}`}>{userDeck.name}</Link></CardTitle>
-          <CardSubtitle>{userDeck.description}</CardSubtitle>
+        <Card className="user-deck">
+          <CardTitle className="deck-title"><Link to={`/deck/${userDeck.id}`}>{userDeck.name}</Link></CardTitle>
+          <CardSubtitle className="deck-subtitle">{userDeck.description}</CardSubtitle>
         </Card>
       </div>
     )

@@ -1,6 +1,5 @@
 import React from 'react'
 import { 
-  Button,
   ButtonDropdown, 
   DropdownToggle, 
   DropdownMenu, 
@@ -8,8 +7,8 @@ import {
 } from 'reactstrap';
 
 import cardData from '../../data/cardData';
-import binderData from '../../data/binderData';
-import deckData from '../../data/deckData';
+
+import './CardSingle.scss';
 
 class AddButton extends React.Component{
   state = {
@@ -19,42 +18,33 @@ class AddButton extends React.Component{
   addToCollection = (e) => {
     e.preventDefault();
     const collectionValue = e.target.value
-    const {scryId, type} = this.props;
-    cardData.addCardToUser(scryId)
-      .then((resp) => {
-        const userCardId = resp.id;
-        const sleeve = {
-          collectionId: collectionValue,
-          cardId: userCardId
-        };
-
-        if(type === "Binder"){
-          binderData.attachBinderSleeve(sleeve)
-        }
-        if(type === "Deck"){
-          deckData.attachDeckSleeve(sleeve)
-        }  
-      })
-      .catch(err => console.error("error in AddButton.js // addToCollection()"))
+    const type = this.props.type;
+    const scryId = this.props.scryId;
+    const additionInfo = {
+      scryId: scryId,
+      collectionId: collectionValue,
+      collectionType: type
+    }
+    console.log(type);
+    cardData.addCardToUser(additionInfo)
     console.log(`adding ${scryId} to ${e.target.value}`)
   }
 
   ddToggle = () => this.setState({ dropdownOpen: !this.state.dropdownOpen })
   render(){
     const { dropdownOpen } = this.state;
-    const { type, collection } = this.props
-    const ddItems = Object.entries(collection).map(entry => 
-      entry.map((item) => <DropdownItem value={item.id} onClick={this.addToCollection} key={`key_${item.id}`}>{item.name}</DropdownItem>)
-      )
+    const myCollection = this.props.collection;
+    const { type } = this.props;
+
+    const ddBtns = myCollection.map(x => <DropdownItem size="sm" value={x.id} onClick={this.addToCollection} key={`key_${x.id}`}>{x.name}</DropdownItem>)
     return(
       <div className="AddButton">
-        <ButtonDropdown isOpen={dropdownOpen} toggle={this.ddToggle}>
-          <DropdownToggle caret>
-            {`Add to ${type}`}
+        <ButtonDropdown className="add-btn-dd" isOpen={dropdownOpen} toggle={this.ddToggle} direction="right">
+          <DropdownToggle className="dd-toggle">
+            {`${type}`}
           </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem header>{`${type}s`}</DropdownItem>
-            {ddItems}
+          <DropdownMenu right>
+            {ddBtns}
           </DropdownMenu>
         </ButtonDropdown>
       </div>

@@ -95,20 +95,223 @@ GO
 
 CREATE TABLE [dbo].[Card] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
-  [ScryId] NVARCHAR(36),
-  [Name] NVARCHAR(255)
+  [ScryId] UNIQUEIDENTIFIER,
+  [Name] NVARCHAR(255),
+  [OracleId] UNIQUEIDENTIFIER,
+  [Lang] NVARCHAR(255),
+  [ReleasedAt] DateTimeOffset,
+  [Uri] NVARCHAR(500),
+  [ScryfallUri] NVARCHAR(500),
+  [Layout] NVARCHAR(255),
+  [HighresImage] BIT,
+  [ManaCost] NVARCHAR(255),
+  [Cmc] INT,
+  [TypeLine] NVARCHAR(255),
+  [Reserved] BIT,
+  [Foil] BIT,
+  [Nonfoil] BIT,
+  [Oversized] BIT,
+  [Promo] BIT,
+  [Reprint] BIT,
+  [Variation] BIT,
+  [Set] NVARCHAR(255),
+  [SetName] NVARCHAR(255),
+  [SetType] NVARCHAR(255),
+  [ScryfallSetUri] NVARCHAR(500),
+  [RulingsUri] NVARCHAR(500),
+  [PrintsSearchUri] NVARCHAR(500),
+  [CollectorNumber] INT,
+  [Digital] BIT,
+  [Rarity] NVARCHAR(255),
+  [CardBackId] UNIQUEIDENTIFIER,
+  [Artist] NVARCHAR(255),
+  [IllustrationId] UNIQUEIDENTIFIER,
+  [BorderColor] NVARCHAR(255),
+  [Frame] INT,
+  [FullArt] BIT,
+  [Textless] BIT,
+  [Booster] BIT,
+  [StorySpotlight] BIT,
+  [EdhrecRank] BIT,
 )
 GO
+
+USE MTG
+IF OBJECT_ID('[dbo].[CardFace]', 'U') IS NOT NULL
+DROP TABLE [dbo].[CardFace]
+GO
+CREATE TABLE [dbo].[CardFace] (
+  [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
+  [CardId] UNIQUEIDENTIFIER
+    FOREIGN KEY (CardId)
+    REFERENCES [Card] (Id),
+  [Object] NVARCHAR(255),
+  [Name] NVARCHAR(255),
+  [PrintedName] NVARCHAR(255),
+  [ManaCost] NVARCHAR(255),
+  [TypeLine] NVARCHAR(255),
+  [PrintedTypeLine] NVARCHAR(255),
+  [OracleText] NVARCHAR(255),
+  [PrintedText] NVARCHAR(255),
+  [Artist] NVARCHAR(255),
+  [ArtistId] UNIQUEIDENTIFIER,
+  [IllustrationId] UNIQUEIDENTIFIER,
+)
+
+USE MTG
+IF OBJECT_ID('[dbo].[ImageUris]', 'U') IS NOT NULL
+DROP TABLE [dbo].[ImageUris]
+GO
+CREATE TABLE [dbo].[ImageUris] (
+  [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
+  [CardId] UNIQUEIDENTIFIER
+    FOREIGN KEY (CardId)
+    REFERENCES [Card] (Id),
+  [Small] NVARCHAR(500),
+  [Normal] NVARCHAR(500),
+  [Large] NVARCHAR(500),
+  [Png] NVARCHAR(500),
+  [ArtCrop] NVARCHAR(500),
+  [BorderCrop] NVARCHAR(500)
+)
+
+USE MTG
+IF OBJECT_ID('[dbo].[Legalities]', 'U') IS NOT NULL
+DROP TABLE [dbo].[Legalities]
+GO
+CREATE TABLE [dbo].[Legalities] (
+  [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
+  [CardId] UNIQUEIDENTIFIER
+    FOREIGN KEY (CardId)
+    REFERENCES [Card] (Id),
+  [Standard] NVARCHAR(15),
+  [Future] NVARCHAR(15),
+  [Historic] NVARCHAR(15),
+  [Pioneer] NVARCHAR(15),
+  [Modern] NVARCHAR(15),
+  [Legacy] NVARCHAR(15),
+  [Pauper] NVARCHAR(15),
+  [Vintage] NVARCHAR(15),
+  [Penny] NVARCHAR(15),
+  [Commander] NVARCHAR(15),
+  [Brawl] NVARCHAR(15),
+  [Duel] NVARCHAR(15),
+  [Oldschool] NVARCHAR(15)
+)
+
+USE MTG
+IF OBJECT_ID('[dbo].[Prices]', 'U') IS NOT NULL
+DROP TABLE [dbo].[Prices]
+GO
+CREATE TABLE [dbo].[Prices] (
+  [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
+  [CardId] UNIQUEIDENTIFIER
+    FOREIGN KEY (CardId)
+    REFERENCES [Card] (Id),
+  [Usd] NVARCHAR(50),
+  [UsdFoil] NVARCHAR(50),
+  [Eur] NVARCHAR(50),
+  [Tix] NVARCHAR(50)
+)
+
+USE MTG
+IF OBJECT_ID('[dbo].[PurchaseUris]', 'U') IS NOT NULL
+DROP TABLE [dbo].[PurchaseUris]
+GO
+CREATE TABLE [dbo].[PurchaseUris] (
+  [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
+  [CardId] UNIQUEIDENTIFIER
+    FOREIGN KEY (CardId)
+    REFERENCES [Card] (Id),
+  [Tcgplayer] NVARCHAR(500),
+  [Cardmarket] NVARCHAR(500),
+  [Cardhoarder] NVARCHAR(500)
+)
+
+USE MTG
+IF OBJECT_ID('[dbo].[RelatedUris]', 'U') IS NOT NULL
+DROP TABLE [dbo].[RelatedUris]
+GO
+CREATE TABLE [dbo].[RelatedUris] (
+  [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
+  [CardId] UNIQUEIDENTIFIER
+    FOREIGN KEY (CardId)
+    REFERENCES [Card] (Id),
+    [Gatherer] NVARCHAR(500),
+  [TcgplayerDecks] NVARCHAR(500),
+  [Edhrec] NVARCHAR(500),
+  [Mtgtop8] NVARCHAR(500)
+)
+
+USE MTG
+IF OBJECT_ID('[dbo].[Colors]', 'U') IS NOT NULL
+DROP TABLE [dbo].[Colors]
+GO
+CREATE TABLE [dbo].[Colors] (
+  [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
+  [CardId] UNIQUEIDENTIFIER
+    FOREIGN KEY (CardId)
+    REFERENCES [Card] (Id),
+  [Color] NVARCHAR(10),
+)
+
+USE MTG
+IF OBJECT_ID('[dbo].[ColorIdentity]', 'U') IS NOT NULL
+DROP TABLE [dbo].[ColorIdentity]
+GO
+CREATE TABLE [dbo].[ColorIdentity] (
+  [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
+  [CardId] UNIQUEIDENTIFIER
+    FOREIGN KEY (CardId)
+    REFERENCES [Card] (Id),
+  [Color] NVARCHAR(255),
+)
+
+USE MTG
+IF OBJECT_ID('[dbo].[Games]', 'U') IS NOT NULL
+DROP TABLE [dbo].[Games]
+GO
+CREATE TABLE [dbo].[Games] (
+  [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
+  [CardId] UNIQUEIDENTIFIER
+    FOREIGN KEY (CardId)
+    REFERENCES [Card] (Id),
+  [Game] NVARCHAR(50),
+)
+
+USE MTG
+IF OBJECT_ID('[dbo].[MultiverseIds]', 'U') IS NOT NULL
+DROP TABLE [dbo].[MultiverseIds]
+GO
+CREATE TABLE [dbo].[MultiverseIds] (
+  [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
+  [CardId] UNIQUEIDENTIFIER
+    FOREIGN KEY (CardId)
+    REFERENCES [Card] (Id),
+  [MultiverseId] INT,
+)
+
+USE MTG
+IF OBJECT_ID('[dbo].[ArtistIds]', 'U') IS NOT NULL
+DROP TABLE [dbo].[ArtistIds]
+GO
+CREATE TABLE [dbo].[ArtistIds] (
+  [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
+  [CardId] UNIQUEIDENTIFIER
+    FOREIGN KEY (CardId)
+    REFERENCES [Card] (Id),
+  [ArtistId] UNIQUEIDENTIFIER,
+)
 -----------------------------------------------------------------------
 
 -- CREATE SLEEVE TABLE --
 
 USE MTG
-IF OBJECT_ID('[dbo].[Sleeve]', 'U') IS NOT NULL
-DROP TABLE [dbo].[Sleeve]
+IF OBJECT_ID('[dbo].[BinderSleeve]', 'U') IS NOT NULL
+DROP TABLE [dbo].[BinderSleeve]
 GO
 
-CREATE TABLE [dbo].[Sleeve] (
+CREATE TABLE [dbo].[BinderSleeve] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
@@ -139,93 +342,3 @@ CREATE TABLE [dbo].[DeckSleeve] (
 )
 GO
 -----------------------------------------------------------------------
-INSERT INTO [dbo].[User]
-(
-    [Id], [FirebaseUid], [Username], [Email], [City], [State], [FirstName], [LastName]
-)
-VALUES
-(
-    DEFAULT,
-    '0000000000000000',
-    'GuttacatTest',
-    'KRW418Test@gmail.com',
-    'Clarksville',
-    'TN',
-    'Keith',
-    'Walker'
-)
---------------------------------------------------------------------------
-INSERT INTO [dbo].[Binder]
-([Id], [UserId], [Name], [Type], [Description], [Tags], [TotalValue])
-VALUES
-(
-    DEFAULT,
-    (select [Id] from [dbo].[User] WHERE [User].[FirstName] = 'Keith'),
-    'Keiths Binder',
-    'Test',
-    'This is a test Binder',
-    '#TEST',
-    1000
-)
---------------------------------------------------------------------------------
-INSERT INTO [dbo].[Deck]
-([Id], [UserId], [Name], [Description], [Type], [Rating])
-VALUES
-(
-    DEFAULT,
-    (select [Id] from [dbo].[User] WHERE [User].[FirstName] = 'Keith'),
-    'Keiths Deck',
-    'This is a test Binder',
-    'TEST DECK',
-    100
-)
-INSERT INTO [dbo].[Card]
-([Id], [ScryId], [Name])
-VALUES
-(DEFAULT, 'TestScryId', 'Test Card 1'),
-(DEFAULT, 'TestScryId', 'Test Card 2'),
-(DEFAULT, 'TestScryId', 'Test Card 3')
---------------------------------------------------------------------------------
-INSERT INTO [dbo].[Sleeve]
-([Id], [CardId], [BinderId], [Quantity])
-VALUES
-(
-    DEFAULT,
-    (SELECT [Id] FROM [Card] WHERE [Card].[Name] = 'Test Card 1'),
-    (SELECT [Id] FROM [Binder] WHERE [Binder].Name = 'Keiths Binder'),
-    1
-),
-(
-    DEFAULT,
-    (SELECT [Id] FROM [Card] WHERE [Card].[Name] = 'Test Card 2'),
-    (SELECT [Id] FROM [Binder] WHERE [Binder].Name = 'Keiths Binder'),
-    1
-),
-(
-    DEFAULT,
-    (SELECT [Id] FROM [Card] WHERE [Card].[Name] = 'Test Card 3'),
-    (SELECT [Id] FROM [Binder] WHERE [Binder].Name = 'Keiths Binder'),
-    1
-)
---------------------------------------------------------------------------------
-INSERT INTO [dbo].[DeckSleeve]
-([Id], [CardId], [DeckId], [Quantity])
-VALUES
-(
-    DEFAULT,
-    (SELECT [Id] FROM [Card] WHERE [Card].[Name] = 'Test Card 1'),
-    (SELECT [Id] FROM [Deck] WHERE [Deck].Name = 'Keiths Deck'),
-    4
-),
-(
-    DEFAULT,
-    (SELECT [Id] FROM [Card] WHERE [Card].[Name] = 'Test Card 2'),
-    (SELECT [Id] FROM [Deck] WHERE [Deck].Name = 'Keiths Deck'),
-    4
-),
-(
-    DEFAULT,
-    (SELECT [Id] FROM [Card] WHERE [Card].[Name] = 'Test Card 3'),
-    (SELECT [Id] FROM [Deck] WHERE [Deck].Name = 'Keiths Deck'),
-    4
-)

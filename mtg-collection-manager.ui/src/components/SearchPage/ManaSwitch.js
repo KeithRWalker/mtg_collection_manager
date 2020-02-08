@@ -1,6 +1,5 @@
 import React from 'react';
 import { CustomInput } from 'reactstrap';
-import symbolData from '../../data/symbolData';
 import './SearchPage.scss';
 
 class ManaSwitch extends React.Component {
@@ -9,7 +8,7 @@ class ManaSwitch extends React.Component {
 
     return(
       <div className="ManaSwitch switch-con">
-        <img className="mana-img" src={mana.imgUri} />
+        <img className="mana-img" src={mana.imgUri} alt={`mana`}/>
         <CustomInput className="color-swicth" type="switch" id={mana.symbolCode} value={mana.symbolCode} />
       </div>
     )

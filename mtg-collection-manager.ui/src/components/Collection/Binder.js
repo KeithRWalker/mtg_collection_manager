@@ -8,9 +8,9 @@ class Binder extends React.Component{
     const {userBinder} = this.props;
     return(
       <div className="Binder">
-        <Card>
-          <CardTitle><Link to={`binder/${userBinder.id}`}>{userBinder.name}</Link></CardTitle>
-          <CardSubtitle>{userBinder.description}</CardSubtitle>
+        <Card className="user-binder">
+          <CardTitle className="binder-title"><Link to={`binder/${userBinder.id}`}>{userBinder.name}</Link></CardTitle>
+          <CardSubtitle className="binder-subtitle">{userBinder.description}</CardSubtitle>
         </Card>
       </div>
     )

@@ -9,12 +9,8 @@ import {
   DropdownMenu,
   DropdownItem,
   ButtonDropdown,
-  Input,
-  InputGroup,
-  Button,
-  Form
 } from 'reactstrap';
-import { NavLink as RRNavLink, Redirect } from 'react-router-dom';
+import { NavLink as RRNavLink } from 'react-router-dom';
 
 import auth from '../../auth/auth';
 
@@ -24,11 +20,11 @@ const defaultSearchValue = '';
 
 class MyNav extends React.Component {
   state = {
-    collapsed: true,
+    navCollapsed: true,
     searchParams: defaultSearchValue,
     fireRedirect: false,
   }
-  toggleNavbar = () => this.setState({ collapsed: !this.state.collapsed });
+  toggleNavbar = () => this.setState({ navCollapsed: !this.state.navCollapsed });
 
   updateSearch = (e) => this.setState({ searchParams: e.target.value })
 
@@ -51,30 +47,29 @@ class MyNav extends React.Component {
 
 
   render() {
-    const { collapsed, searchParams, fireRedirect } = this.state;
-    //const { from } = this.props.location.state || '/';
-    const searchUrl = `/search/${searchParams.replace(/\s/g,'+')}`;
+    const { navCollapsed } = this.state;
+    //const searchUrl = `/search/${searchParams.replace(/\s/g,'+')}`;
     const { authed } = this.props;
     let navItems;
     if(authed){
                   /*  LOGGED IN DROPDOWN  */
-      navItems =  <DropdownMenu>
-                    <DropdownItem >
-                      <NavLink tag={RRNavLink} to="/home">Account</NavLink>
+      navItems =  <DropdownMenu right className="nav-dd-menu">
+                    <DropdownItem className="nav-dd-item">
+                      <NavLink className="navbar-nav-link" tag={RRNavLink} to="/home">Account</NavLink>
                     </DropdownItem>
                       <DropdownItem divider />
-                    <DropdownItem>
-                    <NavLink tag={RRNavLink} to="/landingPage" onClick={this.logoutClickEvent}>Logout</NavLink>
+                    <DropdownItem className="nav-dd-item">
+                    <NavLink className="navbar-nav-link" tag={RRNavLink} to="/landingPage" onClick={this.logoutClickEvent}>Logout</NavLink>
                     </DropdownItem>
                   </DropdownMenu>
     } else{
                   /*  LOGGED OUT DROP DOWN   */
-      navItems =  <DropdownMenu>
-                    <DropdownItem>
-                      <NavLink tag={RRNavLink} to="/login">Login</NavLink>
+      navItems =  <DropdownMenu right className="nav-dd-menu">
+                    <DropdownItem className="nav-dd-item">
+                      <NavLink className="navbar-nav-link" tag={RRNavLink} to="/login">Login</NavLink>
                     </DropdownItem>
-                    <DropdownItem>
-                      <NavLink tag={RRNavLink} to="/registerUser">Register</NavLink>
+                    <DropdownItem className="nav-dd-item">
+                      <NavLink className="navbar-nav-link" tag={RRNavLink} to="/registerUser">Register</NavLink>
                     </DropdownItem>
                   </DropdownMenu>
     }
@@ -87,62 +82,35 @@ class MyNav extends React.Component {
             <NavbarBrand className="col-1" href="/">MTG Binder</NavbarBrand>
             {/* --  NAVIGATION BROWSE/DECKS  -- */}
               <NavItem className="col-2">
-                <NavLink tag={RRNavLink} to="/browse">
+                <NavLink className="navbar-nav-link" tag={RRNavLink} to="/browse">
                   Browse
                 </NavLink>
               </NavItem>
               <NavItem className="col-2">
-                <NavLink href="/decks">
+                <NavLink className="navbar-nav-link" tag={RRNavLink} to="/decks">
                   Decks
                 </NavLink>
               </NavItem>
               <NavItem className="col-2">
-                <NavLink tag={RRNavLink} to="/collection">
-                  Your Collection
+                <NavLink className="navbar-nav-link" tag={RRNavLink} to="/binders">
+                  Binders
                 </NavLink>
               </NavItem>
               <NavItem className="col-2">
-                <NavLink tag={RRNavLink} to="/search">
+                <NavLink className="navbar-nav-link" tag={RRNavLink} to="/search">
                   Search
                 </NavLink>
               </NavItem>
-
-              {/* --  SEARCH BAR  -- */}
-              {/*<NavItem className="col-5">
-              
-                <InputGroup className="">
-                <Input
-                  className ="search-bar"
-                  type="search"
-                  name="navSearch"
-                  id="navSearch"
-                  placeholder="Search"
-                  value={searchParams}
-                  onChange={this.updateSearch}
-                  onKeyPress={this.handleKeyPress}
-                  />
-                    <Button
-                      className="search-bar-submit"
-                      type="search"
-                      onClick={this.searchSubmit}>
-                      Search
-                    </Button>
-                </InputGroup>
-              </NavItem>*/}
-
-
             </Nav>
 
             {/* --  LOGIN/REGISTER/ACCOUNT DROPDOWN  -- */}
             <Nav>
-            <NavItem className="col-3">
-            <ButtonDropdown nav isOpen={!collapsed} toggle={this.toggleNavbar} className="">
-              <DropdownToggle caret className="dropdown-account">
+            <ButtonDropdown nav className="col-2 nav-dd" isOpen={!navCollapsed} toggle={this.toggleNavbar}>
+              <DropdownToggle caret className="dd-account">
                 Account
               </DropdownToggle>
               {navItems}
             </ButtonDropdown>
-          </NavItem>
             </Nav>
         </Navbar>
 

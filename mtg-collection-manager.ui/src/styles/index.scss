@@ -13,27 +13,69 @@ code {
     monospace;
 }
 
-a, .btn {
+.navbar-nav-link{
   background-color: rgba(0, 0, 0, 0);
   color: #ffffff;
 }
 
-a:hover, .btn:hover{
+.navbar-nav-link:hover{
   color: rgba(155, 54, 54, 0.815);
 }
 
-.btn:hover{
+.nav-dd .btn:hover{
   background-color: rgba(0, 0, 0, 0.75);
 }
 
-.dropdown-menu{
+.nav-dd .dropdown-menu{
   color: aliceblue;
   background-color: rgba(0, 0, 0, 0.856) ;
   margin-top: 9px;
 }
-.dropdown-item{
+.nav-dd .dropdown-item{
   color:aliceblue;
 }
-.dropdown-item:hover{
-  background-color: rgb(32, 70, 48)
+.nav-dd .dropdown-item:hover{
+  background-color: rgba(32, 70, 48, 0.326);
+  color:  aliceblue;
+}
+
+.card{
+  background: rgba(255, 255, 255, 0);
+  border: 0;
+}
+
+.modal-content{
+  background-color: rgba(20, 27, 25, 0.8);
+  color: aliceblue;
+}
+
+.form-control{
+  background-color: rgb(20, 27, 25);
+  color: aliceblue;
+}
+
+.form-control:focus{
+  background-color: rgb(26, 35, 33);
+}
+
+.form-control::placeholder{
+  color:aliceblue;
+}
+.btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn:not(:last-child):not(.dropdown-toggle)
+{
+  border-radius: 0% 0% 0% 0%;
+}
+
+.my-card-header{
+  padding-bottom: 0;
+  padding-top: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.my-card-title{
+  margin-top: auto;
+  margin-bottom: 0;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
-import {  Container, Button, Row } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import {  Container, Row } from 'reactstrap';
+//import { Link } from 'react-router-dom';
 import CardSingle from './CardSingle';
 
 import deckData from '../../data/deckData';
@@ -18,7 +18,6 @@ class CardContainer extends React.Component {
     }
 
     getUserCollection = () => {
-      const binderCollection = []
       binderData.getUserBinders()
         .then((resp) => {
 

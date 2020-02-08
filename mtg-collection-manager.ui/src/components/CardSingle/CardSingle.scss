@@ -63,6 +63,60 @@ img.G:hover{
   filter: drop-shadow(10px 10px 10px rgba(0, 115, 61, 0.75)) invert(1%);
 }
 
+.card-header{
+  padding-bottom: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.AddButton .btn{
+  font-size: 12px;
+  margin-left: 15px;
+}
+.AddButton .btn-secondary{
+  background-color: rgb(49, 71, 59);
+}
+
+.AddButton .btn-secondary:hover{
+  background-color: rgb(43, 81, 51);
+}
+
+.AddButton .btn-secondary:focus{
+  background-color: rgb(43, 81, 51);
+}
+
+.AddButton .btn-secondary :active{
+  background-color: rgb(43, 81, 51);
+}
+
+.AddButton > .show > .dropdown-toggle:not(:disabled){
+  background-color: rgb(43, 81, 51);
+}
+
+.AddButton .dropdown-menu{
+  background-color: rgb(49, 71, 59);
+  color:aliceblue;
+}
+
+.AddButton .dropdown-item{
+  color:aliceblue;
+}
+
+.AddButton .dropdown-item:hover{
+  color: aliceblue;
+  background-color: rgb(43, 81, 51);
+}
+
+
+
+.add-btn-dd{
+  display: flex;
+}
+
+
+
 /**
 //////////////////////
 //     W = White 

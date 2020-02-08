@@ -32,7 +32,7 @@ namespace mtg_collection_manager.Controllers
         }
 
         [HttpGet("id/{cardId:Guid}")]
-        public Card GetCardDetails(Guid cardId)
+        public Card GetCardDetails(string cardId)
         {
             var matchingCard = _cardRepo.GetCardDetails(cardId);
 
@@ -41,18 +41,39 @@ namespace mtg_collection_manager.Controllers
 
         [HttpPost("usercard")]
         [Authorize]
-        public object AttachCardToUser(Guid scryId)
+        public bool AttachCardToUser(AttachCardToUserCommand additionInfo)
         {
-            var scryCard = _cardRepo.GetCardDetails(scryId);
+            var sleeveRepo = new SleeveRepo();
 
-            var newUserCard = new UserCard
+            var scryCard = _cardRepo.GetCardDetails(additionInfo.ScryId);
+            var userCard = _cardRepo.AttachCardToUser(scryCard);
+
+            _cardRepo.LinkCardLists(scryCard, userCard.Id);
+
+            if (additionInfo.CollectionType == "Deck")
             {
-                ScryId = scryId,
-                Name = scryCard.Name
-            };
+                var deckRepo = new DeckRepo();
+                var deckToAddTo = deckRepo.GetDeckByDeckId(additionInfo.CollectionId);
+                var sleeveInfo = new
+                {
+                    DeckId = deckToAddTo.Id,
+                    CardId = userCard.Id
+                };
+                return sleeveRepo.CreateNewDeckSleeve(sleeveInfo);
+            }
 
-            var addedCard = _cardRepo.AttachUserCardToUser(newUserCard);
-            return Created($"api/binder/{addedCard}", addedCard);
+            if (additionInfo.CollectionType == "Binder")
+            {
+                var binderRepo = new BinderRepo();
+                var binderToAddTo = binderRepo.GetBinderByBinderId(additionInfo.CollectionId);
+                var sleeveInfo = new
+                {
+                    BinderId = binderToAddTo.Id,
+                    CardId = userCard.Id
+                };
+                return sleeveRepo.CreateNewBinderSleeve(sleeveInfo);
+            }
+            return false;
         }
     }
 }

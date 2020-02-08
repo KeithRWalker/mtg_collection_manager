@@ -1,14 +1,10 @@
 import React from 'react';
 import {
-  Button,
   Card,
   CardImg,
+  CardHeader,
   Col,
   CardTitle,
-  CardText,
-  CardSubtitle,
-  CardBody,
-  CardFooter
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import AddButton from './AddButton';
@@ -22,14 +18,14 @@ class CardSingle extends React.Component {
       const { magicCard } = this.props;
       const { userDecks, userBinders } = this.props;
       const {
-        artist,
+        // artist,
         id,
         image_uris,
-        name,
-        rarity,
+        // name,
+        // rarity,
       } = magicCard;
 
-      const { prices, related_uris, purchase_uris } = magicCard
+      //const { prices, related_uris, purchase_uris } = magicCard
       // const { eur,tix,usd,usd_foil } = prices
       // const { edhrec, gatherer, mtgtop8, tcgplayer_decks } = related_uris;
       // const { cardhoarder, cardmarket, tcgplayer } = purchase_uris;
@@ -58,18 +54,13 @@ class CardSingle extends React.Component {
       return(
               <Col className="CardSingle" xs="1" sm="2" md="2">
               <Card body>
-                <CardBody className="card-header">
-                  <CardTitle><Link to={`/card/${id}`}>{name}</Link></CardTitle>
-                  <CardSubtitle>Artist: {artist}</CardSubtitle>
-                </CardBody>
-              <img className={`${cardColor} magic-card-image`} width="100%" src={images[1]} alt="Card image cap" />
-                  <CardBody className="card-footer">
-                      <CardText className={rarity}>{rarity}</CardText>
-                  </CardBody>
-                  <CardFooter>
-                    {addToDeck}
-                    {addToBinder}
-                  </CardFooter>
+                <CardHeader className="my-card-header">
+                  <CardTitle className="my-card-title">Add to : </CardTitle>
+                  {addToDeck} {addToBinder}
+                </CardHeader>
+                <Link to={`/card/${id}`}>
+                  <CardImg className={`${cardColor} magic-card-image`} width="100%" src={images[1]} alt="Card image cap" />
+                </Link>
               </Card>
               </Col>
       );

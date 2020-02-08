@@ -7,6 +7,8 @@ namespace mtg_collection_manager.Commands
 {
     public class AttachCardToUserCommand
     {
-        public string scryId { get; set; }
+        public string ScryId { get; set; }
+        public string CollectionId { get; set; }
+        public string CollectionType { get; set; }
     }
 }

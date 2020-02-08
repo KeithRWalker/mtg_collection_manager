@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Button,
-  Form,
+  CardDeck,
   Input,
   Modal, 
   ModalHeader, 
@@ -80,7 +80,7 @@ class CollectionPage extends React.Component{
   }
 
   render() {
-    const { userBinders, userDecks, binderModalOpen, deckModalOpen, binderSubmit, deckSubmit } = this.state;
+    const { binderModalOpen, deckModalOpen, binderSubmit, deckSubmit } = this.state;
 
     const bindersToShow = this.state.userBinders.map(binder => (
       <Binder userBinder={binder} key={binder.id}/>
@@ -93,11 +93,20 @@ class CollectionPage extends React.Component{
     return(
       <div className="CollectionPage">
         
-        <div className="binder-container">
-          <h1>Binders:</h1>
-          {bindersToShow}
+        <div className="binder-section-container">
+
+          <div className="binders-label">
+            <h1>Binders:</h1>
+            <Button className="add-binder-btn" size="sm" onClick={this.toggleBinderModal}>Add a Binder</Button>
+          </div>
+
+          <div className="binder-container">
+            <CardDeck>
+              {bindersToShow}
+            </CardDeck>
+          </div>
+
           <div>
-            <Button color="danger" onClick={this.toggleBinderModal}>Add a Binder</Button>
             <Modal isOpen={binderModalOpen} toggle={this.toggleBinderModal} className="binder-modal">
               <ModalHeader toggle={this.toggleBinderModal}> Add a Binder</ModalHeader>
               <ModalBody>
@@ -125,11 +134,23 @@ class CollectionPage extends React.Component{
           </div>
         </div>
 
-        <div className="deck-container">
-          <h1>Decks: </h1>
-          {decksToShow}
+        <div className="deck-section-container">
+
+          <div className="decks-label">
+            <h1>Decks: </h1>
+            <Button className="add-deck-btn" size="sm" onClick={this.toggleDeckModal}>Add a Deck</Button>
+          </div>
+
+          <div className="deck-container">
+            <CardDeck>
+              {decksToShow}
+            </CardDeck>
+          </div>
+          
           <div>
-            <Button color="danger" onClick={this.toggleDeckModal}>Add a Deck</Button>
+
+            
+
             <Modal isOpen={deckModalOpen} toggle={this.toggleDeckModal} className="deck-modal">
               <ModalHeader toggle={this.toggleDeckModal}> Add a Deck</ModalHeader>
                 <ModalBody>

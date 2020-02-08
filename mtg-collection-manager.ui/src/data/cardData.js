@@ -38,12 +38,14 @@ var getCardDetails = (cardId) => new Promise((resolve, reject) => {
     }).catch(err => reject(console.error("error in cardData/getCardDetails()"), err))
 })
 
-var addCardToUser = (scryfallId) => new Promise((resolve, reject) => {
-    Axios.post(`${baseUrl}/usercard`, scryfallId)
-      .then((resp) => {
-        resolve(resp.data)
-      }).catch(err => reject(console.error("error in cardData/addCardToUser", err)))
-});
+// var addCardToUser = (scryfallId) => new Promise((resolve, reject) => {
+//     Axios.post(`${baseUrl}/usercard`, scryfallId)
+//       .then((resp) => {
+//         resolve(resp.data)
+//       }).catch(err => reject(console.error("error in cardData/addCardToUser", err)))
+// });
+
+var addCardToUser = additionInfo => Axios.post(`${baseUrl}/usercard`, additionInfo);
 
 export default { getRandomCard, getPage, getCardDetails, addCardToUser }
 
