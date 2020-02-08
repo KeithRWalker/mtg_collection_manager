@@ -38,5 +38,15 @@ namespace mtg_collection_manager.Repos
             }
         }
 
+        public User GetUserByFirebaseUid(string firebaseUid)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"SELECT * FROM [User] WHERE [FirebaseUid] = @firebaseUid";
+                var user = db.QueryFirstOrDefault<User>(sql, new {firebaseUid});
+                return user;
+            }
+        }
+
     }
 }

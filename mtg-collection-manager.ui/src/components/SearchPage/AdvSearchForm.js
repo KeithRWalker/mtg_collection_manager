@@ -1,13 +1,11 @@
 import React from 'react';
 
-import { Col,
-  Row, 
+import {
   Button, 
   CustomInput,
   Form, 
   FormGroup, 
   Label, 
-  InputGroupAddon
 } from 'reactstrap';
 import Select from 'react-select';
 
@@ -18,7 +16,6 @@ import setData from '../../data/setData';
 import ManaSwitch from './ManaSwitch';
 
 import './SearchPage.scss'
-const valueArray = [ 1 ];
 
 class AdvSearchForm extends React.Component {
   state={
@@ -72,10 +69,10 @@ class AdvSearchForm extends React.Component {
   }
 
   submitForm = () => {
-    const { selectedCreatures, selectedPlaneswalkers, selectedSets} = this.state;
-    const creatures = this.typeHandle(selectedCreatures);
-    const planeswalkers = this.typeHandle(selectedPlaneswalkers)
-    const sets = this.typeHandle(selectedSets);
+    //const { selectedCreatures, selectedPlaneswalkers, selectedSets} = this.state;
+    // const creatures = this.typeHandle(selectedCreatures);
+    // const planeswalkers = this.typeHandle(selectedPlaneswalkers)
+    // const sets = this.typeHandle(selectedSets);
     
   };
 

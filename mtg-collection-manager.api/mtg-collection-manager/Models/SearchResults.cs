@@ -21,7 +21,7 @@ namespace mtg_collection_manager.Models
         public string Object { get; set; }
 
         [JsonProperty("total_cards")]
-        public long TotalCards { get; set; }
+        public int TotalCards { get; set; }
 
         [JsonProperty("has_more")]
         public bool HasMore { get; set; }

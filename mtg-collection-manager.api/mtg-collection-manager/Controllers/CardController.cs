@@ -32,11 +32,48 @@ namespace mtg_collection_manager.Controllers
         }
 
         [HttpGet("id/{cardId:Guid}")]
-        public Card GetCardDetails(Guid cardId)
+        public Card GetCardDetails(string cardId)
         {
             var matchingCard = _cardRepo.GetCardDetails(cardId);
 
             return matchingCard;
+        }
+
+        [HttpPost("usercard")]
+        [Authorize]
+        public bool AttachCardToUser(AttachCardToUserCommand additionInfo)
+        {
+            var sleeveRepo = new SleeveRepo();
+
+            var scryCard = _cardRepo.GetCardDetails(additionInfo.ScryId);
+            var userCard = _cardRepo.AttachCardToUser(scryCard);
+
+            _cardRepo.LinkCardLists(scryCard, userCard.Id);
+
+            if (additionInfo.CollectionType == "Deck")
+            {
+                var deckRepo = new DeckRepo();
+                var deckToAddTo = deckRepo.GetDeckByDeckId(additionInfo.CollectionId);
+                var sleeveInfo = new
+                {
+                    DeckId = deckToAddTo.Id,
+                    CardId = userCard.Id
+                };
+                return sleeveRepo.CreateNewDeckSleeve(sleeveInfo);
+            }
+
+            if (additionInfo.CollectionType == "Binder")
+            {
+                var binderRepo = new BinderRepo();
+                var binderToAddTo = binderRepo.GetBinderByBinderId(additionInfo.CollectionId);
+                var sleeveInfo = new
+                {
+                    BinderId = binderToAddTo.Id,
+                    CardId = userCard.Id
+                };
+                return sleeveRepo.CreateNewBinderSleeve(sleeveInfo);
+            }
+            return false;
         }
     }
 }

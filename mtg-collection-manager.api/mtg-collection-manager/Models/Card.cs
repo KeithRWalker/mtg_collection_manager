@@ -121,8 +121,7 @@ namespace mtg_collection_manager.Models
         public Uri PrintsSearchUri { get; set; }
 
         [JsonProperty("collector_number")]
-        [JsonConverter(typeof(ParseStringConverter))]
-        public long CollectorNumber { get; set; }
+        public string CollectorNumber { get; set; }
 
         [JsonProperty("digital")]
         public bool Digital { get; set; }
@@ -146,8 +145,7 @@ namespace mtg_collection_manager.Models
         public string BorderColor { get; set; }
 
         [JsonProperty("frame")]
-        [JsonConverter(typeof(ParseStringConverter))]
-        public long Frame { get; set; }
+        public string Frame { get; set; }
 
         [JsonProperty("full_art")]
         public bool FullArt { get; set; }
@@ -178,34 +176,24 @@ namespace mtg_collection_manager.Models
     {
         [JsonProperty("object")]
         public string Object { get; set; }
-
         [JsonProperty("name")]
         public string Name { get; set; }
-
         [JsonProperty("printed_name")]
         public string PrintedName { get; set; }
-
         [JsonProperty("mana_cost")]
         public string ManaCost { get; set; }
-
         [JsonProperty("type_line")]
         public string TypeLine { get; set; }
-
         [JsonProperty("printed_type_line")]
         public string PrintedTypeLine { get; set; }
-
         [JsonProperty("oracle_text")]
         public string OracleText { get; set; }
-
         [JsonProperty("printed_text")]
         public string PrintedText { get; set; }
-
         [JsonProperty("artist")]
         public string Artist { get; set; }
-
         [JsonProperty("artist_id")]
         public Guid ArtistId { get; set; }
-
         [JsonProperty("illustration_id", NullValueHandling = NullValueHandling.Ignore)]
         public Guid? IllustrationId { get; set; }
     }
@@ -214,19 +202,14 @@ namespace mtg_collection_manager.Models
     {
         [JsonProperty("small")]
         public Uri Small { get; set; }
-
         [JsonProperty("normal")]
         public Uri Normal { get; set; }
-
         [JsonProperty("large")]
         public Uri Large { get; set; }
-
         [JsonProperty("png")]
         public Uri Png { get; set; }
-
         [JsonProperty("art_crop")]
         public Uri ArtCrop { get; set; }
-
         [JsonProperty("border_crop")]
         public Uri BorderCrop { get; set; }
     }
@@ -277,13 +260,10 @@ namespace mtg_collection_manager.Models
     {
         [JsonProperty("usd")]
         public object Usd { get; set; }
-
         [JsonProperty("usd_foil")]
         public object UsdFoil { get; set; }
-
         [JsonProperty("eur")]
         public object Eur { get; set; }
-
         [JsonProperty("tix")]
         public object Tix { get; set; }
     }
@@ -292,10 +272,8 @@ namespace mtg_collection_manager.Models
     {
         [JsonProperty("tcgplayer")]
         public Uri Tcgplayer { get; set; }
-
         [JsonProperty("cardmarket")]
         public Uri Cardmarket { get; set; }
-
         [JsonProperty("cardhoarder")]
         public Uri Cardhoarder { get; set; }
     }
@@ -304,15 +282,134 @@ namespace mtg_collection_manager.Models
     {
         [JsonProperty("gatherer")]
         public Uri Gatherer { get; set; }
-
         [JsonProperty("tcgplayer_decks")]
         public Uri TcgplayerDecks { get; set; }
-
         [JsonProperty("edhrec")]
         public Uri Edhrec { get; set; }
-
         [JsonProperty("mtgtop8")]
         public Uri Mtgtop8 { get; set; }
+    }
+
+    public class UserCard
+    {
+        public Guid Id { get; set; }
+        public Guid ScryId { get; set; }
+        public Guid OracleId { get; set; }
+        public string Name { get; set; }
+        public string Lang { get; set; }
+        public DateTimeOffset ReleasedAt { get; set; }
+        public string Uri { get; set; }
+        public string ScryfallUri { get; set; }
+        public string Layout { get; set; }
+        public bool HighresImage { get; set; }
+        public string ManaCost { get; set; }
+        public long Cmc { get; set; }
+        public string TypeLine { get; set; }
+        public bool Reserved { get; set; }
+        public bool Foil { get; set; }
+        public bool Nonfoil { get; set; }
+        public bool Oversized { get; set; }
+        public bool Promo { get; set; }
+        public bool Reprint { get; set; }
+        public bool Variation { get; set; }
+        public string Set { get; set; }
+        public string SetName { get; set; }
+        public string SetType { get; set; }
+        public string SetUri { get; set; }
+        public string SetSearchUri { get; set; }
+        public string ScryfallSetUri { get; set; }
+        public string RulingsUri { get; set; }
+        public string PrintsSearchUri { get; set; }
+        public long CollectorNumber { get; set; }
+        public bool Digital { get; set; }
+        public string Rarity { get; set; }
+        public Guid CardBackId { get; set; }
+        public string Artist { get; set; }
+        public Guid IllustrationId { get; set; }
+        public string BorderColor { get; set; }
+        public string Frame { get; set; }
+        public bool FullArt { get; set; }
+        public bool Textless { get; set; }
+        public bool Booster { get; set; }
+        public bool StorySpotlight { get; set; }
+        public long EdhrecRank { get; set; }
+        // public List<CardFace> CardFaces { get; set; }
+        //public List<long> MultiverseIds { get; set; }
+        //public List<string> Colors { get; set; }
+        //public List<string> ColorIdentity { get; set; }
+        //public List<string> Games { get; set; }
+        //public List<Guid> ArtistIds { get; set; }
+        // public Legalities Legalities { get; set; }
+        //public Prices Prices { get; set; }
+        //public RelatedUris RelatedUris { get; set; }
+        //public ImageUris ImageUris { get; set; }
+        //public PurchaseUris PurchaseUris { get; set; }
+    }
+
+    public partial class UserCardFace
+    {
+        public string Object { get; set; }
+        public string Name { get; set; }
+        public string PrintedName { get; set; }
+        public string ManaCost { get; set; }
+        public string TypeLine { get; set; }
+        public string PrintedTypeLine { get; set; }
+        public string OracleText { get; set; }
+        public string PrintedText { get; set; }
+        public string Artist { get; set; }
+        public Guid ArtistId { get; set; }
+        public Guid IllustrationId { get; set; }
+    }
+
+    public partial class UserCardImageUris
+    {
+        public string Small { get; set; }
+        public string Normal { get; set; }
+        public string Large { get; set; }
+        public string Png { get; set; }
+        public string ArtCrop { get; set; }
+        public string BorderCrop { get; set; }
+    }
+
+    public partial class UserCardLegalities
+    {
+        public string Standard { get; set; }
+        public string Future { get; set; }
+        public string Historic { get; set; }
+        public string Pioneer { get; set; }
+        public string Modern { get; set; }
+        public string Legacy { get; set; }
+        public string Pauper { get; set; }
+        public string Vintage { get; set; }
+        public string Penny { get; set; }
+        public string Commander { get; set; }
+        public string Brawl { get; set; }
+        public string Duel { get; set; }
+        public string Oldschool { get; set; }
+    }
+
+    public partial class UserCardPrices
+    {
+
+        public string Usd { get; set; }
+        public string UsdFoil { get; set; }
+        public string Eur { get; set; }
+        public string Tix { get; set; }
+    }
+
+    public partial class UserCardPurchaseUris
+    {
+        public string Tcgplayer { get; set; }
+        public string Cardmarket { get; set; }
+        public string Cardhoarder { get; set; }
+    }
+
+    public partial class UserCardRelatedUris
+    {
+        public string Gatherer { get; set; }
+        public string TcgplayerDecks { get; set; }
+        public string Edhrec { get; set; }
+        public string Mtgtop8 { get; set; }
     }
 
     public partial class Card

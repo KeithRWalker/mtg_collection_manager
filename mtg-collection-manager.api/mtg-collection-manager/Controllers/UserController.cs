@@ -17,6 +17,8 @@ namespace mtg_collection_manager.Controllers
     {
 
         private readonly UserRepo _userRepo = new UserRepo();
+        private readonly BinderRepo _binderRepo = new BinderRepo();
+        private  readonly DeckRepo _deckRepo = new DeckRepo();
 
         [HttpGet("all")]
         public IEnumerable<User> GetAllUsers()
@@ -24,7 +26,6 @@ namespace mtg_collection_manager.Controllers
             return _userRepo.GetAllUsers();
         }
 
-        // POST: api/User
         [HttpPost]
         [Authorize]
         public IActionResult CreateUser(AddUserCommand newUserCommand)
@@ -37,14 +38,13 @@ namespace mtg_collection_manager.Controllers
                 UserName = newUserCommand.UserName,
                 FirebaseUid = FirebaseUserId
             };
-
-            var _userRepo = new UserRepo();
             var userCreated = _userRepo.CreateNewUser(userToAdd);
-            
             if (userCreated == null)
             {
                 return NotFound("could not create user");
             }
+            _deckRepo.CreateHiddenDeck(userCreated.Id);
+            _binderRepo.CreateHiddenBinder(userCreated.Id);
             return Ok(userCreated);
         }
     }
