@@ -16,6 +16,7 @@ namespace mtg_collection_manager.Controllers
     public class CardController : FirebaseEnabledController
     {
         private readonly CardRepo _cardRepo = new CardRepo();
+        private readonly UserCardRepo _userCardRepo = new UserCardRepo();
 
         // GET: api/Card
         [HttpGet("random")]
@@ -46,9 +47,9 @@ namespace mtg_collection_manager.Controllers
             var sleeveRepo = new SleeveRepo();
 
             var scryCard = _cardRepo.GetCardDetails(additionInfo.ScryId);
-            var userCard = _cardRepo.AttachCardToUser(scryCard);
+            var userCard = _userCardRepo.AttachCardToUser(scryCard);
 
-            _cardRepo.LinkCardLists(scryCard, userCard.Id);
+            _userCardRepo.LinkCardLists(scryCard, userCard.Id);
 
             if (additionInfo.CollectionType == "Deck")
             {

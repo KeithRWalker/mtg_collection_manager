@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card } from 'reactstrap';
 import binderData from '../../data/binderData';
+import sleeveData from '../../data/sleeveData';
+
 import './CollectionPage.scss';
 
 class BinderDetail extends React.Component{
@@ -9,6 +11,9 @@ class BinderDetail extends React.Component{
     binderData.getBinderByBinderId(binderId)
       .then(binderInfo => this.setState({ binderInfo }))
       .catch(err => console.error("error in BinderDetail.js => componentDidMount", err));
+    sleeveData.getBinderCards(binderId)
+      .then(cardInfo => this.setState({ cardInfo }))
+      .catch(err => console.error("error in BinderDetail.js => componentDidMount", err))
   }
   render() {  
     return(

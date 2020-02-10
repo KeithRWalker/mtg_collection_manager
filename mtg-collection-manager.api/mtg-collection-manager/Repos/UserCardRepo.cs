@@ -2,73 +2,28 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Dapper;
-using mtg_collection_manager.Commands;
 using mtg_collection_manager.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Schema;
-using Newtonsoft.Json.Schema.Generation;
-using RestSharp;
 
 namespace mtg_collection_manager.Repos
 {
-    public class CardRepo
+    public class UserCardRepo
     {
-        public readonly RestClient _client = new RestClient("https://api.scryfall.com");
-
         string _connectionString = @"Server=localhost;
                                                             Database=MTG;
                                                                 Trusted_Connection=True;";
-
-
-        public object GetRandomCard()
-        {
-            var requestPath = "/cards/random";
-
-            var request = new RestRequest(requestPath, DataFormat.Json);
-
-            var response = _client.Get(request).Content;
-
-            var card = JsonConvert.DeserializeObject(response);
-
-            return card;
-        }
-
-        public object BrowsePage(int pageNum)
-        {
-            var requestPath = $"/cards?page={pageNum}";
-
-            var request = new RestRequest(requestPath, DataFormat.Json);
-
-            var response = _client.Get(request).Content;
-
-            var collection = JsonConvert.DeserializeObject(response);
-
-            return collection;
-        }
-
-        internal Card GetCardDetails(string cardId)
-        {
-            var requestPath = $"/cards/{cardId}";
-            var request = new RestRequest(requestPath, DataFormat.Json);
-            var jsonString = _client.Get(request).Content;
-            var cardData = Card.FromJson(jsonString);
-            return cardData;
-        }
-
-/*        public UserCard GetUserCardByUserCardId(Guid cardId)
+        public UserCard GetUserCardByUserCardId(Guid cardId)
         {
             using (var db = new SqlConnection(_connectionString))
             {
                 var sql = @"SELECT * FROM [Card] WHERE [Id] = @cardId";
-                var parameters = new { Id = cardId };
+                var parameters = new { CardId = cardId };
                 return db.QueryFirst<UserCard>(sql, parameters);
             }
-        }*/
+        }
 
-/*        internal UserCard AttachCardToUser(Card scryCard)
+        internal UserCard AttachCardToUser(Card scryCard)
         {
             using (var db = new SqlConnection(_connectionString))
             {
@@ -159,8 +114,8 @@ namespace mtg_collection_manager.Repos
                     Name = scryCard.Name,
                     OracleId = scryCard.OracleId,
                     ReleasedAt = scryCard.ReleasedAt,
-                    Uri = scryCard.Uri.ToString(),
-                    ScryfallUri = scryCard.ScryfallUri.ToString(),
+                    Uri = scryCard.Uri?.ToString(),
+                    ScryfallUri = scryCard?.ScryfallUri.ToString(),
                     Layout = scryCard.Layout,
                     HighresImage = scryCard.HighresImage,
                     ManaCost = scryCard.ManaCost,
@@ -176,9 +131,9 @@ namespace mtg_collection_manager.Repos
                     Set = scryCard.Set,
                     SetName = scryCard.SetName,
                     SetType = scryCard.SetType,
-                    ScryfallSetUri = scryCard.ScryfallSetUri.ToString(),
-                    RulingsUri = scryCard.RulingsUri.ToString(),
-                    PrintsSearchUri = scryCard.PrintsSearchUri.ToString(),
+                    ScryfallSetUri = scryCard.ScryfallSetUri?.ToString(),
+                    RulingsUri = scryCard.RulingsUri?.ToString(),
+                    PrintsSearchUri = scryCard.PrintsSearchUri?.ToString(),
                     CollectorNumber = scryCard.CollectorNumber,
                     Digital = scryCard.Digital,
                     Rarity = scryCard.Rarity,
@@ -193,7 +148,7 @@ namespace mtg_collection_manager.Repos
                     StorySpotlight = scryCard.StorySpotlight,
                     EdhrecRank = scryCard.EdhrecRank,
                 };
-                
+
                 return db.QueryFirst<UserCard>(sql, parameters);
             }
         }
@@ -437,7 +392,6 @@ namespace mtg_collection_manager.Repos
                     db.Execute(purchaseUrisSql, puchaseUriParameters);
                 }
             }
-        }*/
-
+        }
     }
 }
