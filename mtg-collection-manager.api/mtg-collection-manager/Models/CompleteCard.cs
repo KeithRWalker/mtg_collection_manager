@@ -10,6 +10,10 @@ namespace mtg_collection_manager.Models
         public Guid Id { get; set; }
         public Guid ScryId { get; set; }
         public Guid OracleId { get; set; }
+        public string OracleText { get; set; }
+        public string Power { get; set; }
+        public string Loyalty { get; set; }
+        public string Toughness { get; set; }
         public string Name { get; set; }
         public string Lang { get; set; }
         public DateTimeOffset ReleasedAt { get; set; }
@@ -74,6 +78,9 @@ namespace mtg_collection_manager.Models
         public string Name { get; set; }
         public string PrintedName { get; set; }
         public string ManaCost { get; set; }
+        public string Loyalty { get; set; }
+        public string Power { get; set; }
+        public string FlavorText { get; set; }
         public string TypeLine { get; set; }
         public string PrintedTypeLine { get; set; }
         public string OracleText { get; set; }
@@ -81,6 +88,19 @@ namespace mtg_collection_manager.Models
         public string Artist { get; set; }
         public Guid ArtistId { get; set; }
         public Guid IllustrationId { get; set; }
+        public CompleteCardCardFaceImageUris CardFaceImageUris{ get; set; }
+    }
+
+    public partial class CompleteCardCardFaceImageUris
+    {
+        public Guid Id { get; set; }
+        public Guid CardFaceId { get; set; }
+        public string Small { get; set; }
+        public string Normal { get; set; }
+        public string Large { get; set; }
+        public string Png { get; set; }
+        public string ArtCrop { get; set; }
+        public string BorderCrop { get; set; }
     }
 
     public partial class CompleteCardImageUris

@@ -24,6 +24,18 @@ namespace mtg_collection_manager.Models
         [JsonProperty("oracle_id")]
         public Guid OracleId { get; set; }
 
+        [JsonProperty("oracle_text")]
+        public string OracleText { get; set; }
+
+        [JsonProperty("power")]
+        public string Power { get; set; }
+
+        [JsonProperty("loyalty")]
+        public string Loyalty { get; set; }
+
+        [JsonProperty("toughness")]
+        public string Toughness { get; set; }
+
         [JsonProperty("multiverse_ids")]
         public List<long> MultiverseIds { get; set; }
 
@@ -176,26 +188,69 @@ namespace mtg_collection_manager.Models
     {
         [JsonProperty("object")]
         public string Object { get; set; }
+
         [JsonProperty("name")]
         public string Name { get; set; }
+
         [JsonProperty("printed_name")]
         public string PrintedName { get; set; }
+
         [JsonProperty("mana_cost")]
         public string ManaCost { get; set; }
+
+        [JsonProperty("loyalty")]
+        public string Loyalty { get; set; }
+
+        [JsonProperty("power")]
+        public string Power { get; set; }
+
+        [JsonProperty("flavor_text")]
+        public string FlavorText { get; set; }
+
         [JsonProperty("type_line")]
         public string TypeLine { get; set; }
+
         [JsonProperty("printed_type_line")]
         public string PrintedTypeLine { get; set; }
+
         [JsonProperty("oracle_text")]
         public string OracleText { get; set; }
+
         [JsonProperty("printed_text")]
         public string PrintedText { get; set; }
+
         [JsonProperty("artist")]
-        public string Artist { get; set; }
+        public string Artist {  get;  set; }
+
         [JsonProperty("artist_id")]
         public Guid ArtistId { get; set; }
+
         [JsonProperty("illustration_id", NullValueHandling = NullValueHandling.Ignore)]
         public Guid? IllustrationId { get; set; }
+
+        [JsonProperty("image_uris", NullValueHandling = NullValueHandling.Ignore)]
+        public CardFaceImageUris CardFaceImageUris { get; set; }
+    }
+
+    public partial class CardFaceImageUris
+    {
+        [JsonProperty("small")]
+        public Uri Small { get; set; }
+
+        [JsonProperty("normal")]
+        public Uri Normal { get; set; }
+
+        [JsonProperty("large")]
+        public Uri Large { get; set; }
+
+        [JsonProperty("png")]
+        public Uri Png { get; set; }
+
+        [JsonProperty("art_crop")]
+        public Uri ArtCrop { get; set; }
+
+        [JsonProperty("border_crop")]
+        public Uri BorderCrop { get; set; }
     }
 
     public partial class ImageUris
@@ -295,6 +350,10 @@ namespace mtg_collection_manager.Models
         public Guid Id { get; set; }
         public Guid ScryId { get; set; }
         public Guid OracleId { get; set; }
+        public string OracleText { get; set; }
+        public string Power { get; set; }
+        public string Loyalty { get; set; }
+        public string Toughness { get; set; }
         public string Name { get; set; }
         public string Lang { get; set; }
         public DateTimeOffset ReleasedAt { get; set; }

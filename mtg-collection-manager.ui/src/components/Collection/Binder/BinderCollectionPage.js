@@ -8,9 +8,9 @@ import {
   ModalBody, 
   ModalFooter 
 } from 'reactstrap';
-import binderData from '../../data/binderData';
+import binderData from '../../../data/binderData';
 import Binder from './Binder';
-import './CollectionPage.scss';
+import './BinderStyle.scss';
 
 const defaultInput = {
   name: "",

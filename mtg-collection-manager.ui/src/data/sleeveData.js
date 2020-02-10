@@ -14,4 +14,8 @@ const getDeckCards = (deckId) => new Promise((resolve, reject) => {
       .catch(err => reject(console.error("error in sleeveData.js => getDeckCards()", err)));
 });
 
-export default { getBinderCards, getDeckCards }
+const deleteCardFromDeck = (deleteRequest) => {
+  Axios.delete(`${baseUrl}/deck/${deleteRequest.DeckId}/${deleteRequest.CardId}`)
+};
+
+export default { getBinderCards, getDeckCards, deleteCardFromDeck }

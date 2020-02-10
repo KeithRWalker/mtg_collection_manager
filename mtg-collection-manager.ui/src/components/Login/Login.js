@@ -11,7 +11,6 @@ class Login extends React.Component {
 
     handleSubmit(e, values) {
         e.preventDefault();
-        console.log(values);
         const userInfoToSend = {
             email: values.emailInput,
             password: values.pwInput,

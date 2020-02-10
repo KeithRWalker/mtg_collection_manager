@@ -8,9 +8,9 @@ import {
   ModalBody, 
   ModalFooter 
 } from 'reactstrap';
-import deckData from '../../data/deckData';
+import deckData from '../../../data/deckData';
 import Deck from './Deck';
-import './CollectionPage.scss';
+import './DeckStyle.scss';
 
 const defaultInput = {
   name: "",

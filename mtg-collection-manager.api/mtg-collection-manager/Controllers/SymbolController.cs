@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using mtg_collection_manager.Commands;
 using mtg_collection_manager.Models;
 using mtg_collection_manager.Repos;
 
@@ -36,6 +38,13 @@ namespace mtg_collection_manager.Controllers
         public List<SimpleSymbol> GetDoubleMana()
         {
             return _symbolRepo.GetDoubleMana();
+        }
+
+        [HttpPost("codes")]
+        [Authorize]
+        public List<Uri> GetSymbolsForSymbolCodes(GetManaFromSymbolCode symbolCodes)
+        {
+            return _symbolRepo.GetUrisForSymbolCodes(symbolCodes.SymbolCodes);
         }
     }
 }

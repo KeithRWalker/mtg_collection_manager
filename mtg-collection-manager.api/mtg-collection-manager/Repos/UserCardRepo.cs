@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using mtg_collection_manager.Models;
 
 namespace mtg_collection_manager.Repos
@@ -32,6 +33,10 @@ namespace mtg_collection_manager.Repos
                                             [ScryId],
                                             [Name],
                                             [OracleId],
+                                            [OracleText],
+                                            [Power],
+                                            [Loyalty],
+                                            [Toughness],
                                             [ReleasedAt],
                                             [Uri],
                                             [ScryfallUri],
@@ -73,6 +78,10 @@ namespace mtg_collection_manager.Repos
                                             @scryId,
                                             @name,
                                             @oracleId,
+                                            @oracleText,
+                                            @power,
+                                            @loyalty,
+                                            @toughness,
                                             @releasedAt,
                                             @uri,
                                             @scryfallUri,
@@ -113,6 +122,10 @@ namespace mtg_collection_manager.Repos
                     ScryId = scryCard.Id,
                     Name = scryCard.Name,
                     OracleId = scryCard.OracleId,
+                    OracleText = scryCard.OracleText,
+                    Power = scryCard.Power,
+                    Loyalty = scryCard.Loyalty?.ToString(),
+                    Toughness = scryCard.Toughness,
                     ReleasedAt = scryCard.ReleasedAt,
                     Uri = scryCard.Uri?.ToString(),
                     ScryfallUri = scryCard?.ScryfallUri.ToString(),
@@ -258,10 +271,11 @@ namespace mtg_collection_manager.Repos
                     foreach (var cardFace in cardFaces)
                     {
                         var sql = @"INSERT INTO [CardFace] (
-                                                [CardId], [Object], [Name], [PrintedName], [ManaCost], 
-                                                [TypeLine], [PrintedTypeLine], [OracleText], [PrintedText], [Artist], [ArtistId], [IllustrationId] 
-                                         )  VALUES  (
-                                                @cardId, @object, @name, @printedName, @manaCost,
+                                                [CardId], [Object], [Name], [PrintedName], [ManaCost], [Loyalty], [Power], [FlavorText],
+                                                [TypeLine], [PrintedTypeLine], [OracleText], [PrintedText], [Artist], [ArtistId], [IllustrationId]
+                                         )
+                                            VALUES  (
+                                                @cardId, @object, @name, @printedName, @manaCost, @loyalty, @power, @flavorText,
                                                 @typeLine, @printedTypeLine, @oracleText, @printedText, @artist, @artistId, @illustrationId 
                                         )";
                         var parameters = new
@@ -271,6 +285,9 @@ namespace mtg_collection_manager.Repos
                             Name = cardFace.Name,
                             PrintedName = cardFace.PrintedName,
                             ManaCost = cardFace.ManaCost,
+                            Loyalty = cardFace.Loyalty,
+                            Power = cardFace.Power,
+                            FlavorText = cardFace.FlavorText,
                             TypeLine = cardFace.TypeLine,
                             PrintedTypeLine = cardFace.PrintedTypeLine,
                             OracleText = cardFace.OracleText,
@@ -282,6 +299,40 @@ namespace mtg_collection_manager.Repos
                         db.Execute(sql, parameters);
                     }
                 }
+
+                
+                if (cardFaces != null)
+                {
+                        var sql = @"SELECT * FROM [CardFace] WHERE [CardId] = @cardId";
+                        var dbCardFaces = db.Query<CompleteCardFace>(sql, new { CardId = userCardId })?.AsList();
+                        if (dbCardFaces != null)
+                        {
+                            var i = 0;
+                            foreach (var cardFace in dbCardFaces)
+                            {
+                                var cardFaceImageUris = scryCard.CardFaces[i].CardFaceImageUris;
+
+                                var cardFaceImageUriSql = @"INSERT INTO [CardFaceImageUris] (
+                                                                    [CardFaceId], [Small], [Normal], [Large], [Png], [ArtCrop], [BorderCrop]
+                                                            ) VALUES (
+                                                                    @cardFaceId, @small, @normal, @large, @png, @artCrop, @borderCrop
+                                                            )";
+                                var cardFaceParams = new
+                                {
+                                    CardFaceId = cardFace.Id,
+                                    Small = cardFaceImageUris.Small?.ToString(),
+                                    Normal = cardFaceImageUris.Normal?.ToString(),
+                                    Large = cardFaceImageUris.Large?.ToString(),
+                                    Png = cardFaceImageUris.Png?.ToString(),
+                                    ArtCrop = cardFaceImageUris.ArtCrop?.ToString(),
+                                    BorderCrop = cardFaceImageUris.BorderCrop?.ToString()
+                                };
+                                db.Execute(cardFaceImageUriSql, cardFaceParams);
+                                i++;
+                            }
+                        }
+                }
+
 
 
                 var legalities = scryCard.Legalities;

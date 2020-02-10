@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card } from 'reactstrap';
-import binderData from '../../data/binderData';
-import sleeveData from '../../data/sleeveData';
+import binderData from '../../../data/binderData';
+import sleeveData from '../../../data/sleeveData';
 
-import './CollectionPage.scss';
+import './BinderStyle.scss';
 
 class BinderDetail extends React.Component{
   componentDidMount(){

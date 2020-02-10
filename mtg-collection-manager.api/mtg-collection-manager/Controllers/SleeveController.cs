@@ -53,5 +53,24 @@ namespace mtg_collection_manager.Controllers
 
             return completeCards;
         }
+
+        [HttpDelete("deck/{deckId}/{cardId}")]
+        [Authorize]
+        public IActionResult DeleteCardFromDeck(Guid deckId, Guid cardId)
+        {
+            if (cardId == Guid.Empty || deckId == Guid.Empty)
+            {
+                return Ok();
+            }
+            var deckSleeveToDelete = _sleeveRepo.GetDeckSleeveByBothIds(cardId, deckId);
+            if (deckSleeveToDelete != null)
+            {
+                _sleeveRepo.DeleteDeckSleeveByDeckId(deckSleeveToDelete.Id);
+                _completeCardRepo.DeleteAllCardTablesFromCardId(cardId);
+                return Ok();
+            }
+
+            return Ok();
+        }
     }
 }

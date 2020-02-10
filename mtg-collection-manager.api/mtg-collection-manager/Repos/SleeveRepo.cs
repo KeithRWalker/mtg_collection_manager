@@ -60,5 +60,30 @@ namespace mtg_collection_manager.Repos
                 return db.Query<DeckSleeve>(sql, parameters);
             }
         }
+
+        public DeckSleeve GetDeckSleeveByBothIds(Guid cardId, Guid deckId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"SELECT * FROM [DeckSleeve] WHERE [DeckId] = @deckId AND [CardId] = @cardId";
+
+                var parameters = new
+                {
+                    CardId = cardId,
+                    Deckid = deckId
+                };
+
+                return db.QueryFirstOrDefault<DeckSleeve>(sql, parameters);
+            }
+        }
+
+        public bool DeleteDeckSleeveByDeckId(Guid deckSleeveId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"DELETE FROM [DeckSleeve] WHERE [Id] = @deckSleeveId";
+                return db.Execute(sql, new {DeckSleeveId = deckSleeveId}) == 1;
+            }
+        }
     }
 }
