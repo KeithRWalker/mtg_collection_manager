@@ -26,4 +26,10 @@ const getBasicMana = () => new Promise((resolve, reject) => {
   })).catch(err => reject("error in symbolData.js/getSimpleSymbols()", err));
 })
 
-export default { getAllSymbolData, getSimpleSymbolData, getBasicMana }
+const getUrisForSymbols = (symbols) => new Promise((resolve, reject) => {
+    Axios.post(`${baseUrl}/codes`, symbols)
+      .then(resp => resolve(resp.data))
+      .catch(err => reject(err));
+});
+
+export default { getAllSymbolData, getSimpleSymbolData, getBasicMana, getUrisForSymbols }

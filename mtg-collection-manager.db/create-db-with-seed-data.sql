@@ -98,6 +98,10 @@ CREATE TABLE [dbo].[Card] (
   [ScryId] UNIQUEIDENTIFIER,
   [Name] NVARCHAR(255),
   [OracleId] UNIQUEIDENTIFIER,
+  [OracleText] NVARCHAR(500),
+  [Power] NVARCHAR(255),
+  [Loyalty] NVARCHAR(500),
+  [Toughness] NVARCHAR(255),
   [Lang] NVARCHAR(255),
   [ReleasedAt] DateTimeOffset,
   [Uri] NVARCHAR(500),
@@ -106,7 +110,7 @@ CREATE TABLE [dbo].[Card] (
   [HighresImage] BIT,
   [ManaCost] NVARCHAR(255),
   [Cmc] INT,
-  [TypeLine] NVARCHAR(255),
+  [TypeLine] NVARCHAR(500),
   [Reserved] BIT,
   [Foil] BIT,
   [Nonfoil] BIT,
@@ -149,13 +153,33 @@ CREATE TABLE [dbo].[CardFace] (
   [Name] NVARCHAR(255),
   [PrintedName] NVARCHAR(255),
   [ManaCost] NVARCHAR(255),
+  [Loyalty] NVARCHAR(255),
+  [Power] NVARCHAR(255),
+  [FlavorText] NVARCHAR (255),
   [TypeLine] NVARCHAR(255),
   [PrintedTypeLine] NVARCHAR(255),
-  [OracleText] NVARCHAR(255),
+  [OracleText] NVARCHAR(500),
   [PrintedText] NVARCHAR(255),
   [Artist] NVARCHAR(255),
   [ArtistId] UNIQUEIDENTIFIER,
   [IllustrationId] UNIQUEIDENTIFIER,
+)
+
+USE MTG
+IF OBJECT_ID('[dbo].[CardFaceImageUris]', 'U') IS NOT NULL
+DROP TABLE [dbo].[CardFaceImageUris]
+GO
+CREATE TABLE [dbo].[CardFaceImageUris] (
+  [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
+  [CardFaceId] UNIQUEIDENTIFIER
+    FOREIGN KEY (CardFaceId)
+    REFERENCES [CardFace] (Id),
+  [Small] NVARCHAR(500),
+  [Normal] NVARCHAR(500),
+  [Large] NVARCHAR(500),
+  [Png] NVARCHAR(500),
+  [ArtCrop] NVARCHAR(500),
+  [BorderCrop] NVARCHAR(500)
 )
 
 USE MTG

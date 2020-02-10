@@ -24,14 +24,14 @@ import BrowseCards from '../components/BrowseCards/BrowseCards';
 import CardView from '../components/CardView/CardView';
 import SearchPage from '../components/SearchPage/SearchPage';
 import CardDetails from '../components/CardDetails/CardDetails';
-import DeckDetail from '../components/Collection/DeckDetail';
-import DeckCollectionPage from '../components/Collection/DeckCollectionPage';
-import BinderDetail from '../components/Collection/BinderDetail';
+import DeckCollectionPage from '../components/Collection/Deck/DeckCollectionPage';
+import BinderCollectionPage from '../components/Collection/Binder/BinderCollectionPage';
+import DeckDetail from '../components/Collection/Deck/DeckDetail';
+import BinderDetail from '../components/Collection/Binder/BinderDetail';
 
 //STYLING
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import BinderCollectionPage from '../components/Collection/BinderCollectionPage';
 
 
 firebaseConnection();

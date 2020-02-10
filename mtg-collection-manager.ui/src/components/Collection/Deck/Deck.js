@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardTitle, CardSubtitle } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import './CollectionPage.scss';
+import './DeckStyle.scss';
 
 class Deck extends React.Component{
   render() {

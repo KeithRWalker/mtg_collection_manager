@@ -18,24 +18,18 @@ class CardSingle extends React.Component {
       const { magicCard } = this.props;
       const { userDecks, userBinders } = this.props;
       const {
-        // artist,
         id,
         image_uris,
-        // name,
-        // rarity,
       } = magicCard;
-
-      //const { prices, related_uris, purchase_uris } = magicCard
-      // const { eur,tix,usd,usd_foil } = prices
-      // const { edhrec, gatherer, mtgtop8, tcgplayer_decks } = related_uris;
-      // const { cardhoarder, cardmarket, tcgplayer } = purchase_uris;
 
 
       let cardColor = '';
       let images;
 
       if (image_uris=== null || image_uris === undefined){
-        images = ["", "https://gamepedia.cursecdn.com/mtgsalvation_gamepedia/f/f8/Magic_card_back.jpg"];
+        const cardFace = magicCard.card_faces[0]
+        const { image_uris } = cardFace;
+        images = Object.values(image_uris);
       } else {
         images = Object.values(image_uris)
       }
@@ -61,6 +55,7 @@ class CardSingle extends React.Component {
                 <Link to={`/card/${id}`}>
                   <CardImg className={`${cardColor} magic-card-image`} width="100%" src={images[1]} alt="Card image cap" />
                 </Link>
+                <p>{magicCard.name}</p>
               </Card>
               </Col>
       );

@@ -118,5 +118,33 @@ namespace mtg_collection_manager.Repos
 
             return simpleSymbols;
         }
+
+        public List<Uri> GetUrisForSymbolCodes(List<String> incSymbolCodes)
+        {
+            var requestPath = $"/symbology";
+
+            var request = new RestRequest(requestPath, DataFormat.Json);
+
+            var jsonString = _client.Get(request).Content;
+
+            var symbolData = SymbolContainer.FromJson(jsonString);
+
+            var symbols = symbolData.Symbols;
+
+            var uris = new List<Uri>();
+
+            foreach (var symbol in symbols)
+            {
+                foreach (var incSymbolCode in incSymbolCodes)
+                {
+                    if (symbol.SymbolCode == incSymbolCode)
+                    {
+                        uris.Add(symbol.SvgUri);
+                    }
+                }
+            }
+
+            return uris;
+        }
     }
 }

@@ -25,9 +25,7 @@ class AddButton extends React.Component{
       collectionId: collectionValue,
       collectionType: type
     }
-    console.log(type);
     cardData.addCardToUser(additionInfo)
-    console.log(`adding ${scryId} to ${e.target.value}`)
   }
 
   ddToggle = () => this.setState({ dropdownOpen: !this.state.dropdownOpen })

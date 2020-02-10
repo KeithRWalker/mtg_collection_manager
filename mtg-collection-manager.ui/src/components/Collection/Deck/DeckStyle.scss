@@ -1,0 +1,58 @@
+
+.decks-label{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.add-deck-btn{
+  height: 30px;
+  width: 99px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  padding: 0;
+}
+
+.deck-container{
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.deck-list-con{
+  width: 90%;
+  margin: 0 auto;
+  border: 5px inset rgba(128, 128, 128, 0.527);
+}
+
+
+.list-item-img{
+  width: 100px;
+  height: 100px;
+}
+
+.oracle-txt{
+  width: 100%;
+  margin: 0 auto;
+}
+
+.deck-check{
+  height: 20px;
+  width: 20px;
+}
+
+.deck-mana-img{
+  width: 25px;
+  height: 25px;
+  margin: 5px;
+}
+
+.img-a{
+  position:relative;
+}
+.img-b{
+  position:relative;
+}

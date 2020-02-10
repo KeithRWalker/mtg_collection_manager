@@ -23,6 +23,10 @@ namespace mtg_collection_manager.Repos
                 Id = userCard.Id,
                 ScryId = userCard.ScryId,
                 OracleId = userCard.OracleId,
+                OracleText = userCard.OracleText,
+                Power = userCard.Power,
+                Loyalty = userCard.Loyalty,
+                Toughness = userCard.Toughness,
                 Name = userCard.Name,
                 Lang = userCard.Lang,
                 ReleasedAt = userCard.ReleasedAt,
@@ -89,7 +93,14 @@ namespace mtg_collection_manager.Repos
 
                 var cardFaceSql = @"SELECT * FROM [CardFace] WHERE [CardId] = @cardId";
                 var cardFaces = db.Query<CompleteCardFace>(cardFaceSql, parameters);
-                completeCard.CardFaces = cardFaces?.AsList(); 
+                completeCard.CardFaces = cardFaces?.AsList();
+
+                foreach (var cardFace in completeCard.CardFaces)
+                {
+                    var cardFaceImageUriSql = @"SELECT * FROM [CardFaceImageUris] WHERE [CardFaceId] = @cardFaceId";
+                    var cardFaceImageUris = db.QueryFirstOrDefault<CompleteCardCardFaceImageUris>(cardFaceImageUriSql, new { CardFaceId = cardFace.Id});
+                    cardFace.CardFaceImageUris = cardFaceImageUris;
+                }
 
                 var legalitiesSql = @"SELECT * FROM [Legalities] WHERE [CardId] = @cardId";
                 var legalities = db.QueryFirstOrDefault<CompleteCardLegalities>(legalitiesSql, parameters);
@@ -111,8 +122,55 @@ namespace mtg_collection_manager.Repos
                 var purchaseUris = db.QueryFirstOrDefault<CompleteCardPurchaseUris>(purchaseUrisSql, parameters);
                 completeCard.PurchaseUris = purchaseUris;
             }
-
             return completeCard;
+        }
+
+        public bool DeleteAllCardTablesFromCardId(Guid cardId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var parameters = new { CardId = cardId };
+                var multiverseIdSql = @"DELETE FROM [MultiverseIds] WHERE [CardId] = @cardId";
+                db.Execute(multiverseIdSql, parameters);
+
+                var colorsSql = @"DELETE FROM [Colors] WHERE [CardId] = @cardId";
+                var colors = db.Execute(colorsSql, parameters);
+
+                var colorIdentitySql = @"DELETE FROM [ColorIdentity] WHERE [CardId] = @cardId";
+                var colorIdentity = db.Execute(colorIdentitySql, parameters);
+
+                var gamesSql = @"DELETE FROM [Games] WHERE [CardId] = @cardId";
+                var games = db.Execute(gamesSql, parameters);
+
+                var artistIdsSql = @"DELETE FROM [ArtistIds] WHERE [CardId] = @cardId";
+                var artistIds = db.Execute(artistIdsSql, parameters);
+
+                var legalitiesSql = @"DELETE FROM [Legalities] WHERE [CardId] = @cardId";
+                var legalities = db.Execute(legalitiesSql, parameters);
+
+                var pricesSql = @"DELETE FROM [Prices] WHERE [CardId] = @cardId";
+                var prices = db.Execute(pricesSql, parameters);
+
+                var relatedUrisSql = @"DELETE FROM [RelatedUris] WHERE [CardId] = @cardId";
+                var relatedUris = db.Execute(relatedUrisSql, parameters);
+
+                var imageUrisSql = @"DELETE FROM [ImageUris] WHERE [CardId] = @cardId";
+                var imageUris = db.Execute(imageUrisSql, parameters);
+
+                var purchaseUrisSql = @"DELETE FROM [PurchaseUris] WHERE [CardId] = @cardId";
+                var purchaseUris = db.Execute(purchaseUrisSql, parameters);
+
+                var selectCardFaces = @"SELECT [Id] FROM [CardFace] WHERE [CardId] = @cardId";
+                var cardFaceIds = db.Query<Guid>(selectCardFaces, parameters)?.AsList();
+                foreach (var cardFaceId in cardFaceIds)
+                {
+                    var cardFaceUris = @"DELETE FROM [CardFaceImageUris] WHERE [CardFaceId] = @cardFaceId";
+                    db.Execute(cardFaceUris, new { CardFaceId = cardFaceId});
+                }
+                var cardFaceSql = @"DELETE FROM [CardFace] WHERE [CardId] = @cardId";
+                var cardFaces = db.Execute(cardFaceSql, parameters) == 1;
+                return cardFaces;
+            }
         }
     }
 }
