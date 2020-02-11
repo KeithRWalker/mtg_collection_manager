@@ -57,5 +57,17 @@ namespace mtg_collection_manager.Repos
             var cardData = Card.FromJson(jsonString);
             return cardData;
         }
+
+        public ConvertCard GetScryCardByScryId(Guid scryId)
+        {
+            var requestPath = $"/cards/{scryId}";
+            var request = new RestRequest(requestPath, DataFormat.Json);
+            var jsonString = _client.Get(request).Content;
+            var cardData = Card.FromJson(jsonString);
+            var _completeCardRepo = new CompleteCardRepo();
+
+            var completedCard = _completeCardRepo.ConvertScryCard(cardData);
+            return completedCard;
+        }
     }
 }

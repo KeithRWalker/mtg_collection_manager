@@ -40,6 +40,16 @@ namespace mtg_collection_manager.Controllers
             return matchingCard;
         }
 
+        [HttpGet("scryfall/{scryId}")]
+        [Authorize]
+        public IEnumerable<ConvertCard> GetScryCardByScryId(Guid scryId)
+        {
+            var list = new List<ConvertCard>();
+            var scryCard = _cardRepo.GetScryCardByScryId(scryId);
+            list.Add(scryCard);
+            return list;
+        }
+
         [HttpPost("usercard")]
         [Authorize]
         public bool AttachCardToUser(AttachCardToUserCommand additionInfo)

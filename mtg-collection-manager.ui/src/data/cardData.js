@@ -38,6 +38,12 @@ var getCardDetails = (cardId) => new Promise((resolve, reject) => {
     }).catch(err => reject(console.error("error in cardData/getCardDetails()"), err))
 })
 
+const getCardByScryId = (scryId) => new Promise((resolve, reject) => {
+    Axios.get(`${baseUrl}/scryfall/${scryId}`)
+      .then(resp => resolve(resp.data))
+      .catch(err => reject(console.error("error in cardData.js => getCardByScryId()")));
+});
+
 // var addCardToUser = (scryfallId) => new Promise((resolve, reject) => {
 //     Axios.post(`${baseUrl}/usercard`, scryfallId)
 //       .then((resp) => {
@@ -47,17 +53,4 @@ var getCardDetails = (cardId) => new Promise((resolve, reject) => {
 
 var addCardToUser = additionInfo => Axios.post(`${baseUrl}/usercard`, additionInfo);
 
-export default { getRandomCard, getPage, getCardDetails, addCardToUser }
-
-// const cardObj = resp.data;
-
-
-//   const arrayCheck = Array.isArray(value)
-//   if(arrayCheck === true){
-//     value.forEach(item => {
-//       if(item === null){
-//         item='Not Avalible'
-//       }
-//     });
-//   }
-// }
+export default { getRandomCard, getPage, getCardDetails, addCardToUser, getCardByScryId }
