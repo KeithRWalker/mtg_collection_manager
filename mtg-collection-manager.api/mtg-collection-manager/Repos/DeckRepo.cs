@@ -84,5 +84,15 @@ namespace mtg_collection_manager.Repos
                 return deck;
             }
         }
+
+        public bool DeleteDeck(Guid deckId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"DELETE FROM [DECK] WHERE [Id] = @deckId";
+                var parameters = new {deckId};
+                return db.Execute(sql, parameters) == 1;
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ import {
   Col,
   CardTitle,
 } from 'reactstrap';
+import { MDBCardImage } from "mdbreact";
 import { Link } from 'react-router-dom';
 import AddButton from './AddButton';
 
@@ -53,7 +54,7 @@ class CardSingle extends React.Component {
                   {addToDeck} {addToBinder}
                 </CardHeader>
                 <Link to={`/card/${id}`}>
-                  <CardImg className={`${cardColor} magic-card-image`} width="100%" src={images[1]} alt="Card image cap" />
+                  <MDBCardImage className={`${cardColor} magic-card-image`} width="100%" src={images[1]} alt="Card image cap" />
                 </Link>
                 <p>{magicCard.name}</p>
               </Card>

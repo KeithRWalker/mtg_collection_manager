@@ -77,12 +77,32 @@ namespace mtg_collection_manager.Repos
             }
         }
 
+        public IEnumerable<DeckSleeve> GetDeckSleevesByDeckId(Guid deckId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"SELECT * FROM [DeckSleeve] WHERE [DeckId] = @deckId";
+                var parameters = new { DeckId = deckId };
+                //var checkIfNull = db.QueryFirstOrDefault(sql, parameters)
+                return db.Query<DeckSleeve>(sql, parameters);
+            }
+        }
+
         public bool DeleteDeckSleeveByDeckId(Guid deckSleeveId)
         {
             using (var db = new SqlConnection(_connectionString))
             {
                 var sql = @"DELETE FROM [DeckSleeve] WHERE [Id] = @deckSleeveId";
                 return db.Execute(sql, new {DeckSleeveId = deckSleeveId}) == 1;
+            }
+        }
+
+        public bool DeleteDeckSleeveByCardId(Guid cardId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"DELETE FROM [DeckSleeve] WHERE [CardId] = @cardId";
+                return db.Execute(sql, new { cardId }) == 1;
             }
         }
     }

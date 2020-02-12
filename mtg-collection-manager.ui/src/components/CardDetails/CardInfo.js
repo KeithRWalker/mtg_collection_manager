@@ -1,6 +1,10 @@
 import React from 'react'
-import { Button, Collapse, Fade } from 'reactstrap';
+import { Collapse, Fade } from 'reactstrap';
+import { MDBBtn, MDBListGroup, MDBListGroupItem } from "mdbreact";
+import AddButton from '../CardSingle/AddButton';
 import symbolData from '../../data/symbolData';
+import cardData from '../../data/cardData';
+import deckData from '../../data/deckData';
 import './CardDetails.scss';
 class CardInfo extends React.Component{
 
@@ -9,10 +13,36 @@ class CardInfo extends React.Component{
     faceAManaCost: [],
     faceBManaCost: [],
     faceOpen: true,
+    userDecks: []
   }
 
   toggleFace = () => this.setState({ faceOpen: !this.state.faceOpen })
 
+  getUserDecks = () => {
+      deckData.getUserDecks()
+        .then((resp) => {
+          resp.forEach((deck) => {
+            const { id, name } = deck
+            const deckInfo = {
+              id: id,
+              name: name
+            };
+            this.state.userDecks.push(deckInfo);
+          })
+        })
+  }
+
+
+  addToDeck = (e) => {
+      const collectionValue = e.target.value
+      const scryId = this.props.cardInfo.scryId;
+      const additionInfo = {
+        scryId: scryId,
+        collectionId: collectionValue,
+        collectionType: "deck"
+      }
+      cardData.addCardToUser(additionInfo)
+  }
 
   checkRegImg = () => {
     const card = this.props.cardItem;
@@ -45,7 +75,7 @@ class CardInfo extends React.Component{
       card.cardFaces.forEach((face, index) => {
         const faceManaCost = face.manaCost;
 
-        if(faceManaCost != "" || faceManaCost.length >= 3) {
+        if(faceManaCost !== "" || faceManaCost.length >= 3) {
 
           var faceManaArray = faceManaCost.split(/(?<=}).*?(?={)/g);
 
@@ -76,22 +106,24 @@ class CardInfo extends React.Component{
 
   componentDidMount(){
     this.checkMana();
+    this.getUserDecks();
     if(this.props.cardItem.cardFaces < 0){
       this.checkRegImg();
     }
   }
 
   render() {
+    const userDecks = this.state.userDecks;
     const cardItem = this.props.cardItem;
     const legalities = cardItem.legalities;
-
+    const addToDeck = <AddButton collection={userDecks} type="Deck" scryId={cardItem.scryId} key={`add_btn_key_${cardItem.id}`} />
 
     const legality = Object.entries(legalities).map(function (entry) {
       const gameName = entry[0].replace(/^\w/, c => c.toUpperCase());
       if(entry[1] === "legal"){
-        return <div className="legal-con"><dt className="game-name-dt">{gameName}</dt> <dd className="is-legal dd-legality">Legal</dd></div>
+        return <div className="legal-con" key={`key_${gameName}_${entry[1]}_${cardItem.Id}_div`}><dt className="game-name-dt" key={`key_${gameName}_${entry[1]}_${cardItem.Id}_dt`}>{gameName}</dt> <dd className="is-legal dd-legality" key={`key_${gameName}_${entry[1]}_${cardItem.Id}_dd`}>Legal</dd></div>
       }
-        return <div className="legal-con"><dt className="game-name-dt">{gameName}</dt> <dd className="is-not-legal dd-legality">Not Legal</dd></div>
+        return <div className="legal-con" key={`key_${gameName}_${entry[1]}_${cardItem.Id}_div`}><dt className="game-name-dt" key={`key_${gameName}_${entry[1]}_${cardItem.Id}_dt`}>{gameName}</dt> <dd className="is-not-legal dd-legality" key={`key_${gameName}_${entry[1]}_${cardItem.Id}_dd`}>Not Legal</dd></div>
     })
 
     
@@ -101,28 +133,28 @@ class CardInfo extends React.Component{
       let cardImgs;
 
       if(cardFaceA.cardFaceImageUris == null || cardFaceB.cardFaceImageUris == null){
-        cardImgs = <div className="card-info-image-con" onClick={this.toggleFace}><img className="card-info-img" src={cardItem.imageUris.large} /></div>
+        cardImgs = <div className="card-info-image-con" onClick={this.toggleFace}><img className="card-info-img" src={cardItem.imageUris.large} alt={cardItem.name ? cardItem.name : "magic card"}/></div>
       }
       else{
         cardImgs = <div className="img-td" onClick={this.toggleFace}>
                       <Fade in={this.state.faceOpen}>
                         <Collapse isOpen={this.state.faceOpen}>
-                          <img className="card-info-img" src={cardFaceA.cardFaceImageUris.large}/>
+                          <img className="card-info-img" src={cardFaceA.cardFaceImageUris.large} alt={`${cardFaceA.name ? cardFaceA.name : 'magic card'}`}/>
                         </Collapse>
                       </Fade>
                       <Fade in={!this.state.faceAOpen}>
                         <Collapse isOpen={!this.state.faceOpen}>
-                          <img className="card-info-img" src={cardFaceB.cardFaceImageUris.large}/>
+                          <img className="card-info-img" src={cardFaceB.cardFaceImageUris.large} alt={`${cardFaceB.name ? cardFaceB.name : 'magic card'}`}/>
                         </Collapse>
                       </Fade>
                     </div>
       }
 
       const faceAManaImgs = this.state.faceAManaCost.map((uri, index) => (
-        <img key={`${uri}_${index}`} src={uri} className="info-mana-img" />
+        <img key={`${uri}_${index}`} src={uri} className="info-mana-img" alt="mana-symbol" />
       ))
       const faceBManaImgs = this.state.faceBManaCost.map((uri, index) => (
-        <img key={`${uri}_${index}`} src={uri} className="info-mana-img" />
+        <img key={`${uri}_${index}`} src={uri} className="info-mana-img" alt="mana-symbol" />
       ))
 
 
@@ -135,44 +167,100 @@ class CardInfo extends React.Component{
 
 
             <div className="card-play-info-con">
-              <div onClick={this.toggleFace}>
-              {cardImgs}
+              <div onClick={this.toggleFace} className="card-con">
 
-                <Fade in={this.state.faceOpen}><Collapse isOpen={this.state.faceOpen}><h3>{cardFaceA.name}</h3></Collapse></Fade>
-                <Fade in={!this.state.faceOpen}><Collapse isOpen={!this.state.faceOpen}><h3>{cardFaceB.name}</h3></Collapse></Fade>
+              <div className="card-info-img-con">
+                {cardImgs}
+              </div>
+
                 <Collapse isOpen={this.state.faceOpen}>
-                  <h3>{cardFaceA.typeLine}</h3>
-                  <div className="info-oracle-txt"><p>{cardFaceA.oracleText}</p></div>
+                  <div className="side-of-card">
+
+                    <div className="card-play-info-con">
+                      <h3>{cardFaceA.name}</h3>
+                      <div className="info-oracle-txt"><p>{cardFaceA.oracleText}</p></div>
+                    </div>
+
+                    <div className="misc-con">
+                      <h6>{cardFaceA.typeLine}</h6>
+                      <div className="stats">
+                        <h6> {cardFaceA.power ? `Power: ${cardFaceA.power}` : ''}</h6>
+                        <h6>{cardFaceA.toughness ? `Toughness: ${cardFaceA.toughness}` : ''}</h6>
+                        <h6> {cardFaceA.loyalty ? `Loyalty: ${cardFaceA.loyalty}` : ''}</h6>
+                        <h6> {cardFaceA.artist ? `Artist: ${cardFaceA.artist}` : ''}</h6>
+                        <h6>  {cardItem.rarity ? `Rarity: ${cardItem.rarity}` : ''}</h6>
+                        <div className="mana-imgs">{faceAManaImgs}</div>
+                      </div>
+                    </div>
+
+                    <div className="legality-con">
+                      <h6>Legalities</h6>
+                      <dl className="legality-dl"> {legality} </dl>
+                    </div>
+                  </div>
                 </Collapse>
+
 
                 <Collapse isOpen={!this.state.faceOpen}>
-                  <h3>{cardFaceB.typeLine}</h3>
-                  <div className="info-oracle-txt"><p>{cardFaceB.oracleText}</p></div>
+                  <div className="side-of-card">
+
+                    <div className="card-play-info-con">
+                      <h3>{cardFaceB.name}</h3>
+                      <div className="info-oracle-txt"><p>{cardFaceB.oracleText}</p></div>
+                    </div>
+    
+                      <div className="misc-con">
+                        <h6>{cardFaceB.typeLine}</h6>
+                        <div className="stats">
+                          <h6> {cardFaceB.power ? `Power: ${cardFaceB.power}` : ''}</h6>
+                          <h6>{cardFaceB.toughness ? `Toughness: ${cardFaceB.toughness}` : ''}</h6>
+                          <h6> {cardFaceB.loyalty ? `Loyalty: ${cardFaceB.loyalty}` : ''}</h6>
+                          <h6> {cardFaceB.artist ? `Artist: ${cardFaceB.artist}` : ''}</h6>
+                          <h6>  {cardItem.rarity ? `Rarity: ${cardItem.rarity}` : ''}</h6>
+                          <div className="mana-imgs">{faceBManaImgs}</div>
+                      </div> 
+                      
+                      <div className="legality-con">
+                        <h6>Legalities</h6>
+                        <dl className="legality-dl"> {legality} </dl>
+                      </div>
+                    </div>
+                  </div>
                 </Collapse>
 
-                <Fade in={this.state.faceOpen}><Collapse isOpen={this.state.faceOpen}><div>{faceAManaImgs}</div></Collapse></Fade>
-                <Fade in={!this.state.faceOpen}><Collapse isOpen={!this.state.faceOpen}><div>{faceBManaImgs}</div></Collapse></Fade>
               </div>
             </div>
 
 
-            <div className="card-market-info-con">
-            <div className="card-info-prices-con">
-              <h2>Prices</h2>
-              <p>USD: {cardItem.prices.usd ? cardItem.prices.usd : 'Not Available'}</p>
-              <p>USD/Foil: {cardItem.prices.usdFoil ? cardItem.prices.usdFoil : 'Not Available'}</p>
-              <p>EUR: {cardItem.prices.eur ? cardItem.prices.eur : 'Not Available'}</p>
-              <p>TIX: {cardItem.prices.tix ? cardItem.prices.tix : 'Not Available'}</p>
+            <div className="under-card">
+                <div className="prices">
+                <MDBListGroup>
+                  <h5 className="price-head">Prices:</h5>
+                  <MDBListGroupItem color="success">USD: {cardItem.prices.usd ? cardItem.prices.usd : 'Not Available'}</MDBListGroupItem>
+                  <MDBListGroupItem color="success">USD/Foil: {cardItem.prices.usdFoil ? cardItem.prices.usdFoil : 'Not Available'}</MDBListGroupItem>
+                  <MDBListGroupItem color="success">EUR: {cardItem.prices.eur ? cardItem.prices.eur : 'Not Available'}</MDBListGroupItem>
+                  <MDBListGroupItem color="success">TIX: {cardItem.prices.tix ? cardItem.prices.tix : 'Not Available'}</MDBListGroupItem>
+                </MDBListGroup>
+                </div>
+  
+                <div className="purchases">
+                  <h5 className="purchase-head">Purchase</h5>
+                  <MDBBtn rounded color="success" className="external-link" target="_blank" href={cardItem.purchaseUris.cardhoarder ? cardItem.purchaseUris.cardhoarder : ''}>{cardItem.purchaseUris.cardhoarder ? 'Buy On Cardhoarder' : ''}</MDBBtn>
+                  <MDBBtn rounded color="success" className="external-link" target="_blank" href={cardItem.purchaseUris.cardmarket ? cardItem.purchaseUris.cardmarket : ''}>{cardItem.purchaseUris.cardmarket ? 'Buy On Cardmarket' : ''}</MDBBtn>
+                  <MDBBtn rounded color="success" className="external-link" target="_blank" href={cardItem.purchaseUris.tcgplayer ? cardItem.purchaseUris.tcgplayer : ''}>{cardItem.purchaseUris.tcgplayer ? 'Buy On TCGPlayer' : ''} </MDBBtn>
+                </div>
+              
+            
+            <div className="external-links">
+            <h5 className="link-head">External Links</h5>
+              <MDBBtn rounded color="info" className="external-link" target="_blank" href={cardItem.relatedUris.edhrec ? cardItem.relatedUris.edhrec : ''}> {cardItem.relatedUris.edhrec ? 'Card Analysis on EDHREC' : ''}</MDBBtn>
+              <MDBBtn rounded color="info" className="external-link" target="_blank" href={cardItem.relatedUris.gatherer ? cardItem.relatedUris.gatherer : ''}> {cardItem.relatedUris.gatherer ? 'View On Gatherer' : ''}</MDBBtn>
+              <MDBBtn rounded color="info" className="external-link" target="_blank" href={cardItem.relatedUris.mtgtop8 ? cardItem.relatedUris.mtgtop8 : ''}> {cardItem.relatedUris.mtgtop8 ? 'Search MTGTop8 for this card' : ''}</MDBBtn>
+              <MDBBtn rounded color="info" className="external-link" target="_blank" href={cardItem.relatedUris.tcgplayerDecks ? cardItem.relatedUris.tcgplayerDecks : ''}> {cardItem.relatedUris.tcgplayerDecks ? 'TCGplayer decks with this card' : ''}</MDBBtn>
             </div>
-
-            <div className="card-info-prices-con">
-              <h2>Purchase</h2>
-              <a target="_blank" href={cardItem.purchaseUris.cardhoarder ? cardItem.purchaseUris.cardhoarder : ''}>{cardItem.purchaseUris.cardhoarder ? 'Cardhoarder' : ''}</a>
-              <a target="_blank" href={cardItem.purchaseUris.cardmarket ? cardItem.purchaseUris.cardmarket : ''}>{cardItem.purchaseUris.cardmarket ? 'Cardmarket' : ''}</a>
-              <a target="_blank" href={cardItem.purchaseUris.tcgplayer ? cardItem.purchaseUris.tcgplayer : ''}>{cardItem.purchaseUris.tcgplayer ? 'TCGPlayer' : ''}</a>
-            </div>
+            {addToDeck}
           </div>
-
+          
         </div>
       )
     }
@@ -183,7 +271,7 @@ class CardInfo extends React.Component{
 
           <div className="card-con">
               <div className="card-info-img-con">
-                <img className="card-info-img" src={cardItem.imageUris.large}/>
+                <img className="card-info-img" src={cardItem.imageUris.large} alt={cardItem.name ? cardItem.name : 'Magic card'}/>
               </div>
                   <div className="side-of-card">
                       <div className="card-play-info-con">
@@ -192,8 +280,8 @@ class CardInfo extends React.Component{
                       </div>
                       <div className="misc-con">
                         <h5>{cardItem.typeLine ? cardItem.typeLine : ''}</h5>
-                        <h6> {cardItem.power ? `Power: ${cardItem.power}` : ''}</h6>
                         <div className="stats">
+                          <h6> {cardItem.power ? `Power: ${cardItem.power}` : ''}</h6>
                           <h6>{cardItem.toughness ? `Toughness: ${cardItem.toughness}` : ''}</h6>
                           <h6> {cardItem.loyalty ? `Loyalty: ${cardItem.loyalty}` : ''}</h6>
                           <h6> {cardItem.artist ? `Artist: ${cardItem.artist}` : ''}</h6>
@@ -210,31 +298,34 @@ class CardInfo extends React.Component{
           </div>
 
 
-            <div className="under-card">
+          <div className="under-card">
 
-              <div className="prices-purchase">
-
-              <div className="prices">
-                <h6>Prices</h6>
-                <dl>
-                  <dt>USD:</dt> <dd>{cardItem.prices.usd ? cardItem.prices.usd : 'Not Available'}</dd>
-                  <dt>USD/Foil:</dt> <dd>{cardItem.prices.usdFoil ? cardItem.prices.usdFoil : 'Not Available'}</dd>
-                  <dt>EUR:</dt> <dd>{cardItem.prices.eur ? cardItem.prices.eur : 'Not Available'}</dd>
-                  <dt>TIX:</dt> <dd> {cardItem.prices.tix ? cardItem.prices.tix : 'Not Available'}</dd>
-                </dl>
-              </div>
-  
-              <div className="purchase">
-              <h6>Purchase</h6>
-              <a className="buy-link" target="_blank" href={cardItem.purchaseUris.cardhoarder ? cardItem.purchaseUris.cardhoarder : ''}>{cardItem.purchaseUris.cardhoarder ? 'Cardhoarder' : ''}</a>
-              <a className="buy-link" target="_blank" href={cardItem.purchaseUris.cardmarket ? cardItem.purchaseUris.cardmarket : ''}>{cardItem.purchaseUris.cardmarket ? 'Cardmarket' : ''}</a>
-              <a className="buy-link" target="_blank" href={cardItem.purchaseUris.tcgplayer ? cardItem.purchaseUris.tcgplayer : ''}>{cardItem.purchaseUris.tcgplayer ? 'TCGPlayer' : ''}</a>
+            <div className="prices">
+              <MDBListGroup>
+                <h5 className="price-head">Prices:</h5>
+                <MDBListGroupItem color="success">USD: {cardItem.prices.usd ? cardItem.prices.usd : 'Not Available'}</MDBListGroupItem>
+                <MDBListGroupItem color="success">USD/Foil: {cardItem.prices.usdFoil ? cardItem.prices.usdFoil : 'Not Available'}</MDBListGroupItem>
+                <MDBListGroupItem color="success">EUR: {cardItem.prices.eur ? cardItem.prices.eur : 'Not Available'}</MDBListGroupItem>
+                <MDBListGroupItem color="success">TIX: {cardItem.prices.tix ? cardItem.prices.tix : 'Not Available'}</MDBListGroupItem>
+              </MDBListGroup>
             </div>
 
+            <div className="purchases">
+              <h5 className="purchase-head">Purchase</h5>
+              <MDBBtn rounded color="success" className="external-link" target="_blank" href={cardItem.purchaseUris.cardhoarder ? cardItem.purchaseUris.cardhoarder : ''}>{cardItem.purchaseUris.cardhoarder ? 'Buy On Cardhoarder' : ''}</MDBBtn>
+              <MDBBtn rounded color="success" className="external-link" target="_blank" href={cardItem.purchaseUris.cardmarket ? cardItem.purchaseUris.cardmarket : ''}>{cardItem.purchaseUris.cardmarket ? 'Buy On Cardmarket' : ''}</MDBBtn>
+              <MDBBtn rounded color="success" className="external-link" target="_blank" href={cardItem.purchaseUris.tcgplayer ? cardItem.purchaseUris.tcgplayer : ''}>{cardItem.purchaseUris.tcgplayer ? 'Buy On TCGPlayer' : ''} </MDBBtn>
             </div>
-  
-
-
+        
+      
+            <div className="external-links">
+              <h5 className="link-head">External Links</h5>
+              <MDBBtn rounded color="info" className="external-link" target="_blank" href={cardItem.relatedUris.edhrec ? cardItem.relatedUris.edhrec : ''}> {cardItem.relatedUris.edhrec ? 'Card Analysis on EDHREC' : ''}</MDBBtn>
+              <MDBBtn rounded color="info" className="external-link" target="_blank" href={cardItem.relatedUris.gatherer ? cardItem.relatedUris.gatherer : ''}> {cardItem.relatedUris.gatherer ? 'View On Gatherer' : ''}</MDBBtn>
+              <MDBBtn rounded color="info" className="external-link" target="_blank" href={cardItem.relatedUris.mtgtop8 ? cardItem.relatedUris.mtgtop8 : ''}> {cardItem.relatedUris.mtgtop8 ? 'Search MTGTop8 for this card' : ''}</MDBBtn>
+              <MDBBtn rounded color="info" className="external-link" target="_blank" href={cardItem.relatedUris.tcgplayerDecks ? cardItem.relatedUris.tcgplayerDecks : ''}> {cardItem.relatedUris.tcgplayerDecks ? 'TCGplayer decks with this card' : ''}</MDBBtn>
+            </div>
+            {addToDeck}
           </div>
 
         </div>

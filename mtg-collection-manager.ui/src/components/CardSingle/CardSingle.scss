@@ -1,11 +1,9 @@
 @import'../../styles/variables.scss';
 
 .CardContainer{
-  border: .5em outset rgba(38, 65, 47, 0.25);
-  width: 100%;
-}
-
-.Card-Container{
+  background-color: $bgColorGrad;
+  background-image: $bgImgGrad;
+  border: $bgBorderGrad;
   width: 100%;
 }
 .CardSingle{
@@ -44,7 +42,7 @@ img.G {
   border-radius: 20px;
 }
 
-img:hover{
+img.magic-card-image:hover{
   filter: drop-shadow(10px 10px 10px rgba(208, 188, 123, 0.75)) invert(1%);
 }
 img.W:hover{

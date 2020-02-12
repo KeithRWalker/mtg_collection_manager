@@ -1,15 +1,32 @@
 import React from 'react';
+
+
 import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  ButtonDropdown,
-} from 'reactstrap';
+  MDBNavbar,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBNavItem,
+  MDBNavLink,
+  MDBNavbarToggler,
+  MDBCollapse,
+  MDBMask,
+  MDBRow,
+  MDBCol,
+  MDBIcon,
+  MDBBtn,
+  MDBView,
+  MDBNav,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
+  MDBDropdown,
+  MDBContainer,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+  MDBFormInline,
+  MDBAnimation
+} from "mdbreact";
 import { NavLink as RRNavLink } from 'react-router-dom';
 
 import auth from '../../auth/auth';
@@ -23,10 +40,16 @@ class MyNav extends React.Component {
     navCollapsed: true,
     searchParams: defaultSearchValue,
     fireRedirect: false,
+    collapseID: "",
   }
   toggleNavbar = () => this.setState({ navCollapsed: !this.state.navCollapsed });
 
   updateSearch = (e) => this.setState({ searchParams: e.target.value })
+
+  toggleCollapse = collapseID => () =>
+  this.setState(prevState => ({
+    collapseID: prevState.collapseID !== collapseID ? collapseID : ""
+  }));
 
   searchSubmit = () => {
     this.setState({ fireRedirect: true });
@@ -53,66 +76,69 @@ class MyNav extends React.Component {
     let navItems;
     if(authed){
                   /*  LOGGED IN DROPDOWN  */
-      navItems =  <DropdownMenu right className="nav-dd-menu">
-                    <DropdownItem className="nav-dd-item">
-                      <NavLink className="navbar-nav-link" tag={RRNavLink} to="/home">Account</NavLink>
-                    </DropdownItem>
-                      <DropdownItem divider />
-                    <DropdownItem className="nav-dd-item">
-                    <NavLink className="navbar-nav-link" tag={RRNavLink} to="/landingPage" onClick={this.logoutClickEvent}>Logout</NavLink>
-                    </DropdownItem>
-                  </DropdownMenu>
+      navItems =  <MDBDropdownMenu>
+                    <MDBDropdownItem>
+                      <MDBNavLink to="/home">Account</MDBNavLink>
+                    </MDBDropdownItem>
+                      <MDBDropdownItem divider />
+                    <MDBDropdownItem className="nav-dd-item">
+                    <MDBNavLink className="navbar-nav-link" tag={RRNavLink} to="/landingPage" onClick={this.logoutClickEvent}>Logout</MDBNavLink>
+                    </MDBDropdownItem>
+                  </MDBDropdownMenu>
     } else{
                   /*  LOGGED OUT DROP DOWN   */
-      navItems =  <DropdownMenu right className="nav-dd-menu">
-                    <DropdownItem className="nav-dd-item">
-                      <NavLink className="navbar-nav-link" tag={RRNavLink} to="/login">Login</NavLink>
-                    </DropdownItem>
-                    <DropdownItem className="nav-dd-item">
-                      <NavLink className="navbar-nav-link" tag={RRNavLink} to="/registerUser">Register</NavLink>
-                    </DropdownItem>
-                  </DropdownMenu>
+      navItems =  <MDBDropdownMenu right className="nav-dd-menu">
+                    <MDBDropdownItem className="nav-dd-item">
+                      <MDBNavLink className="navbar-nav-link" tag={RRNavLink} to="/login">Login</MDBNavLink>
+                    </MDBDropdownItem>
+                    <MDBDropdownItem className="nav-dd-item">
+                      <MDBNavLink className="navbar-nav-link" tag={RRNavLink} to="/registerUser">Register</MDBNavLink>
+                    </MDBDropdownItem>
+                  </MDBDropdownMenu>
     }
 
     return (
       <div className="MyNav">
-        <Navbar className="row wrap" expand="lg">
-          
-            <Nav navbar className="col">
-            <NavbarBrand className="col-1" href="/">MTG Binder</NavbarBrand>
-            {/* --  NAVIGATION BROWSE/DECKS  -- */}
-              <NavItem className="col-2">
-                <NavLink className="navbar-nav-link" tag={RRNavLink} to="/browse">
-                  Browse
-                </NavLink>
-              </NavItem>
-              <NavItem className="col-2">
-                <NavLink className="navbar-nav-link" tag={RRNavLink} to="/decks">
-                  Decks
-                </NavLink>
-              </NavItem>
-              <NavItem className="col-2">
-                <NavLink className="navbar-nav-link" tag={RRNavLink} to="/binders">
-                  Binders
-                </NavLink>
-              </NavItem>
-              <NavItem className="col-2">
-                <NavLink className="navbar-nav-link" tag={RRNavLink} to="/search">
-                  Search
-                </NavLink>
-              </NavItem>
-            </Nav>
+        <MDBNavbar dark expand="md" fixed="top">
+          <MDBContainer>
+            <MDBNav navbar className="col">
+              <MDBNavbarBrand className="col-1" href="#"><MDBNavLink to={authed ? "/home" : "/landingpage"}><strong>MTG Binder</strong></MDBNavLink></MDBNavbarBrand>
+              {/* --  NAVIGATION BROWSE/DECKS  -- */}
+             {
+                  /*<MDBNavItem className="col-2">
+                  <MDBNavLink className="navbar-nav-link" tag={RRNavLink} to="/browse">
+                    Browse
+                  </MDBNavLink>
+                </MDBNavItem>*/
+             }
 
-            {/* --  LOGIN/REGISTER/ACCOUNT DROPDOWN  -- */}
-            <Nav>
-            <ButtonDropdown nav className="col-2 nav-dd" isOpen={!navCollapsed} toggle={this.toggleNavbar}>
-              <DropdownToggle caret className="dd-account">
-                Account
-              </DropdownToggle>
-              {navItems}
-            </ButtonDropdown>
-            </Nav>
-        </Navbar>
+                <MDBNavItem className="col-2">
+                  <MDBNavLink className="navbar-nav-link" tag={RRNavLink} to="/decks">
+                    Decks
+                  </MDBNavLink>
+                </MDBNavItem>
+
+                <MDBNavItem className="col-2">
+                  <MDBNavLink className="navbar-nav-link" tag={RRNavLink} to="/binders">
+                    Binders
+                  </MDBNavLink>
+                </MDBNavItem>
+                
+                <MDBNavItem className="col-2">
+                  <MDBNavLink className="navbar-nav-link" tag={RRNavLink} to="/search">
+                    Search
+                  </MDBNavLink>
+                </MDBNavItem>
+
+                <MDBDropdown>
+                  <MDBDropdownToggle nav caret isOpen={!navCollapsed} toggle={this.toggleNavbar}>
+                    <div className="d-none d-md-inline">Account</div>
+                  </MDBDropdownToggle>
+                  {navItems}
+                </MDBDropdown>
+              </MDBNav>
+            </MDBContainer>
+        </MDBNavbar>
 
         {/*fireRedirect && (
           <Redirect to={searchUrl}/>
@@ -123,3 +149,4 @@ class MyNav extends React.Component {
 }
 
 export default MyNav;
+

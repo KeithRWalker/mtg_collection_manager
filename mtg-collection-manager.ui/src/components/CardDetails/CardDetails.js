@@ -18,7 +18,6 @@ class CardDetails extends React.Component {
   }
 
     render(){
-        const cardInformation = this.state.cardInformation;
         const cardMap = this.state.cardInformation.map(cardItem => (
           <CardInfo cardItem={cardItem} key={`${cardItem.scryId}_key_details`} />
         ))

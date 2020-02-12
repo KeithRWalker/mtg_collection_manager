@@ -455,5 +455,15 @@ namespace mtg_collection_manager.Repos
                 }
             }
         }
+
+        public bool DeleteCardById(Guid cardId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"DELETE FROM [Card] WHERE [Id] = @cardId";
+                var parameters = new {cardId};
+                return db.Execute(sql, parameters) == 1;
+            }
+        }
     }
 }

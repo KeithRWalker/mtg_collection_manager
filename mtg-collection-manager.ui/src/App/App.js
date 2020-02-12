@@ -30,8 +30,9 @@ import DeckDetail from '../components/Collection/Deck/DeckDetail';
 import BinderDetail from '../components/Collection/Binder/BinderDetail';
 
 //STYLING
-import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.scss';
+
 
 
 firebaseConnection();
@@ -77,11 +78,14 @@ class App extends React.Component {
     const { authed } = this.state;
     return (
       <div className="App">
-        <Router>
-          <MyNav authed={authed} logout={this.logout} />
-          <Switch className="main-switch">
-            
+      <Router>
+      <div className="bg-img"/>
 
+        
+          <MyNav authed={authed} logout={this.logout} />
+
+          <Switch>
+            
             <PublicRoute path="/landingPage" component={LandingPage} authed={authed} />
             <PublicRoute path="/login" component={Login} authed={authed} />
             <PublicRoute path="/registerUser" component={RegisterUser} authed={authed} />
@@ -97,8 +101,6 @@ class App extends React.Component {
             <PrivateRoute path="/binder/:binderId" component={BinderDetail} authed={authed} />
 
             {/*<PrivateRoute path="/search/:searchText" component={SearchResults} authed={authed} />*/}
-
-            <Redirect from="/browse" to="/browse/1" />
           </Switch>
         </Router>
       </div>

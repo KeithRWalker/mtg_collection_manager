@@ -1,12 +1,16 @@
 @import'./variables.scss';
+
+
+body > #root > div {
+  height: 100vh;
+}
+
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: aliceblue;
 }
 
 code {
@@ -14,72 +18,71 @@ code {
     monospace;
 }
 
-.navbar-nav-link{
-  background-color: rgba(0, 0, 0, 0);
-  color: #ffffff;
+html, .App{
+  background-image: url('./assets/beyond.jpg');
+  background-repeat: repeat;
+  background-size: 135%;
+  box-shadow: inset 0 0 0 100vw rgba(0, 0, 0, 0.233);
+  background-position: -35em 0em ;
 }
 
-.navbar-nav-link:hover{
-  color: rgba(155, 54, 54, 0.815);
+.bg-img{
+  background-image: url(../styles/assets/spir.png);
+  position: absolute;
+  border-left: 7px outset rgba(73, 18, 83, 0.452);
+  border-right: 5px outset rgba(117, 35, 131, 0.514);
+  box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.55);
+  -webkit-filter: blur(5px);
+  filter: blur(5px);
+  width: 70%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 15%;
+  right: 15%;
+  z-index: 0;
+  opacity: .80;
 }
 
-.nav-dd .btn:hover{
-  background-color: rgba(0, 0, 0, 0.75);
+
+.MyNav{
+  
+} 
+
+a{
+  color:rgb(234, 198, 255);
+  font-size: large;
+  font-weight: 500;
 }
 
-.nav-dd .dropdown-menu{
-  color: aliceblue;
-  background-color: rgba(0, 0, 0, 0.856) ;
-  margin-top: 9px;
+.PageComp{
+  width: 75%;
+  //border: 2px solid red;
+  margin: 0 auto;
+  height: 100vh;
 }
-.nav-dd .dropdown-item{
-  color:aliceblue;
-}
-.nav-dd .dropdown-item:hover{
-  background-color: rgba(32, 70, 48, 0.326);
-  color:  aliceblue;
+.PageCon{
+  width: 100%;
+  height: 100vh;
 }
 
-.card{
-  background: rgba(255, 255, 255, 0);
-  border: 0;
+
+
+.card-deck{
+  display: flex;
+  justify-content: center;
+}
+
+
+.my-deck-card{
+  background-color: transparentize($color: #00000000, $amount: 0);
+  padding: 1em;
+  margin: 1em;
 }
 
 .modal-content{
-  background-color: rgba(20, 27, 25, 0.8);
-  color: aliceblue;
-}
-
-.form-control{
-  background-color: rgb(20, 27, 25);
-  color: aliceblue;
-}
-
-.form-control:focus{
-  background-color: rgb(26, 35, 33);
-}
-
-.form-control::placeholder{
-  color:aliceblue;
-}
-.btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn:not(:last-child):not(.dropdown-toggle)
-{
-  border-radius: 0% 0% 0% 0%;
-}
-
-.my-card-header{
-  padding-bottom: 0;
-  padding-top: 0;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-content: center;
-}
-
-.my-card-title{
-  margin-top: auto;
-  margin-bottom: 0;
-}
-.Table{
+  background-color: rgba(8, 6, 14, 0.781);
+  background-image: linear-gradient(147deg, rgba(19, 11, 46, 0.753) 0%, rgba(34, 23, 18, 0.815)80%);
+  border: 5px inset rgba(45, 7, 54, 0.253);
   color: aliceblue;
 }

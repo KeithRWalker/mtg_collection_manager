@@ -1,5 +1,9 @@
-.SearchPage{
-  border: 5px solid black;
+@import'../../styles/variables.scss';
+
+.search-bar-con{
+  background-color: $bgColorGrad;
+  background-image: $bgImgGrad;
+  border: $bgBorderGrad;
 }
 
 .AdvSearchForm{

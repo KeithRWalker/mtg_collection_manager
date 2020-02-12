@@ -20,6 +20,8 @@ const getDeckById = (deckId) => new Promise((resolve, reject) => {
   .catch(err => reject(console.error("Error in deckData.js/getUserDecks()", err)))
 });
 
+const deleteDeck = (deckId) => Axios.delete(`${baseUrl}/delete/${deckId}`);
+
 const postNewDeck = deck => Axios.post(`${baseUrl}`, deck);
 
-export default { getUserDecks, getDeckById, postNewDeck }
+export default { getUserDecks, getDeckById, postNewDeck, deleteDeck }

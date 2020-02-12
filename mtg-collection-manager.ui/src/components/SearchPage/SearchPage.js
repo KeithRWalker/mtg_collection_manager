@@ -87,50 +87,51 @@ class SearchPage extends React.Component {
     }
 
     return(
-      <div className="SearchPage">
-        <Container>
-          <Form name="searchFormName" onSubmit={this.submitSearch}>
-            <Row >
-            <Col sm="12" md={{ size: 6, offset: 3 }}>
-              <FormGroup>
-                <Label for="nameSearch">
-                  <h4>Search By Name:</h4>
-                </Label>
-                <InputGroup size="lg">
-                  <Input
-                      type="search"
-                      name="nameSearch"
-                      id="nameSearch"
-                      placeholder="Card Name"
-                      value={searchState.name}
-                      onChange={this.nameUpdate}/>
-                  <InputGroupAddon addonType="append">
-                  <Button type="submit" color="success">Search</Button>
-                  </InputGroupAddon>
-                </InputGroup>
-              </FormGroup>
-            </Col>
-            </Row>
-          </Form>
+      <div className="SearchPage PageComp">
+        <div className="PageCon">
+          <Container className="search-bar-con">
+            <Form name="searchFormName" onSubmit={this.submitSearch}>
+              <Row >
+              <Col sm="12" md={{ size: 6, offset: 3 }}>
+                <FormGroup>
+                  <Label for="nameSearch">
+                    <h4>Search By Name:</h4>
+                  </Label>
+                  <InputGroup size="lg">
+                    <Input
+                        type="search"
+                        name="nameSearch"
+                        id="nameSearch"
+                        placeholder="Card Name"
+                        value={searchState.name}
+                        onChange={this.nameUpdate}/>
+                    <InputGroupAddon addonType="append">
+                    <Button type="submit" color="success">Search</Button>
+                    </InputGroupAddon>
+                  </InputGroup>
+                </FormGroup>
+              </Col>
+              </Row>
+            </Form>
 
-          <Row>
-            <Col>
-              <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>
-                Advanced Search
-              </Button>
-            </Col>
-          </Row>   
+            <Row>
+              <Col>
+                <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>
+                  Advanced Search
+                </Button>
+              </Col>
+            </Row>   
 
-          <Collapse isOpen={advIsOpen}>
-            <AdvSearchForm
-              key="AdvSearchFormKey"
-            />
-          </Collapse>
-        </Container>
+            <Collapse isOpen={advIsOpen}>
+              <AdvSearchForm
+                key="AdvSearchFormKey"
+              />
+            </Collapse>
+          </Container>
 
-        {results}
+          {results}
 
-        
+        </div>
       </div>
     );
   }

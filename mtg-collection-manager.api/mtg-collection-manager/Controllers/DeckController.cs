@@ -53,5 +53,24 @@ namespace mtg_collection_manager.Controllers
             var addedDeck = _deckRepo.AddNewDeck(newDeck);
             return Created($"api/Deck/{addedDeck.Id}", addedDeck);
         }
+
+        [HttpDelete("delete/{deckId}")]
+        [Authorize]
+        public IActionResult DeleteDeck(Guid deckId)
+        {
+/*            var _sleeveRepo = new SleeveRepo();
+            var _userCardRepo = new UserCardRepo();
+
+            var deckSleeves = _sleeveRepo.GetDeckSleevesByDeckId(deckId);
+            if (deckSleeves != null)
+            {
+                foreach (var deckSleeve in deckSleeves)
+                {
+                    _userCardRepo.DeleteCardById(deckSleeve.CardId);
+                }
+            }*/
+            _deckRepo.DeleteDeck(deckId);
+            return Ok();
+        }
     }
 }

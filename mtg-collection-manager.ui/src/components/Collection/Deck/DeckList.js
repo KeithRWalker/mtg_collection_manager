@@ -7,9 +7,8 @@ import './DeckStyle.scss';
 class DeckList extends React.Component{
   render(){
     const cardInfo = this.props.cardInfo;
-    const deckId = this.props.deckId;
     const deckListItems = cardInfo.map(card => (
-      <DeckListItem key={`deckListItem_${card.id}`} card={card} deleteCard={this.props.deleteCard}/>
+      <DeckListItem key={`deckListItem_${card.id}`} card={card} loadDeckInfo={this.props.loadDeckInfo}/>
     ))
 
     return(

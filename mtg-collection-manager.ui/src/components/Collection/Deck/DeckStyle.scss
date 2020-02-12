@@ -1,9 +1,35 @@
+@import'../../../styles/variables.scss';
+.DeckCollectionPage{
+  //background-color: rgba(0, 0, 0, 0);
+  border: $bgBorderGrad;
+  height: 100%;
+  width: 75%;
+  margin: 0 auto;
+  border-radius: .5%;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.close{
+  position: absolute;
+  padding: .75em;
+}
+.x{
+  color:red;
+}
+
+.my-deck-header a{
+  font-size: xx-large;
+  font-weight: 500;
+  color: aliceblue;
+}
+
 
 .decks-label{
   display: flex;
   align-content: center;
   justify-content: center;
-  margin: 20px;
+  margin-bottom: 20px;
 }
 
 .add-deck-btn{
@@ -22,11 +48,7 @@
   justify-content: center;
 }
 
-.deck-list-con{
-  width: 90%;
-  margin: 0 auto;
-  border: 5px inset rgba(128, 128, 128, 0.527);
-}
+
 
 
 .list-item-img{

@@ -27,7 +27,8 @@ class Login extends React.Component {
 
     render() {
         return(
-            <div className="Login">
+            <div className="Login PageComp">
+              <div className="PageCon">
                 <AvForm className="user-form col" onValidSubmit={this.handleSubmit}>
                 <h1 className="col">Login</h1>
                     <AvGroup className="col email-fg fg">
@@ -53,7 +54,7 @@ class Login extends React.Component {
                     </FormGroup>
                 </AvForm>
 
-                
+                </div>
             </div>
         );
     }

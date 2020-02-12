@@ -26,8 +26,6 @@
   border-top: 5px outset rgba(21, 53, 29, 0.664);
   border: 5px outset rgba(21, 53, 29, 0.664);
   margin-left: 1em;
-
-
   width: 100%;
   padding: 10px;
 }
@@ -43,24 +41,13 @@
 .info-mana-img{
   width:25px;
   height: 25px;
+  margin: .5em;
 }
 
 .card-info-img {
   width: 336px;
-  height: 468px;
+  height: 490px;
 }
-
-.prices-purchase{
-  display: flex;
-  flex-flow: row nowrap;
-}
-
-.purchase{
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
-}
-
 
 .legality-con{
   border-top: 2px inset rgba(21, 53, 29, 0.664);
@@ -92,4 +79,25 @@
   margin: 5px;
   display: flex;
   flex-flow: column nowrap;
+}
+
+.prices{
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.purchases{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.external-links{
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.external-link{
+  color: aliceblue;
+  margin: .25em;
 }
