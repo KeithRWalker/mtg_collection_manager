@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardTitle, CardSubtitle } from 'reactstrap';
+import { Button, Card, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './DeckStyle.scss';
 
@@ -8,10 +8,13 @@ class Deck extends React.Component{
     const {userDeck} = this.props;
     return(
       <div className="Deck">
+      
         <Card className="user-deck">
+          <Button exit color="danger">X</Button>
           <CardTitle className="deck-title"><Link to={`/deck/${userDeck.id}`}>{userDeck.name}</Link></CardTitle>
           <CardSubtitle className="deck-subtitle">{userDeck.description}</CardSubtitle>
         </Card>
+        
       </div>
     )
   }

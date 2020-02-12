@@ -310,32 +310,43 @@ namespace mtg_collection_manager.Repos
                             var i = 0;
                             foreach (var cardFace in dbCardFaces)
                             {
-                                var cardFaceImageUris = scryCard.CardFaces[i].CardFaceImageUris;
+                                if (cardFace != null)
+                                {
+                                    if (scryCard.CardFaces[i] != null)
+                                    {
+                                        CardFaceImageUris CFImages = scryCard.CardFaces[i].CardFaceImageUris;
 
-                                var cardFaceImageUriSql = @"INSERT INTO [CardFaceImageUris] (
+                                        //CardFaceImageUris CFImages = new CardFaceImageUris();
+                                        // CFImages = cardFaceImageUris;
+                                        if (CFImages != null)
+                                        {
+                                            var cardFaceImageUriSql = @"INSERT INTO [CardFaceImageUris] (
                                                                     [CardFaceId], [Small], [Normal], [Large], [Png], [ArtCrop], [BorderCrop]
                                                             ) VALUES (
                                                                     @cardFaceId, @small, @normal, @large, @png, @artCrop, @borderCrop
                                                             )";
-                                var cardFaceParams = new
-                                {
-                                    CardFaceId = cardFace.Id,
-                                    Small = cardFaceImageUris.Small?.ToString(),
-                                    Normal = cardFaceImageUris.Normal?.ToString(),
-                                    Large = cardFaceImageUris.Large?.ToString(),
-                                    Png = cardFaceImageUris.Png?.ToString(),
-                                    ArtCrop = cardFaceImageUris.ArtCrop?.ToString(),
-                                    BorderCrop = cardFaceImageUris.BorderCrop?.ToString()
-                                };
-                                db.Execute(cardFaceImageUriSql, cardFaceParams);
-                                i++;
+                                            var cardFaceParams = new
+                                            {
+                                                CardFaceId = cardFace.Id,
+                                                Small = CFImages.Small?.ToString(),
+                                                Normal = CFImages.Normal?.ToString(),
+                                                Large = CFImages.Large?.ToString(),
+                                                Png = CFImages.Png?.ToString(),
+                                                ArtCrop = CFImages.ArtCrop?.ToString(),
+                                                BorderCrop = CFImages.BorderCrop?.ToString()
+                                            };
+                                            db.Execute(cardFaceImageUriSql, cardFaceParams);
+                                            i++;
+                                        }
+                                    }
+                                }
                             }
                         }
                 }
 
 
 
-                var legalities = scryCard.Legalities;
+                Legalities legalities = scryCard.Legalities;
                 if (legalities != null)
                 {
                     var legalitiesSql = @"INSERT INTO [Legalities] (
@@ -365,7 +376,7 @@ namespace mtg_collection_manager.Repos
                     db.Execute(legalitiesSql, legalitiesParameters);
                 }
 
-                var prices = scryCard.Prices;
+                Prices prices = scryCard.Prices;
                 if (prices != null)
                 {
                     var pricesSql = @"INSERT INTO [Prices] (
@@ -384,7 +395,7 @@ namespace mtg_collection_manager.Repos
                     db.Execute(pricesSql, pricesParameters);
                 }
 
-                var relatedUris = scryCard.RelatedUris;
+                RelatedUris relatedUris = scryCard.RelatedUris;
                 if (relatedUris != null)
                 {
                     var relatedUrisSql = @"INSERT INTO [RelatedUris] (
@@ -403,7 +414,7 @@ namespace mtg_collection_manager.Repos
                     db.Execute(relatedUrisSql, relatedUrisParameters);
                 }
 
-                var imageUris = scryCard.ImageUris;
+                ImageUris imageUris = scryCard.ImageUris;
                 if (imageUris != null)
                 {
                     var imageUrisSql = @"INSERT INTO [ImageUris] (
@@ -424,7 +435,7 @@ namespace mtg_collection_manager.Repos
                     db.Execute(imageUrisSql, imageUriParameters);
                 }
 
-                var purchaseUris = scryCard.PurchaseUris;
+                PurchaseUris purchaseUris = scryCard.PurchaseUris;
                 if (purchaseUris != null)
                 {
                     var purchaseUrisSql = @"INSERT INTO [PurchaseUris] (

@@ -1,9 +1,95 @@
 .CardInfo{
   display: flex;
+  flex-flow: column wrap;
+  align-content: space-evenly;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.card-con{
+  display: flex;
+  flex-flow: row nowrap;
+  border-left: 5px inset rgba(21, 53, 29, 0.664);
+  border-right: 5px inset rgba(21, 53, 29, 0.664);
+  border-top: 5px inset rgba(21, 53, 29, 0.664);
+  border-bottom: 5px inset rgba(21, 53, 29, 0.664);
+
+
+  padding: 1em;
+}
+
+.side-of-card{
+  display: flex;
+  flex-flow: column nowrap;
+  border-bottom: 5px outset rgba(21, 53, 29, 0.664);
+  border-left: 5px outset rgba(21, 53, 29, 0.664);
+  border-top: 5px outset rgba(21, 53, 29, 0.664);
+  border: 5px outset rgba(21, 53, 29, 0.664);
+  margin-left: 1em;
+
+
+  width: 100%;
+  padding: 10px;
+}
+.under-card{
+  display: flex;
   flex-flow: row wrap;
+  justify-content: space-evenly;
+  border-left: 5px inset rgba(21, 53, 29, 0.664);
+  border-right: 5px inset rgba(21, 53, 29, 0.664);
+  border: 5px inset rgba(21, 53, 29, 0.664);
+}
+
+.info-mana-img{
+  width:25px;
+  height: 25px;
 }
 
 .card-info-img {
-  width: 500px;
-  height: 750px;
+  width: 336px;
+  height: 468px;
+}
+
+.prices-purchase{
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.purchase{
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+}
+
+
+.legality-con{
+  border-top: 2px inset rgba(21, 53, 29, 0.664);
+  margin-top: 1em;
+}
+
+.legality-dl{
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.stats{
+  margin-left: 30%;
+  margin-right: 30%;
+  text-align: center;
+}
+
+.is-legal{
+  color: green;
+}
+
+.is-not-legal{
+  color: red;
+}
+
+.legal-con{
+  margin: 5px;
+  display: flex;
+  flex-flow: column nowrap;
 }

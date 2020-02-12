@@ -11,6 +11,9 @@ class DeckListItem extends React.Component {
     cardManaCost: [],
     faceAManaCost: [],
     faceBManaCost: [],
+    faceAImg:'https://img.scryfall.com/card_backs/image/large/59/597b79b3-7d77-4261-871a-60dd17403388.jpg?1548988262',
+    faceBImg:'https://img.scryfall.com/card_backs/image/large/59/597b79b3-7d77-4261-871a-60dd17403388.jpg?1548988262',
+    cardImg: 'https://img.scryfall.com/card_backs/image/large/59/597b79b3-7d77-4261-871a-60dd17403388.jpg?1548988262',
     modal: false,
     faceAOpen: true,
     faceBOpen: false,
@@ -63,6 +66,8 @@ class DeckListItem extends React.Component {
     }
   }
 
+
+
   render(){
     const card = this.props.card;
     const manaImgs = this.state.cardManaCost.map((uri, index) => (
@@ -72,6 +77,26 @@ class DeckListItem extends React.Component {
     if(card.cardFaces.length > 0){
       const cardFaceA = card.cardFaces[0];
       const cardFaceB = card.cardFaces[1];
+      let cardImgs;
+
+      if(cardFaceA.cardFaceImageUris == null || cardFaceB.cardFaceImageUris == null){
+        cardImgs = <td className="img-td" onClick={this.toggleFace}><img className="list-item-img" src={card.imageUris.artCrop} /></td>
+      }
+      else{
+        cardImgs = <td className="img-td" onClick={this.toggleFace}>
+                    <Fade in={this.state.faceAOpen}>
+                      <Collapse isOpen={this.state.faceAOpen}>
+                        <img className="list-item-img img-a" src={cardFaceA.cardFaceImageUris.artCrop}/>
+                      </Collapse>
+                    </Fade>
+                    <Fade in={!this.state.faceAOpen}>
+                      <Collapse isOpen={!this.state.faceAOpen}>
+                        <img className="list-item-img img-b" src={cardFaceB.cardFaceImageUris.artCrop}/>
+                      </Collapse>
+                    </Fade>
+                    </td>
+      }
+
 
       const faceAManaImgs = this.state.faceAManaCost.map((uri, index) => (
         <img key={`${uri}_${index}`} src={uri} className="deck-mana-img" />
@@ -79,35 +104,29 @@ class DeckListItem extends React.Component {
       const faceBManaImgs = this.state.faceBManaCost.map((uri, index) => (
         <img key={`${uri}_${index}`} src={uri} className="deck-mana-img" />
       ))
+
+      
+
       return(
         <tr className="DeckListItem" id={`${card.id}_popover`}>
 
         <td>
-        <Button color="danger" onClick={this.toggle}>X</Button>
-        </td>
+          <Button color="danger" onClick={this.toggle}>X</Button>        
+        </td>  
+        
+        {cardImgs}
+        
 
-        <td className="img-td" onClick={this.toggleFace}>
-          <Fade in={this.state.faceAOpen}>
-            <Collapse isOpen={this.state.faceAOpen}>
-              <img className="list-item-img img-a" src={cardFaceA.cardFaceImageUris.artCrop}/>
-            </Collapse>
-          </Fade>
-          <Fade in={!this.state.faceAOpen}>
-            <Collapse isOpen={!this.state.faceAOpen}>
-              <img className="list-item-img img-b" src={cardFaceB.cardFaceImageUris.artCrop}/>
-            </Collapse>
-          </Fade>
-        </td>
 
         <td onClick={this.toggleFace}>
           <Fade in={this.state.faceAOpen}>
             <Collapse isOpen={this.state.faceAOpen}>
-              <h3 className="list-item-name"><NavLink to={`../card/${card.scryId}`}>{cardFaceA.name}</NavLink></h3>
+              <h3 className="list-item-name"><NavLink to={`../card/${card.scryId}`}>{cardFaceA.name ? cardFaceA.name : 'N/A'}</NavLink></h3>
             </Collapse>
           </Fade>
           <Fade in={!this.state.faceAOpen}>
             <Collapse isOpen={!this.state.faceAOpen}>
-              <h3 className="list-item-name"><NavLink to={`../card/${card.scryId}`}>{cardFaceB.name}</NavLink></h3>
+              <h3 className="list-item-name"><NavLink to={`../card/${card.scryId}`}>{cardFaceB.name ? cardFaceB.name : 'N/A'}</NavLink></h3>
             </Collapse>
           </Fade> 
         </td>
@@ -190,7 +209,7 @@ class DeckListItem extends React.Component {
 
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader>Are You Sure?</ModalHeader>
-          <ModalBody>Are you sure you want to remove {card.name} from your deck?</ModalBody>
+          <ModalBody>Are you sure you want to remove {card.name ? card.name : 'N/A'} from your deck?</ModalBody>
           <ModalFooter>
             <Button onClick={this.deleteThisCard} color="danger"> Delete </Button>
             <Button onClick={this.toggle} color="secondary">Cancel</Button>
@@ -201,60 +220,63 @@ class DeckListItem extends React.Component {
       </tr>
       )
     }
-    else
-    return(
-      <tr className="DeckListItem" id={`${card.id}_popover`}>
+    else {
+  
+      return (
+        <tr className="DeckListItem" id={`${card.id}_popover`}>
+  
+        <td>
+        <Button color="danger" onClick={this.toggle}>X</Button>
+        </td>
+  
+        <td>
+          <img className="list-item-img" src={card.imageUris ? card.imageUris.artCrop : 'https://img.scryfall.com/card_backs/image/large/59/597b79b3-7d77-4261-871a-60dd17403388.jpg?1548988262'}/>
+        </td>
+  
+        <td>
+          <h3 className="list-item-name"><NavLink to={`../card/${card.scryId}`}>{card.name ? card.name : 'N/A'}</NavLink></h3>
+        </td>
+  
+        <td>
+          <h3>{card.typeLine ? card.typeLine : ''}</h3>
+            <div className="oracle-txt">
+              <p>{card.oracleText}</p>
+            </div>
+        </td>
+  
+        <td>
+          <div className="mana-img-con">{manaImgs ? manaImgs : ''}</div>
+        </td>
+  
+        <td>
+          <p> {card.power ? card.power : "/"} </p>
+        </td>
+  
+        <td>
+          <p> {card.toughness ? card.toughness : "/"} </p>
+        </td>
+  
+        <td>
+          <p> {card.loyalty ? card.loyalty : "/"} </p>
+        </td>
+  
+        <td>
+          <p>/</p>
+        </td>
+  
+        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+        <ModalHeader>Are You Sure?</ModalHeader>
+        <ModalBody>Are you sure you want to remove {card.name ? card.name : 'N/A'} from your deck?</ModalBody>
+        <ModalFooter>
+          <Button onClick={this.deleteThisCard} color="danger"> Delete </Button>
+          <Button onClick={this.toggle} color="secondary">Cancel</Button>
+        </ModalFooter>
+        </Modal>
+  
+      </tr>
+      )
 
-      <td>
-      <Button color="danger" onClick={this.toggle}>X</Button>
-      </td>
-
-      <td>
-        <img className="list-item-img" src={card.imageUris.artCrop}/>
-      </td>
-
-      <td>
-        <h3 className="list-item-name"><NavLink to={`../card/${card.scryId}`}>{card.name}</NavLink></h3>
-      </td>
-
-      <td>
-        <h3>{card.typeLine}</h3>
-          <div className="oracle-txt">
-            <p>{card.oracleText}</p>
-          </div>
-      </td>
-
-      <td>
-        <div className="mana-img-con">{manaImgs}</div>
-      </td>
-
-      <td>
-        <p> {card.power ? card.power : "/"} </p>
-      </td>
-
-      <td>
-        <p> {card.toughness ? card.toughness : "/"} </p>
-      </td>
-
-      <td>
-        <p> {card.loyalty ? card.loyalty : "/"} </p>
-      </td>
-
-      <td>
-        <p>/</p>
-      </td>
-
-      <Modal isOpen={this.state.modal} toggle={this.toggle}>
-      <ModalHeader>Are You Sure?</ModalHeader>
-      <ModalBody>Are you sure you want to remove {card.name} from your deck?</ModalBody>
-      <ModalFooter>
-        <Button onClick={this.deleteThisCard} color="danger"> Delete </Button>
-        <Button onClick={this.toggle} color="secondary">Cancel</Button>
-      </ModalFooter>
-      </Modal>
-
-    </tr>
-    )
+    }
   }
 }
 

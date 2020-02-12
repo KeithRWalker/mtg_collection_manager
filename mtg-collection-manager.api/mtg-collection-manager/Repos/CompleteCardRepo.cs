@@ -92,7 +92,6 @@ namespace mtg_collection_manager.Repos
                         PrintedText = cardFace.PrintedText,
                         Artist = cardFace.Artist,
                         ArtistId = cardFace.ArtistId,
-                        IllustrationId = new Guid(cardFace.IllustrationId?.ToString()),
                     };
                     CardFaceImageUris scryCardFaceImageUris = cardFace.CardFaceImageUris;
                     if (scryCardFaceImageUris != null)
