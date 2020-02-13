@@ -88,7 +88,7 @@ class MyNav extends React.Component {
         <MDBNavbar dark expand="md" fixed="top" className="mdb-navbar ">
           <MDBContainer className="navbar-con">
             <MDBNav navbar className="col">
-              <MDBNavbarBrand className="nav-header"><MDBNavLink to={authed ? "/home" : "/landingpage"}><strong>MTG Binder</strong></MDBNavLink></MDBNavbarBrand>
+              <MDBNavbarBrand className="nav-header"><MDBNavLink to={authed ? "/home" : "/landingpage"}><strong>Deckord</strong></MDBNavLink></MDBNavbarBrand>
               {/* --  NAVIGATION BROWSE/DECKS  -- */}
 
                 <MDBNavItem className="nav-item">
