@@ -10,7 +10,6 @@ import './Login.scss';
 class Login extends React.Component {
 
     handleSubmit(e, values) {
-        e.preventDefault();
         const userInfoToSend = {
             email: values.emailInput,
             password: values.pwInput,
@@ -19,7 +18,6 @@ class Login extends React.Component {
     }
 
     gmailLoginClickEvent = (e) => {
-        e.preventDefault();
         Auth.loginWithGmail()
             .then(() => this.props.history.push('/home'))
             .catch(error => console.error('there was an error in registering', error));
