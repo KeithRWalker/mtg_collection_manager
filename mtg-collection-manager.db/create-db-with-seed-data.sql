@@ -56,7 +56,8 @@ CREATE TABLE [dbo].[Binder] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [UserId] UNIQUEIDENTIFIER
     FOREIGN KEY (UserId)
-    REFERENCES [User] (Id),
+    REFERENCES [User] (Id)
+    ON DELETE CASCADE,
   [Name] NVARCHAR(255),
   [Type] NVARCHAR(255),
   [Description] NVARCHAR(255),
@@ -77,7 +78,8 @@ CREATE TABLE [dbo].[Deck] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [UserId] UNIQUEIDENTIFIER
     FOREIGN KEY (UserId)
-    REFERENCES [User] (Id),
+    REFERENCES [User] (Id)
+    ON DELETE CASCADE,
   [Name] NVARCHAR(255),
   [Description] NVARCHAR(255),
   [Type] NVARCHAR(255),
@@ -106,7 +108,7 @@ CREATE TABLE [dbo].[Card] (
   [ReleasedAt] DateTimeOffset,
   [Uri] NVARCHAR(500),
   [ScryfallUri] NVARCHAR(500),
-  [Layout] NVARCHAR(255),
+  [Layout] NVARCHAR(500),
   [HighresImage] BIT,
   [ManaCost] NVARCHAR(255),
   [Cmc] INT,
@@ -148,18 +150,19 @@ CREATE TABLE [dbo].[CardFace] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
   [Object] NVARCHAR(255),
   [Name] NVARCHAR(255),
   [PrintedName] NVARCHAR(255),
   [ManaCost] NVARCHAR(255),
   [Loyalty] NVARCHAR(255),
   [Power] NVARCHAR(255),
-  [FlavorText] NVARCHAR (255),
+  [FlavorText] NVARCHAR (500),
   [TypeLine] NVARCHAR(255),
   [PrintedTypeLine] NVARCHAR(255),
   [OracleText] NVARCHAR(500),
-  [PrintedText] NVARCHAR(255),
+  [PrintedText] NVARCHAR(500),
   [Artist] NVARCHAR(255),
   [ArtistId] UNIQUEIDENTIFIER,
   [IllustrationId] UNIQUEIDENTIFIER,
@@ -173,7 +176,8 @@ CREATE TABLE [dbo].[CardFaceImageUris] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardFaceId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardFaceId)
-    REFERENCES [CardFace] (Id),
+    REFERENCES [CardFace] (Id)
+    ON DELETE CASCADE,
   [Small] NVARCHAR(500),
   [Normal] NVARCHAR(500),
   [Large] NVARCHAR(500),
@@ -190,7 +194,8 @@ CREATE TABLE [dbo].[ImageUris] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
   [Small] NVARCHAR(500),
   [Normal] NVARCHAR(500),
   [Large] NVARCHAR(500),
@@ -207,7 +212,8 @@ CREATE TABLE [dbo].[Legalities] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
   [Standard] NVARCHAR(15),
   [Future] NVARCHAR(15),
   [Historic] NVARCHAR(15),
@@ -231,7 +237,8 @@ CREATE TABLE [dbo].[Prices] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
   [Usd] NVARCHAR(50),
   [UsdFoil] NVARCHAR(50),
   [Eur] NVARCHAR(50),
@@ -246,7 +253,8 @@ CREATE TABLE [dbo].[PurchaseUris] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
   [Tcgplayer] NVARCHAR(500),
   [Cardmarket] NVARCHAR(500),
   [Cardhoarder] NVARCHAR(500)
@@ -260,7 +268,8 @@ CREATE TABLE [dbo].[RelatedUris] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
     [Gatherer] NVARCHAR(500),
   [TcgplayerDecks] NVARCHAR(500),
   [Edhrec] NVARCHAR(500),
@@ -275,7 +284,8 @@ CREATE TABLE [dbo].[Colors] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
   [Color] NVARCHAR(10),
 )
 
@@ -287,7 +297,8 @@ CREATE TABLE [dbo].[ColorIdentity] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
   [Color] NVARCHAR(255),
 )
 
@@ -299,7 +310,8 @@ CREATE TABLE [dbo].[Games] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
   [Game] NVARCHAR(50),
 )
 
@@ -311,7 +323,8 @@ CREATE TABLE [dbo].[MultiverseIds] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
   [MultiverseId] INT,
 )
 
@@ -323,7 +336,8 @@ CREATE TABLE [dbo].[ArtistIds] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
   [ArtistId] UNIQUEIDENTIFIER,
 )
 -----------------------------------------------------------------------
@@ -339,10 +353,12 @@ CREATE TABLE [dbo].[BinderSleeve] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
   [BinderId] UNIQUEIDENTIFIER
     FOREIGN KEY (BinderId)
-    REFERENCES [Binder] (Id),
+    REFERENCES [Binder] (Id)
+    ON DELETE CASCADE,
   [Quantity] INT
 )
 GO
@@ -358,10 +374,12 @@ CREATE TABLE [dbo].[DeckSleeve] (
   [Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL DEFAULT NEWID(),
   [DeckId] UNIQUEIDENTIFIER
     FOREIGN KEY (DeckId)
-    REFERENCES [Deck] (Id),
+    REFERENCES [Deck] (Id)
+    ON DELETE CASCADE,
   [CardId] UNIQUEIDENTIFIER
     FOREIGN KEY (CardId)
-    REFERENCES [Card] (Id),
+    REFERENCES [Card] (Id)
+    ON DELETE CASCADE,
   [Quantity] INT
 )
 GO

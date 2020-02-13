@@ -1,6 +1,6 @@
-.SearchPage{
-  border: 5px solid black;
-}
+@import'../../styles/variables.scss';
+
+
 
 .AdvSearchForm{
   display: flex;
@@ -9,7 +9,7 @@
 
 .adv-search-form{
   display: flex;
-  border: 5px double black;
+
   width: 100%;
 }
 
@@ -25,7 +25,7 @@
   flex-flow: column wrap;
   align-content: center;
   width:25%;
-  border: 3px inset grey;
+
   padding: 1em;
   margin: 1em;
 }
@@ -50,6 +50,20 @@
 }
 
 div.multiselect, div.multiselect > * {
-  background-color: rgb(57, 59, 59);
-  color: aliceblue;
+  color: rgba(247, 196, 175, 0.815)!important;
+  color: aliceblue; 
+}
+
+.submit-search{
+  margin-top: -.1em!important;
+  margin-bottom: .5em!important;
+  margin-left: -.10em!important;
+  // padding: .30em!important;
+  padding-top: -5em!important;
+  padding-bottom: -5em!important;
+  border-radius: 5% 20% 20% 5% !important;
+}
+
+.search-con{
+  width:100%
 }

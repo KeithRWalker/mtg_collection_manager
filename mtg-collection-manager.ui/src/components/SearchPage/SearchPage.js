@@ -2,7 +2,6 @@ import React from 'react';
 import { 
   Button,
   Col,
-  Collapse,
   Container,
   Form,
   FormGroup,
@@ -14,7 +13,7 @@ import {
 } from 'reactstrap';
 import CardContainer from '../CardSingle/CardContainer';
 import searchData from '../../data/searchData';
-import AdvSearchForm from './AdvSearchForm';
+//import AdvSearchForm from './AdvSearchForm';
 
 import './SearchPage.scss';
 import NoResults from './NoResults';
@@ -72,7 +71,7 @@ class SearchPage extends React.Component {
   }
 
   render() {
-    const { searchState, totalCards, hasMore, cardsReturned, advIsOpen, invalidSearch } = this.state;
+    const { searchState, totalCards, hasMore, cardsReturned, invalidSearch } = this.state;
     let results;
     if(invalidSearch){
       results = <NoResults />
@@ -87,50 +86,56 @@ class SearchPage extends React.Component {
     }
 
     return(
-      <div className="SearchPage">
-        <Container>
-          <Form name="searchFormName" onSubmit={this.submitSearch}>
-            <Row >
-            <Col sm="12" md={{ size: 6, offset: 3 }}>
-              <FormGroup>
-                <Label for="nameSearch">
-                  <h4>Search By Name:</h4>
-                </Label>
-                <InputGroup size="lg">
-                  <Input
-                      type="search"
-                      name="nameSearch"
-                      id="nameSearch"
-                      placeholder="Card Name"
-                      value={searchState.name}
-                      onChange={this.nameUpdate}/>
-                  <InputGroupAddon addonType="append">
-                  <Button type="submit" color="success">Search</Button>
-                  </InputGroupAddon>
-                </InputGroup>
-              </FormGroup>
-            </Col>
-            </Row>
-          </Form>
+      <div className="SearchPage comp page">
+      
+        <div className="search-con">
+          <Container className="search-bar-con">
+            <Form name="searchFormName" onSubmit={this.submitSearch}>
+              <Row >
+              <Col sm="12" md={{ size: 6, offset: 3 }}>
+                <FormGroup>
+                  <Label for="nameSearch">
+                    <h4>Search By Name:</h4>
+                  </Label>
+                  <InputGroup size="lg">
+                    <Input
+                        className="input-link"
+                        type="search"
+                        name="nameSearch"
+                        id="nameSearch"
+                        placeholder="Card Name"
+                        value={searchState.name}
+                        onChange={this.nameUpdate}/>
+                    <InputGroupAddon addonType="append">
+                    <Button type="submit" className="input-link submit-search">Search</Button>
+                    </InputGroupAddon>
+                  </InputGroup>
+                </FormGroup>
+              </Col>
+              </Row>
+            </Form>
+            {
+              /*
+            <Row>
+              <Col>
+                <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>
+                  Advanced Search
+                </Button>
+              </Col>
+            </Row>   
 
-          <Row>
-            <Col>
-              <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>
-                Advanced Search
-              </Button>
-            </Col>
-          </Row>   
 
-          <Collapse isOpen={advIsOpen}>
-            <AdvSearchForm
-              key="AdvSearchFormKey"
-            />
-          </Collapse>
-        </Container>
-
-        {results}
-
-        
+              <Collapse isOpen={advIsOpen}>
+              <AdvSearchForm
+                key="AdvSearchFormKey"
+              />
+            </Collapse>
+          
+          */
+}
+            </Container>
+          {results}
+        </div>
       </div>
     );
   }

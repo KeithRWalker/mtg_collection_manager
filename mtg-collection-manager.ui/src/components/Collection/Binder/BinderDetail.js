@@ -17,7 +17,8 @@ class BinderDetail extends React.Component{
   }
   render() {  
     return(
-      <div className="BinderDetail">
+      <div className="BinderDetail page comp">
+      
         <Card>
           BinderDetail
         </Card>

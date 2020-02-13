@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using mtg_collection_manager.Commands;
 using mtg_collection_manager.Models;
 
 namespace mtg_collection_manager.Repos
@@ -24,17 +25,53 @@ namespace mtg_collection_manager.Repos
             }
         }
 
-        public User CreateNewUser(User newUser)
+        public void checkIfInDB(string fbId)
         {
             using (var db = new SqlConnection(_connectionString))
             {
+                var sql = @"SELECT * FROM [User] WHERE [FirebaseUid] = @firebaseUid";
+                var parameters =  new {FirebaseUid = fbId};
+                var query = db.QueryFirstOrDefault<User>(sql, parameters);
+                if (query != null)
+                {
+                    return;
+                }
+                if (query == null)
+                {
+                    var addSql = @"INSERT INTO [User] ( [FirebaseUid] ) VALUES (@firebaseUid)";
+
+                    db.Execute(addSql, parameters);
+                    var created = GetUserByFirebaseUid(parameters.FirebaseUid);
+                    var _deckRepo = new DeckRepo();
+                    var _binderRepo = new BinderRepo();
+                    _deckRepo.CreateHiddenDeck(created.Id);
+                    _binderRepo.CreateHiddenBinder(created.Id);
+                }
+            }
+        }
+
+        public void CreateNewUser(AddUserCommand newUser)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var user = new
+                {
+                    FirebaseUid = newUser.FirebaseUid,
+                    UserName = newUser.UserName,
+                    Email = newUser.Email,
+                    FirstName = newUser.FirstName,
+                    LastName = newUser.LastName,
+                };
                 var sql = @"INSERT INTO [User]
                                 ([FirebaseUid], [Username], [Email], [FirstName], [LastName])
-                                OUTPUT INSERTED.*
                             VALUES
                                 (@firebaseUid, @userName, @email, @firstName, @lastName)";
-                var user = db.QueryFirst<User>(sql, newUser);
-                return user;
+                db.Execute(sql, user);
+                var created = GetUserByFirebaseUid(user.FirebaseUid);
+                var _deckRepo = new DeckRepo();
+                var _binderRepo = new BinderRepo();
+                _deckRepo.CreateHiddenDeck(created.Id);
+                _binderRepo.CreateHiddenBinder(created.Id);
             }
         }
 
@@ -43,7 +80,7 @@ namespace mtg_collection_manager.Repos
             using (var db = new SqlConnection(_connectionString))
             {
                 var sql = @"SELECT * FROM [User] WHERE [FirebaseUid] = @firebaseUid";
-                var user = db.QueryFirstOrDefault<User>(sql, new {firebaseUid});
+                var user = db.QueryFirstOrDefault<User>(sql, new {FirebaseUid = firebaseUid});
                 return user;
             }
         }

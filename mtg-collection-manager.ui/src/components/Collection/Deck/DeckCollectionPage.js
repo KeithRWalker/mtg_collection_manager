@@ -57,50 +57,55 @@ class DeckCollectionPage extends React.Component{
     const { deckModalOpen, deckSubmit } = this.state;
 
     const decksToShow = this.state.userDecks.map(deck => (
-      <Deck userDeck={deck} key={deck.id}/>
+      <Deck userDeck={deck} key={deck.id} loadDeckCollection={this.loadDeckCollection}/>
     ));
 
     return(
-      <div className="DeckCollectionPage">
-        <div className="deck-collection-container">
+      <div className="DeckCollectionPage page comp">
+      
+        <div className="PageCon">
+        
+          <div className="deck-collection-container">
 
-          <div className="decks-label">
-            <h1>Decks: </h1>
-            <Button className="add-deck-btn" size="sm" onClick={this.toggleDeckModal}>Add a Deck</Button>
-          </div>
-          <div className="deck-container">
-            <CardDeck>
-              {decksToShow}
-            </CardDeck>
-          </div>
+            <div className="decks-label">
+              <h1>Decks: </h1>
+              <Button className="add-deck-btn" size="sm" onClick={this.toggleDeckModal}>Add a Deck</Button>
+            </div>
+            <div className="deck-container">
+              <CardDeck>
+                {decksToShow}
+              </CardDeck>
+            </div>
 
-          <div className="deck-modal collection-modal">
-          <Modal isOpen={deckModalOpen} toggle={this.toggleDeckModal} className="deck-modal">
-            <ModalHeader toggle={this.toggleDeckModal}> Add a Deck</ModalHeader>
-              <ModalBody>
-                <Input
-                  type="text"
-                  name="deckName"
-                  placeholder="Name"
-                  value={deckSubmit.name}
-                  onChange={this.deckNameUpdate}
-                />
-                <Input
-                  type="textarea"
-                  rows={4}
-                  name="deckDescription"
-                  placeholder="Description"
-                  value={deckSubmit.description}
-                  onChange={this.deckDescriptionUpdate}
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button onClick={this.toggleDeckModal}>Cancel</Button>
-                <Button type="submit" onClick={this.deckSubmit}>Submit</Button>{' '}
-              </ModalFooter>
-              </Modal>
+            <div className="deck-modal collection-modal">
+            <Modal isOpen={deckModalOpen} toggle={this.toggleDeckModal} className="deck-modal">
+              <ModalHeader toggle={this.toggleDeckModal}> Add a Deck</ModalHeader>
+                <ModalBody>
+                  <Input
+                    type="text"
+                    name="deckName"
+                    placeholder="Name"
+                    value={deckSubmit.name}
+                    onChange={this.deckNameUpdate}
+                  />
+                  <Input
+                    type="textarea"
+                    rows={4}
+                    name="deckDescription"
+                    placeholder="Description"
+                    value={deckSubmit.description}
+                    onChange={this.deckDescriptionUpdate}
+                  />
+                </ModalBody>
+                <ModalFooter>
+                  <Button onClick={this.toggleDeckModal}>Cancel</Button>
+                  <Button type="submit" onClick={this.deckSubmit}>Submit</Button>{' '}
+                </ModalFooter>
+                </Modal>
+              </div>
             </div>
           </div>
+          
       </div>
     )
   }

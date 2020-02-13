@@ -15,6 +15,182 @@ namespace mtg_collection_manager.Repos
                                                             Database=MTG;
                                                                 Trusted_Connection=True;";
 
+
+        public ConvertCard ConvertScryCard(Card scryCard)
+        {
+            var completeCard = new ConvertCard
+            {
+                ScryId = scryCard.Id,
+                OracleId = scryCard.OracleId,
+                OracleText = scryCard.OracleText,
+                Power = scryCard.Power,
+                Loyalty = scryCard.Loyalty,
+                Toughness = scryCard.Toughness,
+                Name = scryCard.Name,
+                Lang = scryCard.Lang,
+                ReleasedAt = scryCard.ReleasedAt,
+                Uri = scryCard.Uri?.ToString(),
+                ScryfallUri = scryCard.ScryfallUri?.ToString(),
+                Layout = scryCard.Layout,
+                HighresImage = scryCard.HighresImage,
+                ManaCost = scryCard.ManaCost,
+                Cmc = scryCard.Cmc,
+                TypeLine = scryCard.TypeLine,
+                Reserved = scryCard.Reserved,
+                Foil = scryCard.Foil,
+                Nonfoil = scryCard.Nonfoil,
+                Oversized = scryCard.Oversized,
+                Promo = scryCard.Promo,
+                Reprint = scryCard.Reprint,
+                Variation = scryCard.Variation,
+                Set = scryCard.Set,
+                SetName = scryCard.SetName,
+                SetType = scryCard.SetType,
+                SetUri = scryCard.ScryfallSetUri?.ToString(),
+                SetSearchUri = scryCard.SetSearchUri?.ToString(),
+                ScryfallSetUri = scryCard.ScryfallSetUri?.ToString(),
+                RulingsUri = scryCard.RulingsUri?.ToString(),
+                PrintsSearchUri = scryCard.PrintsSearchUri?.ToString(),
+                CollectorNumber = (long)Convert.ToDouble(scryCard.CollectorNumber),
+                Digital = scryCard.Digital,
+                Rarity = scryCard.Rarity,
+                CardBackId = scryCard.CardBackId,
+                Artist = scryCard.Artist,
+                IllustrationId = scryCard.IllustrationId,
+                BorderColor = scryCard.BorderColor,
+                Frame = scryCard.Frame,
+                FullArt = scryCard.FullArt,
+                Textless = scryCard.Textless,
+                Booster = scryCard.Booster,
+                StorySpotlight = scryCard.StorySpotlight,
+                EdhrecRank = scryCard.EdhrecRank,
+                MultiverseIds = scryCard.MultiverseIds,
+                Colors = scryCard.Colors,
+                ColorIdentity = scryCard.ColorIdentity,
+                Games = scryCard.Games,
+                ArtistIds = scryCard.ArtistIds
+            };
+
+            List<ConvertCardFace> cardFaces = new List<ConvertCardFace>();
+            List<CardFace> scryCardFaces = scryCard.CardFaces;
+            if (scryCardFaces != null)
+            {
+                foreach (var cardFace in scryCardFaces)
+                {
+                    ConvertCardFace completeCardFace = new ConvertCardFace
+                    {
+                        Object = cardFace.Object,
+                        Name = cardFace.Name,
+                        PrintedName = cardFace.PrintedName,
+                        ManaCost = cardFace.ManaCost,
+                        Loyalty = cardFace.Loyalty,
+                        Power = cardFace.Power,
+                        FlavorText = cardFace.FlavorText,
+                        TypeLine = cardFace.TypeLine,
+                        PrintedTypeLine = cardFace.PrintedTypeLine,
+                        OracleText = cardFace.OracleText,
+                        PrintedText = cardFace.PrintedText,
+                        Artist = cardFace.Artist,
+                        ArtistId = cardFace.ArtistId,
+                    };
+                    CardFaceImageUris scryCardFaceImageUris = cardFace.CardFaceImageUris;
+                    if (scryCardFaceImageUris != null)
+                    {
+                        ConvertCardCardFaceImageUris imageUris = new ConvertCardCardFaceImageUris
+                        {
+                            Small = scryCardFaceImageUris.Small?.ToString(),
+                            Normal = scryCardFaceImageUris.Normal?.ToString(),
+                            Large = scryCardFaceImageUris.Large?.ToString(),
+                            Png = scryCardFaceImageUris.Png?.ToString(),
+                            ArtCrop = scryCardFaceImageUris.ArtCrop?.ToString(),
+                            BorderCrop = scryCardFaceImageUris.BorderCrop?.ToString()
+                        };
+                        completeCardFace.CardFaceImageUris = imageUris;
+                    }
+                    cardFaces.Add(completeCardFace);
+                }
+            }
+
+            completeCard.CardFaces = cardFaces;
+            Legalities scryCardLegalities = scryCard.Legalities;
+            if (scryCardLegalities != null)
+            {
+                ConvertCardLegalities completeLegalities = new ConvertCardLegalities
+                {
+                    Standard = scryCardLegalities.Standard,
+                    Future = scryCardLegalities.Future,
+                    Historic = scryCardLegalities.Historic,
+                    Pioneer = scryCardLegalities.Pioneer,
+                    Modern = scryCardLegalities.Modern,
+                    Legacy = scryCardLegalities.Legacy,
+                    Pauper = scryCardLegalities.Pauper,
+                    Vintage = scryCardLegalities.Vintage,
+                    Penny = scryCardLegalities.Penny,
+                    Commander = scryCardLegalities.Commander,
+                    Brawl = scryCardLegalities.Brawl,
+                    Duel = scryCardLegalities.Duel,
+                    Oldschool = scryCardLegalities.Oldschool
+                };
+                completeCard.Legalities = completeLegalities;
+            }
+
+
+            Prices scryCardPrices = scryCard.Prices;
+            if (scryCardPrices != null)
+            {
+                ConvertCardPrices completePrices = new ConvertCardPrices
+                {
+                    Usd = scryCardPrices.Usd?.ToString(),
+                    UsdFoil = scryCardPrices.UsdFoil?.ToString(),
+                    Eur = scryCardPrices.Eur?.ToString(),
+                    Tix = scryCardPrices.Tix?.ToString()
+                };
+                completeCard.Prices = completePrices;
+            }
+
+            RelatedUris scryCardRelatedUris = scryCard.RelatedUris;
+            if (scryCardRelatedUris != null)
+            {
+                ConvertCardRelatedUris completeRelatedUris = new ConvertCardRelatedUris
+                {
+                    Gatherer = scryCardRelatedUris.Gatherer?.ToString(),
+                    TcgplayerDecks = scryCardRelatedUris.TcgplayerDecks?.ToString(),
+                    Edhrec = scryCardRelatedUris.Edhrec?.ToString(),
+                    Mtgtop8 = scryCardRelatedUris.Mtgtop8?.ToString()
+                };
+                completeCard.RelatedUris = completeRelatedUris;
+            }
+
+            ImageUris scryCardImageUris = scryCard.ImageUris;
+            if (scryCardImageUris != null)
+            {
+                ConvertCardImageUris completeImageUris = new ConvertCardImageUris
+                {
+                    Small = scryCardImageUris.Small?.ToString(),
+                    Normal = scryCardImageUris.Normal?.ToString(),
+                    Large = scryCardImageUris.Large?.ToString(),
+                    Png = scryCardImageUris.Png?.ToString(),
+                    ArtCrop = scryCardImageUris.ArtCrop?.ToString(),
+                    BorderCrop = scryCardImageUris.BorderCrop?.ToString()
+                };
+                completeCard.ImageUris = completeImageUris;
+            }
+
+            PurchaseUris scryCardPurchaseUris = scryCard.PurchaseUris;
+            if (scryCardPurchaseUris != null)
+            {
+                ConvertCardPurchaseUris completePurchaseUris = new ConvertCardPurchaseUris
+                {
+                    Tcgplayer = scryCardPurchaseUris.Tcgplayer?.ToString(),
+                    Cardmarket = scryCardPurchaseUris.Cardmarket?.ToString(),
+                    Cardhoarder = scryCardPurchaseUris.Cardhoarder?.ToString()
+                };
+                completeCard.PurchaseUris = completePurchaseUris;
+            }
+
+            return completeCard;
+        }
+
         public CompleteCard CreateCompleteCardFromUserCard(UserCard userCard)
         {
             var cardId = userCard.Id;

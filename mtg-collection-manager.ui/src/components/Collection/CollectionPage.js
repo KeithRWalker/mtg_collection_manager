@@ -182,4 +182,3 @@ class CollectionPage extends React.Component{
   }
 }
 
-export default CollectionPage;

@@ -1,12 +1,8 @@
 @import'../../styles/variables.scss';
 
 .CardContainer{
-  border: .5em outset rgba(38, 65, 47, 0.25);
-  width: 100%;
-}
-
-.Card-Container{
-  width: 100%;
+  margin: 0 auto;
+  width: 80%;
 }
 .CardSingle{
   font-family: $Bree-Serif;
@@ -14,13 +10,11 @@
   padding: 0em;
 }
 img{
-  width: 100%;
-  height: 100%;
   align-self: center;
   border-radius: 5%;
 }
 .CardSingle > div{
-  background-color: rgba(9, 228, 9, 0);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 img.W {
@@ -44,7 +38,7 @@ img.G {
   border-radius: 20px;
 }
 
-img:hover{
+img.magic-card-image:hover{
   filter: drop-shadow(10px 10px 10px rgba(208, 188, 123, 0.75)) invert(1%);
 }
 img.W:hover{
@@ -63,57 +57,18 @@ img.G:hover{
   filter: drop-shadow(10px 10px 10px rgba(0, 115, 61, 0.75)) invert(1%);
 }
 
-.card-header{
-  padding-bottom: 0;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-content: center;
-}
+// .card-header{
+//   padding-bottom: 0;
+//   display: flex;
+//   flex-flow: row nowrap;
+//   justify-content: center;
+//   align-content: center;
+// }
 
-.AddButton .btn{
-  font-size: 12px;
-  margin-left: 15px;
-}
-.AddButton .btn-secondary{
-  background-color: rgb(49, 71, 59);
-}
-
-.AddButton .btn-secondary:hover{
-  background-color: rgb(43, 81, 51);
-}
-
-.AddButton .btn-secondary:focus{
-  background-color: rgb(43, 81, 51);
-}
-
-.AddButton .btn-secondary :active{
-  background-color: rgb(43, 81, 51);
-}
-
-.AddButton > .show > .dropdown-toggle:not(:disabled){
-  background-color: rgb(43, 81, 51);
-}
-
-.AddButton .dropdown-menu{
-  background-color: rgb(49, 71, 59);
-  color:aliceblue;
-}
-
-.AddButton .dropdown-item{
-  color:aliceblue;
-}
-
-.AddButton .dropdown-item:hover{
-  color: aliceblue;
-  background-color: rgb(43, 81, 51);
-}
-
-
-
-.add-btn-dd{
-  display: flex;
-}
+// .add-btn-dd{
+//   display: flex;
+  
+// }
 
 
 

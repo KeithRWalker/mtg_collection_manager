@@ -73,7 +73,7 @@ namespace mtg_collection_manager.Repos
                                     VALUES
                                         (   @userId, @name,  @type, @description  )";
 
-                var hiddenBinder = new Binder
+                var hiddenBinder = new 
                 {
                     UserId = userId,
                     Name = "placeholder",

@@ -72,5 +72,13 @@ namespace mtg_collection_manager.Controllers
 
             return Ok();
         }
+
+        [HttpDelete("delete/{cardId}")]
+        [Authorize]
+        public IActionResult DeleteDeckSleeveByCardId(Guid cardId)
+        {
+            _sleeveRepo.DeleteDeckSleeveByCardId(cardId);
+            return Ok();
+        }
     }
 }

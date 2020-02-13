@@ -34,14 +34,14 @@ class AddButton extends React.Component{
     const myCollection = this.props.collection;
     const { type } = this.props;
 
-    const ddBtns = myCollection.map(x => <DropdownItem size="sm" value={x.id} onClick={this.addToCollection} key={`key_${x.id}`}>{x.name}</DropdownItem>)
+    const ddBtns = myCollection.map(x => <DropdownItem value={x.id} onClick={this.addToCollection} key={`key_${x.id}`}> Add To {x.name}</DropdownItem>)
     return(
       <div className="AddButton">
-        <ButtonDropdown className="add-btn-dd" isOpen={dropdownOpen} toggle={this.ddToggle} direction="right">
+        <ButtonDropdown className="add-btn-dd" isOpen={dropdownOpen} toggle={this.ddToggle} direction="up">
           <DropdownToggle className="dd-toggle">
-            {`${type}`}
+            {`Add To your ${type}s`}
           </DropdownToggle>
-          <DropdownMenu right>
+          <DropdownMenu>
             {ddBtns}
           </DropdownMenu>
         </ButtonDropdown>

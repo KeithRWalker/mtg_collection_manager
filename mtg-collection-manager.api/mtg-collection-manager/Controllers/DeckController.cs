@@ -22,9 +22,12 @@ namespace mtg_collection_manager.Controllers
         [Authorize]
         public IEnumerable<Deck> GetUserDecks()
         {
-            var user = _userRepo.GetUserByFirebaseUid(FirebaseUserId);
+            var user = _userRepo.GetUserByFirebaseUid(FirebaseUid);
+            if (user == null)
+            {
+                return new List<Deck>();
+            }
             var userDecks = _deckRepo.GetUserDecks(user.Id);
-
             return userDecks;
         }
 
@@ -40,7 +43,7 @@ namespace mtg_collection_manager.Controllers
         [Authorize]
         public IActionResult CreateUserDeck(AddNewDeckCommand userDeck)
         {
-            var user = _userRepo.GetUserByFirebaseUid(FirebaseUserId);
+            var user = _userRepo.GetUserByFirebaseUid(FirebaseUid);
             var newDeck = new Deck
             {
                 UserId = user.Id,
@@ -52,6 +55,25 @@ namespace mtg_collection_manager.Controllers
 
             var addedDeck = _deckRepo.AddNewDeck(newDeck);
             return Created($"api/Deck/{addedDeck.Id}", addedDeck);
+        }
+
+        [HttpDelete("delete/{deckId}")]
+        [Authorize]
+        public IActionResult DeleteDeck(Guid deckId)
+        {
+/*            var _sleeveRepo = new SleeveRepo();
+            var _userCardRepo = new UserCardRepo();
+
+            var deckSleeves = _sleeveRepo.GetDeckSleevesByDeckId(deckId);
+            if (deckSleeves != null)
+            {
+                foreach (var deckSleeve in deckSleeves)
+                {
+                    _userCardRepo.DeleteCardById(deckSleeve.CardId);
+                }
+            }*/
+            _deckRepo.DeleteDeck(deckId);
+            return Ok();
         }
     }
 }

@@ -1,21 +1,23 @@
 import React from 'react';
 import { AvForm, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 import { Button, Label, FormGroup } from 'reactstrap';
-//import { NavLink } from 'react-router-dom';
+
 
 import Auth from '../../auth/auth';
 
-import './Login.scss';
+import './RegisterUser.scss';
 
-class Login extends React.Component {
+class RegisterUser extends React.Component {
 
-    handleSubmit(e, values) {
-        e.preventDefault();
+    handleSubmit(event, values) {
+        console.log(values);
         const userInfoToSend = {
+            userName: values.userNameInput,
             email: values.emailInput,
             password: values.pwInput,
         }
-        Auth.loginUser(userInfoToSend);
+
+        Auth.registerUser(userInfoToSend);
     }
 
     gmailLoginClickEvent = (e) => {
@@ -25,16 +27,15 @@ class Login extends React.Component {
             .catch(error => console.error('there was an error in registering', error));
     };
 
+
     render() {
-        return(
-            <div className="Login page comp">
-              <div className="PageCon">
+        return (
+            <div className="RegisterUser">
                 <AvForm className="user-form col" onValidSubmit={this.handleSubmit}>
-                <h1 className="col">Login</h1>
+                <h1 className="col">Register!</h1>
                     <AvGroup className="col email-fg fg">
                         <Label className="form-label" for="emailInput">Email</Label>
                         <AvInput
-                        className="input-link"
                         name="emailInput"
                         id="emailInput"
                         type="email"
@@ -44,20 +45,29 @@ class Login extends React.Component {
 
                     <AvGroup className="col email-fg fg">
                         <Label className="form-label" for="pwInput">Password</Label>
-                        <AvInput name="pwInput" id="pwInput" type="password" className="input-link" required />
+                        <AvInput name="pwInput" id="pwInput" type="password" required />
+
+                        <Label className="form-label fg" for="pwValidationInput">Re-Enter Password</Label>
+                        <AvInput name="pwValidationInput" id="pwValidationInput" type="password" validate={{match:{value:'pwInput'}}} />
+                        <AvFeedback>Passwords Don't match!</AvFeedback>
+                    </AvGroup>
+
+                    <AvGroup className="col email-fg fg">
+                        <Label className="form-label" for="userNameInput">User Name</Label>
+                        <AvInput name="userNameInput" id="userNameInput" type="text" minLength={5} maxLength={20} required/>
+                        <AvFeedback>Please enter a user name! (Between 5-20 characters)</AvFeedback>
                     </AvGroup>
 
                     <FormGroup className="col email-fg fg">
-                        <Button className="external-link">Submit</Button>
-                            <br />
-                            <br />
+                        <Button>Submit</Button>
+                        <br />
+                        <br />
+                        <Button onClick={this.gmailLoginClickEvent}>Login With Google</Button>
                     </FormGroup>
                 </AvForm>
-
-                </div>
             </div>
         );
     }
 }
 
-export default Login;
+export default RegisterUser;

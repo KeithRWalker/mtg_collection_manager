@@ -22,9 +22,12 @@ namespace mtg_collection_manager.Controllers
         [Authorize]
         public IEnumerable<Binder> GetUserBinders()
         {
-            var user = _userRepo.GetUserByFirebaseUid(FirebaseUserId);
+            var user = _userRepo.GetUserByFirebaseUid(FirebaseUid);
+            if (user == null)
+            {
+                return new List<Binder>();
+            }
             var binders = _binderRepo.GetUserBinders(user.Id);
-
             return binders;
         }
 
@@ -40,7 +43,7 @@ namespace mtg_collection_manager.Controllers
         [Authorize]
         public IActionResult CreateUserBinder(AddNewBinderCommand userBinder)
         {
-            var user = _userRepo.GetUserByFirebaseUid(FirebaseUserId);
+            var user = _userRepo.GetUserByFirebaseUid(FirebaseUid);
             var newBinder = new Binder
             {
                 UserId = user.Id,
