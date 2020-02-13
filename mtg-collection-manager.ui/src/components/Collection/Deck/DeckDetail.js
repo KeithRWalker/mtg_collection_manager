@@ -46,7 +46,7 @@ class DeckDetail extends React.Component{
   render() {
     const { deckInfo, cardInfo } = this.state
     return(
-      <div className="DeckDetail">
+      <div className="DeckDetail page comp">
         <h3>{deckInfo.name}</h3>
         <h5>Total Cards: {cardInfo.length}</h5>
         <div className="deck-list-con">

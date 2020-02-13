@@ -235,7 +235,7 @@ class DeckListItem extends React.Component {
         </td>
   
         <td>
-          <h3 className="list-item-name"><NavLink to={`../card/${card.scryId}`}>{card.name ? card.name : 'N/A'}</NavLink></h3>
+          <h3 className="list-item-name"><NavLink to={`../card/${card.scryId}`}>{card.name ? card.name : ''}</NavLink></h3>
         </td>
   
         <td>
@@ -250,15 +250,15 @@ class DeckListItem extends React.Component {
         </td>
   
         <td>
-          <p> {card.power ? card.power : "/"} </p>
+          <p> {card.power ? card.power : ""} </p>
         </td>
   
         <td>
-          <p> {card.toughness ? card.toughness : "/"} </p>
+          <p> {card.toughness ? card.toughness : ""} </p>
         </td>
   
         <td>
-          <p> {card.loyalty ? card.loyalty : "/"} </p>
+          <p> {card.loyalty ? card.loyalty : ""} </p>
         </td>
   
         <td>

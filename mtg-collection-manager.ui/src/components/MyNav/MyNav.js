@@ -4,28 +4,14 @@ import React from 'react';
 import {
   MDBNavbar,
   MDBNavbarBrand,
-  MDBNavbarNav,
   MDBNavItem,
   MDBNavLink,
-  MDBNavbarToggler,
-  MDBCollapse,
-  MDBMask,
-  MDBRow,
-  MDBCol,
-  MDBIcon,
-  MDBBtn,
-  MDBView,
   MDBNav,
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
   MDBDropdown,
   MDBContainer,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-  MDBFormInline,
-  MDBAnimation
 } from "mdbreact";
 import { NavLink as RRNavLink } from 'react-router-dom';
 
@@ -76,9 +62,9 @@ class MyNav extends React.Component {
     let navItems;
     if(authed){
                   /*  LOGGED IN DROPDOWN  */
-      navItems =  <MDBDropdownMenu>
-                    <MDBDropdownItem>
-                      <MDBNavLink to="/home">Account</MDBNavLink>
+      navItems =  <MDBDropdownMenu right className="nav-dd-menu">
+                    <MDBDropdownItem className="nav-dd-item">
+                      <MDBNavLink className="navbar-nav-link" to="/home">Account</MDBNavLink>
                     </MDBDropdownItem>
                       <MDBDropdownItem divider />
                     <MDBDropdownItem className="nav-dd-item">
@@ -99,40 +85,37 @@ class MyNav extends React.Component {
 
     return (
       <div className="MyNav">
-        <MDBNavbar dark expand="md" fixed="top">
-          <MDBContainer>
+        <MDBNavbar dark expand="md" fixed="top" className="mdb-navbar ">
+          <MDBContainer className="navbar-con">
             <MDBNav navbar className="col">
-              <MDBNavbarBrand className="col-1" href="#"><MDBNavLink to={authed ? "/home" : "/landingpage"}><strong>MTG Binder</strong></MDBNavLink></MDBNavbarBrand>
+              <MDBNavbarBrand className="nav-header"><MDBNavLink to={authed ? "/home" : "/landingpage"}><strong>MTG Binder</strong></MDBNavLink></MDBNavbarBrand>
               {/* --  NAVIGATION BROWSE/DECKS  -- */}
-             {
-                  /*<MDBNavItem className="col-2">
-                  <MDBNavLink className="navbar-nav-link" tag={RRNavLink} to="/browse">
-                    Browse
-                  </MDBNavLink>
-                </MDBNavItem>*/
-             }
 
-                <MDBNavItem className="col-2">
+                <MDBNavItem className="nav-item">
                   <MDBNavLink className="navbar-nav-link" tag={RRNavLink} to="/decks">
                     Decks
                   </MDBNavLink>
                 </MDBNavItem>
-
+              {
+                /*
                 <MDBNavItem className="col-2">
                   <MDBNavLink className="navbar-nav-link" tag={RRNavLink} to="/binders">
                     Binders
                   </MDBNavLink>
                 </MDBNavItem>
+                */
+              }
+
                 
-                <MDBNavItem className="col-2">
+                <MDBNavItem className="nav-item">
                   <MDBNavLink className="navbar-nav-link" tag={RRNavLink} to="/search">
                     Search
                   </MDBNavLink>
                 </MDBNavItem>
 
                 <MDBDropdown>
-                  <MDBDropdownToggle nav caret isOpen={!navCollapsed} toggle={this.toggleNavbar}>
-                    <div className="d-none d-md-inline">Account</div>
+                  <MDBDropdownToggle className="nav-dd-toggle" nav caret isOpen={!navCollapsed} toggle={this.toggleNavbar}>
+                    Account
                   </MDBDropdownToggle>
                   {navItems}
                 </MDBDropdown>

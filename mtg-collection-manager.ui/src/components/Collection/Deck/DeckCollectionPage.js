@@ -61,7 +61,7 @@ class DeckCollectionPage extends React.Component{
     ));
 
     return(
-      <div className="DeckCollectionPage PageComp">
+      <div className="DeckCollectionPage page comp">
       
         <div className="PageCon">
         
@@ -105,6 +105,7 @@ class DeckCollectionPage extends React.Component{
               </div>
             </div>
           </div>
+          
       </div>
     )
   }

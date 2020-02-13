@@ -28,8 +28,8 @@ const registerUser = (user) => {
             //save the token to the session storage
             .then(token => sessionStorage.setItem('token',token))
             //save the user to the the api
-            .then(() => axios.post(`${baseUrl}/user`, user));
-    });
+            
+    }).then(() => axios.post(`${baseUrl}/user`, user));
 };
 
 const loginUser = (user) => {
@@ -49,10 +49,8 @@ const loginWithGmail = () => {
         //get token from firebase
         cred.user.getIdToken()
             //save the token to the session storage
-        .then((token) => {
-            sessionStorage.setItem('token',token)
-
-        });
+        .then((token) => sessionStorage.setItem('token',token))
+        .then(() => axios.post(`${baseUrl}/google`));
     });
 
     

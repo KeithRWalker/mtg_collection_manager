@@ -27,13 +27,14 @@ class Login extends React.Component {
 
     render() {
         return(
-            <div className="Login PageComp">
+            <div className="Login page comp">
               <div className="PageCon">
                 <AvForm className="user-form col" onValidSubmit={this.handleSubmit}>
                 <h1 className="col">Login</h1>
                     <AvGroup className="col email-fg fg">
                         <Label className="form-label" for="emailInput">Email</Label>
                         <AvInput
+                        className="input-link"
                         name="emailInput"
                         id="emailInput"
                         type="email"
@@ -43,14 +44,13 @@ class Login extends React.Component {
 
                     <AvGroup className="col email-fg fg">
                         <Label className="form-label" for="pwInput">Password</Label>
-                        <AvInput name="pwInput" id="pwInput" type="password" required />
+                        <AvInput name="pwInput" id="pwInput" type="password" className="input-link" required />
                     </AvGroup>
 
                     <FormGroup className="col email-fg fg">
-                        <Button>Submit</Button>
+                        <Button className="external-link">Submit</Button>
                             <br />
                             <br />
-                        <Button onClick={this.gmailLoginClickEvent}>Login With Gmail</Button>
                     </FormGroup>
                 </AvForm>
 

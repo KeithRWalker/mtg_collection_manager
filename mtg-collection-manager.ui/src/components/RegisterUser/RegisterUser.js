@@ -9,7 +9,6 @@ import './RegisterUser.scss';
 class RegisterUser extends React.Component {
 
     handleSubmit(event, values) {
-        console.log(values);
         const userInfoToSend = {
             userName: values.userNameInput,
             email: values.emailInput,
@@ -29,7 +28,7 @@ class RegisterUser extends React.Component {
 
     render() {
         return (
-            <div className="RegisterUser">
+            <div className="RegisterUser page">
                 <AvForm className="user-form col" onValidSubmit={this.handleSubmit}>
                 <h1 className="col">Register!</h1>
                     <AvGroup className="col email-fg fg">

@@ -26,26 +26,21 @@ namespace mtg_collection_manager.Controllers
             return _userRepo.GetAllUsers();
         }
 
+        [HttpPost("google")]
+        [Authorize]
+        public void GmailLogin()
+        {
+             _userRepo.checkIfInDB(FirebaseUid);
+        }
+
         [HttpPost]
         [Authorize]
-        public IActionResult CreateUser(AddUserCommand newUserCommand)
+        public void CreateUser(AddUserCommand newUserCommand)
         {
-            var userToAdd = new User
-            {
-                Email = newUserCommand.Email,
-                FirstName = newUserCommand.FirstName,
-                LastName = newUserCommand.LastName,
-                UserName = newUserCommand.UserName,
-                FirebaseUid = FirebaseUserId
-            };
-            var userCreated = _userRepo.CreateNewUser(userToAdd);
-            if (userCreated == null)
-            {
-                return NotFound("could not create user");
-            }
-            _deckRepo.CreateHiddenDeck(userCreated.Id);
-            _binderRepo.CreateHiddenBinder(userCreated.Id);
-            return Ok(userCreated);
+            newUserCommand.FirebaseUid = FirebaseUid;
+            var theNewUser = newUserCommand;
+            _userRepo.CreateNewUser(theNewUser);
+            
         }
     }
 }

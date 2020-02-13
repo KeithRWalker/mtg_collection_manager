@@ -303,27 +303,27 @@ class CardInfo extends React.Component{
             <div className="prices">
               <MDBListGroup>
                 <h5 className="price-head">Prices:</h5>
-                <MDBListGroupItem color="success">USD: {cardItem.prices.usd ? cardItem.prices.usd : 'Not Available'}</MDBListGroupItem>
-                <MDBListGroupItem color="success">USD/Foil: {cardItem.prices.usdFoil ? cardItem.prices.usdFoil : 'Not Available'}</MDBListGroupItem>
-                <MDBListGroupItem color="success">EUR: {cardItem.prices.eur ? cardItem.prices.eur : 'Not Available'}</MDBListGroupItem>
-                <MDBListGroupItem color="success">TIX: {cardItem.prices.tix ? cardItem.prices.tix : 'Not Available'}</MDBListGroupItem>
+                <MDBListGroupItem className="prices">USD: {cardItem.prices.usd ? cardItem.prices.usd : 'Not Available'}</MDBListGroupItem>
+                <MDBListGroupItem className="prices">USD/Foil: {cardItem.prices.usdFoil ? cardItem.prices.usdFoil : 'Not Available'}</MDBListGroupItem>
+                <MDBListGroupItem className="prices">EUR: {cardItem.prices.eur ? cardItem.prices.eur : 'Not Available'}</MDBListGroupItem>
+                <MDBListGroupItem className="prices">TIX: {cardItem.prices.tix ? cardItem.prices.tix : 'Not Available'}</MDBListGroupItem>
               </MDBListGroup>
             </div>
 
             <div className="purchases">
               <h5 className="purchase-head">Purchase</h5>
-              <MDBBtn rounded color="success" className="external-link" target="_blank" href={cardItem.purchaseUris.cardhoarder ? cardItem.purchaseUris.cardhoarder : ''}>{cardItem.purchaseUris.cardhoarder ? 'Buy On Cardhoarder' : ''}</MDBBtn>
-              <MDBBtn rounded color="success" className="external-link" target="_blank" href={cardItem.purchaseUris.cardmarket ? cardItem.purchaseUris.cardmarket : ''}>{cardItem.purchaseUris.cardmarket ? 'Buy On Cardmarket' : ''}</MDBBtn>
-              <MDBBtn rounded color="success" className="external-link" target="_blank" href={cardItem.purchaseUris.tcgplayer ? cardItem.purchaseUris.tcgplayer : ''}>{cardItem.purchaseUris.tcgplayer ? 'Buy On TCGPlayer' : ''} </MDBBtn>
+              <MDBBtn rounded className="external-link" target="_blank" href={cardItem.purchaseUris.cardhoarder ? cardItem.purchaseUris.cardhoarder : ''}>{cardItem.purchaseUris.cardhoarder ? 'Buy On Cardhoarder' : ''}</MDBBtn>
+              <MDBBtn rounded className="external-link" target="_blank" href={cardItem.purchaseUris.cardmarket ? cardItem.purchaseUris.cardmarket : ''}>{cardItem.purchaseUris.cardmarket ? 'Buy On Cardmarket' : ''}</MDBBtn>
+              <MDBBtn rounded className="external-link" target="_blank" href={cardItem.purchaseUris.tcgplayer ? cardItem.purchaseUris.tcgplayer : ''}>{cardItem.purchaseUris.tcgplayer ? 'Buy On TCGPlayer' : ''} </MDBBtn>
             </div>
         
       
             <div className="external-links">
               <h5 className="link-head">External Links</h5>
-              <MDBBtn rounded color="info" className="external-link" target="_blank" href={cardItem.relatedUris.edhrec ? cardItem.relatedUris.edhrec : ''}> {cardItem.relatedUris.edhrec ? 'Card Analysis on EDHREC' : ''}</MDBBtn>
-              <MDBBtn rounded color="info" className="external-link" target="_blank" href={cardItem.relatedUris.gatherer ? cardItem.relatedUris.gatherer : ''}> {cardItem.relatedUris.gatherer ? 'View On Gatherer' : ''}</MDBBtn>
-              <MDBBtn rounded color="info" className="external-link" target="_blank" href={cardItem.relatedUris.mtgtop8 ? cardItem.relatedUris.mtgtop8 : ''}> {cardItem.relatedUris.mtgtop8 ? 'Search MTGTop8 for this card' : ''}</MDBBtn>
-              <MDBBtn rounded color="info" className="external-link" target="_blank" href={cardItem.relatedUris.tcgplayerDecks ? cardItem.relatedUris.tcgplayerDecks : ''}> {cardItem.relatedUris.tcgplayerDecks ? 'TCGplayer decks with this card' : ''}</MDBBtn>
+              <MDBBtn rounded className="external-link" target="_blank" href={cardItem.relatedUris.edhrec ? cardItem.relatedUris.edhrec : ''}> {cardItem.relatedUris.edhrec ? 'Card Analysis on EDHREC' : ''}</MDBBtn>
+              <MDBBtn rounded className="external-link" target="_blank" href={cardItem.relatedUris.gatherer ? cardItem.relatedUris.gatherer : ''}> {cardItem.relatedUris.gatherer ? 'View On Gatherer' : ''}</MDBBtn>
+              <MDBBtn rounded className="external-link" target="_blank" href={cardItem.relatedUris.mtgtop8 ? cardItem.relatedUris.mtgtop8 : ''}> {cardItem.relatedUris.mtgtop8 ? 'Search MTGTop8 for this card' : ''}</MDBBtn>
+              <MDBBtn rounded className="external-link" target="_blank" href={cardItem.relatedUris.tcgplayerDecks ? cardItem.relatedUris.tcgplayerDecks : ''}> {cardItem.relatedUris.tcgplayerDecks ? 'TCGplayer decks with this card' : ''}</MDBBtn>
             </div>
             {addToDeck}
           </div>

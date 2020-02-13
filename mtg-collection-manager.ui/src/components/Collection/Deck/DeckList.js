@@ -12,7 +12,7 @@ class DeckList extends React.Component{
     ))
 
     return(
-        <Table className="DeckList" hover dark striped bordered responsive>
+        <Table className="DeckList" responsive>
           <thead>
             <tr>
               <th>Remove</th>

@@ -58,7 +58,7 @@ namespace mtg_collection_manager.Repos
                                     VALUES
                                         (  @userId,   @name,   @type,  @description  )";
 
-                var hiddenDeck = new Deck
+                var hiddenDeck = new
                 {
                     UserId = userId,
                     Name = "placeholder",

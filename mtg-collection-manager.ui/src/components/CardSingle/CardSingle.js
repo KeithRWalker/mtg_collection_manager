@@ -1,10 +1,8 @@
 import React from 'react';
 import {
   Card,
-  CardImg,
   CardHeader,
   Col,
-  CardTitle,
 } from 'reactstrap';
 import { MDBCardImage } from "mdbreact";
 import { Link } from 'react-router-dom';
@@ -17,7 +15,7 @@ import './CardSingle.scss';
 class CardSingle extends React.Component {
     render() {
       const { magicCard } = this.props;
-      const { userDecks, userBinders } = this.props;
+      const { userDecks } = this.props;
       const {
         id,
         image_uris,
@@ -44,17 +42,16 @@ class CardSingle extends React.Component {
       }
 
       const addToDeck = <AddButton collection={userDecks} type="Deck" scryId={id} />
-      const addToBinder = <AddButton collection={userBinders} type="Binder" scryId={id}/>
+      //const addToBinder = <AddButton collection={userBinders} type="Binder" scryId={id}/>
       
       return(
-              <Col className="CardSingle" xs="1" sm="2" md="2">
+              <Col className="CardSingle">
               <Card body>
                 <CardHeader className="my-card-header">
-                  <CardTitle className="my-card-title">Add to : </CardTitle>
-                  {addToDeck} {addToBinder}
+                  {addToDeck}
                 </CardHeader>
                 <Link to={`/card/${id}`}>
-                  <MDBCardImage className={`${cardColor} magic-card-image`} width="100%" src={images[1]} alt="Card image cap" />
+                  <MDBCardImage className={`${cardColor} magic-card-image`} width="100%" src={images[2]} alt="Card image cap" />
                 </Link>
                 <p>{magicCard.name}</p>
               </Card>

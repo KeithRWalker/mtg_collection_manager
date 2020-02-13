@@ -63,8 +63,8 @@ class BinderCollectionPage extends React.Component{
     ));
 
     return(
-      <div className="BinderCollectionPage PageComp">
-        <div className="PageCon">
+      <div className="BinderCollectionPage page comp">
+      
           <div className="binder-section-container">
 
             <div className="binders-label">
@@ -104,7 +104,6 @@ class BinderCollectionPage extends React.Component{
             </Modal>
             </div>
           </div>
-        </div>
       </div>
     )
   }

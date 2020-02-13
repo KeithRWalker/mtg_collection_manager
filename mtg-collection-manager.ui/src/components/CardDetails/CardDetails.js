@@ -22,7 +22,8 @@ class CardDetails extends React.Component {
           <CardInfo cardItem={cardItem} key={`${cardItem.scryId}_key_details`} />
         ))
         return(
-            <div className="CardDetails">
+            <div className="CardDetails page comp">
+            
               {cardMap}
             </div>
         );

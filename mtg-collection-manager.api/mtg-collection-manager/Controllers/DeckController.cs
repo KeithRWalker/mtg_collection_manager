@@ -22,9 +22,12 @@ namespace mtg_collection_manager.Controllers
         [Authorize]
         public IEnumerable<Deck> GetUserDecks()
         {
-            var user = _userRepo.GetUserByFirebaseUid(FirebaseUserId);
+            var user = _userRepo.GetUserByFirebaseUid(FirebaseUid);
+            if (user == null)
+            {
+                return new List<Deck>();
+            }
             var userDecks = _deckRepo.GetUserDecks(user.Id);
-
             return userDecks;
         }
 
@@ -40,7 +43,7 @@ namespace mtg_collection_manager.Controllers
         [Authorize]
         public IActionResult CreateUserDeck(AddNewDeckCommand userDeck)
         {
-            var user = _userRepo.GetUserByFirebaseUid(FirebaseUserId);
+            var user = _userRepo.GetUserByFirebaseUid(FirebaseUid);
             var newDeck = new Deck
             {
                 UserId = user.Id,

@@ -20,8 +20,8 @@ import RegisterUser from '../components/RegisterUser/RegisterUser';
 
 // PRIVATE COMPONENTS
 import Home from '../components/Home/Home';
-import BrowseCards from '../components/BrowseCards/BrowseCards';
-import CardView from '../components/CardView/CardView';
+// import BrowseCards from '../components/BrowseCards/BrowseCards';
+// import CardView from '../components/CardView/CardView';
 import SearchPage from '../components/SearchPage/SearchPage';
 import CardDetails from '../components/CardDetails/CardDetails';
 import DeckCollectionPage from '../components/Collection/Deck/DeckCollectionPage';
@@ -40,7 +40,7 @@ firebaseConnection();
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
     ? (<Component authed={authed} {...props} {...rest} />)
-    : (<Redirect to={{ pathname: '/home', state: { from: props.location } }} />));
+    : (<Redirect to={{ pathname: '/search', state: { from: props.location } }} />));
   return <Route {...rest} render={props => routeChecker(props)} />;
 };
 
@@ -78,31 +78,28 @@ class App extends React.Component {
     const { authed } = this.state;
     return (
       <div className="App">
-      <Router>
-      <div className="bg-img"/>
-
-        
-          <MyNav authed={authed} logout={this.logout} />
-
-          <Switch>
+          <Router>
+            <MyNav authed={authed} logout={this.logout} />
             
-            <PublicRoute path="/landingPage" component={LandingPage} authed={authed} />
-            <PublicRoute path="/login" component={Login} authed={authed} />
-            <PublicRoute path="/registerUser" component={RegisterUser} authed={authed} />
+            <Switch>
+              <PublicRoute path="/landingPage" component={LandingPage} authed={authed} />
+              <PublicRoute path="/login" component={Login} authed={authed} />
+              <PublicRoute path="/registerUser" component={RegisterUser} authed={authed} />
 
-            <PrivateRoute path="/home" component={Home} authed={authed} />
-            <PrivateRoute path="/cardView" component={CardView} authed={authed} />
-            <PrivateRoute path="/browse/:pageNum" component={BrowseCards} authed={authed} />
-            <PrivateRoute path="/search" component={SearchPage} authed={authed} />
-            <PrivateRoute path="/card/:cardId" component={CardDetails} authed={authed} />
-            <PrivateRoute path="/decks" component={DeckCollectionPage} authed={authed} />
-            <PrivateRoute path="/deck/:deckId" component={DeckDetail} authed={authed} />
-            <PrivateRoute path="/binders" component={BinderCollectionPage} authed={authed} />
-            <PrivateRoute path="/binder/:binderId" component={BinderDetail} authed={authed} />
+              <PrivateRoute path="/home" component={Home} authed={authed} />
 
-            {/*<PrivateRoute path="/search/:searchText" component={SearchResults} authed={authed} />*/}
-          </Switch>
-        </Router>
+              <PrivateRoute path="/search" component={SearchPage} authed={authed} />
+              <PrivateRoute path="/card/:cardId" component={CardDetails} authed={authed} />
+              <PrivateRoute path="/decks" component={DeckCollectionPage} authed={authed} />
+              <PrivateRoute path="/deck/:deckId" component={DeckDetail} authed={authed} />
+              <PrivateRoute path="/binders" component={BinderCollectionPage} authed={authed} />
+              <PrivateRoute path="/binder/:binderId" component={BinderDetail} authed={authed} />
+  
+              {/*<PrivateRoute path="/search/:searchText" component={SearchResults} authed={authed} />*/}
+            </Switch>
+
+          </Router>
+          <div className="bg-img" />
       </div>
     );
   }
