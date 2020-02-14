@@ -193,3 +193,7 @@ button{
   border-bottom: 5px inset rgba(45, 7, 54, 0.37);
   box-shadow: .25em .25em .25em .25em rgba(21, 8, 24, 0.459);
 }
+
+.modal-open {
+  overflow: scroll!important;
+}

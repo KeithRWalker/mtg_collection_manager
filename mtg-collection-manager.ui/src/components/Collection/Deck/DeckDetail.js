@@ -16,28 +16,26 @@ class DeckDetail extends React.Component{
   loadDeckInfo = () => {
     const deckId = this.props.match.params.deckId;
     deckData.getDeckById(deckId)
-      .then(deckInfo => this.setState({ deckInfo }))
+      .then((deckInfo) => {
+        this.setState({ deckInfo })
+        sleeveData.getDeckCards(deckId)
+          .then((cardInfo) => {
+            const cardArray = [];
+            cardInfo.forEach(card => {
+              cardArray.push(card);
+            })
+            this.setState({ cardInfo: cardArray })
+        })
+      })
       .catch(err => console.error("error in DeckDetail.js => componentDidMount", err));
-    sleeveData.getDeckCards(deckId)
-      .then(cardInfo => this.setState({ cardInfo }))
-      .catch(err => console.error("error in DeckDetail.js => componentDidMount", err));
+
+      //.catch(err => console.error("error in DeckDetail.js => componentDidMount", err));
   }
 
-  // deleteCard = (cardId) => {
-  //   const deckId = this.state.deckInfo.id;
-  //   const deleteRequest = {
-  //     CardId: cardId,
-  //     DeckId: deckId
-  //   }
-  //   console.log(deleteRequest);
-  //   sleeveData.deleteCardFromDeck(deleteRequest)
-  //   const newCards = [];
-  //   sleeveData.getDeckCards(this.props.match.params.deckId)
-  //     .then((cardInfo) => {
-  //       this.loadDeckInfo(this.props.match.param.deckId);
-  //     })
-  //     .catch(err => console.error("error in DeckDetail.js => deleteCard() =>getDeckCards()", err))
-  // }
+  deleteCard = (cardId) => {
+    sleeveData.deleteCardFromDeck(cardId);
+    this.loadDeckInfo();
+  }
 
   componentDidMount() {
     this.loadDeckInfo();
@@ -50,7 +48,7 @@ class DeckDetail extends React.Component{
         <h3>{deckInfo.name}</h3>
         <h5>Total Cards: {cardInfo.length}</h5>
         <div className="deck-list-con">
-        <DeckList key={`DeckList_${deckInfo.id}`} cardInfo={cardInfo} loadDeckInfo={this.loadDeckInfo} />
+        <DeckList key={`DeckList_${deckInfo.id}`} cardInfo={cardInfo} loadDeckInfo={this.loadDeckInfo} deleteCard={this.deleteCard}/>
         </div>
       </div>
     )

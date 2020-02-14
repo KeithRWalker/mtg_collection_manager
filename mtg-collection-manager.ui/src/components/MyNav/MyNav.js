@@ -56,7 +56,7 @@ class MyNav extends React.Component {
 
 
   render() {
-    const { navCollapsed } = this.state;
+    //const { navCollapsed } = this.state;
     //const searchUrl = `/search/${searchParams.replace(/\s/g,'+')}`;
     const { authed } = this.props;
     let navItems;
@@ -87,7 +87,7 @@ class MyNav extends React.Component {
       <div className="MyNav">
         <MDBNavbar dark expand="md" fixed="top" className="mdb-navbar ">
           <MDBContainer className="navbar-con">
-            <MDBNav navbar className="col">
+            <MDBNav className="col">
               <MDBNavbarBrand className="nav-header"><MDBNavLink to={authed ? "/home" : "/landingpage"}><strong>Deckord</strong></MDBNavLink></MDBNavbarBrand>
               {/* --  NAVIGATION BROWSE/DECKS  -- */}
 
@@ -113,8 +113,8 @@ class MyNav extends React.Component {
                   </MDBNavLink>
                 </MDBNavItem>
 
-                <MDBDropdown>
-                  <MDBDropdownToggle className="nav-dd-toggle" nav caret isOpen={!navCollapsed} toggle={this.toggleNavbar}>
+                <MDBDropdown toggle={this.toggleNavbar}>
+                  <MDBDropdownToggle nav caret className="nav-dd-toggle">
                     Account
                   </MDBDropdownToggle>
                   {navItems}
