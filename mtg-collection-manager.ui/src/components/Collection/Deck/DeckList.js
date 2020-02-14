@@ -1,14 +1,20 @@
 import React from 'react'
 import DeckListItem from './DeckListItem';
+//import sleeveData from '../../../data/sleeveData';
 import { Table } from 'reactstrap';
 
 import './DeckStyle.scss';
 
 class DeckList extends React.Component{
+
+  componentDidMount(){
+    this.props.loadDeckInfo();
+  }
+
   render(){
     const cardInfo = this.props.cardInfo;
     const deckListItems = cardInfo.map(card => (
-      <DeckListItem key={`deckListItem_${card.id}`} card={card} loadDeckInfo={this.props.loadDeckInfo}/>
+      <DeckListItem key={`deckListItem_${card.id}`} card={card} loadDeckInfo={this.props.loadDeckInfo} deleteCard={this.props.deleteCard}/>
     ))
 
     return(

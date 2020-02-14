@@ -30,21 +30,33 @@ class DeckCollectionPage extends React.Component{
 
   loadDeckCollection = () => {
     deckData.getUserDecks()
-    .then((resp) => {
-      this.setState({ userDecks: resp })
-    }).catch(err => console.error(err, "Error in loadDeckCollection => componentDidMount // DeckCollectionPage.js"))
+      .then((resp) => {
+        const deckArray = [];
+        resp.forEach(deck => {
+          deckArray.push(deck);
+        })
+        this.setState({ userDecks: deckArray })
+      }).catch(err => console.error(err, "Error in loadDeckCollection => componentDidMount // DeckCollectionPage.js"))
+  }
+
+  deleteThisDeck = (deckId) => {
+    deckData.deleteDeck(deckId)
+    this.loadDeckCollection();
   }
 
   toggleDeckModal = () => this.setState({ deckModalOpen: !this.state.deckModalOpen });
+
   deckNameUpdate = e => this.updateDeckState(e, 'name');
+
   deckDescriptionUpdate = e => this.updateDeckState(e, 'description');
+
   updateDeckState = (e, formName) => {
     const deckObject = { ...this.state.deckSubmit }
     deckObject[formName] = e.target.value;
     this.setState({ deckSubmit: deckObject })
   }
+
   deckSubmit = (e) => {
-    e.preventDefault();
     const deckObject = { ...this.state.deckSubmit };
     deckData.postNewDeck(deckObject).then(() => {
       this.toggleDeckModal();
@@ -57,13 +69,12 @@ class DeckCollectionPage extends React.Component{
     const { deckModalOpen, deckSubmit } = this.state;
 
     const decksToShow = this.state.userDecks.map(deck => (
-      <Deck userDeck={deck} key={deck.id} loadDeckCollection={this.loadDeckCollection}/>
+      <Deck userDeck={deck} key={deck.id} loadDeckCollection={this.loadDeckCollection} deleteThisDeck={this.deleteThisDeck}/>
     ));
 
     return(
       <div className="DeckCollectionPage page comp">
-      
-        <div className="PageCon">
+    
         
           <div className="deck-collection-container">
 
@@ -103,7 +114,6 @@ class DeckCollectionPage extends React.Component{
                 </ModalFooter>
                 </Modal>
               </div>
-            </div>
           </div>
           
       </div>

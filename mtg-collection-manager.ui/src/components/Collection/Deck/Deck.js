@@ -2,20 +2,25 @@ import React from 'react';
 import { MDBCard, MDBCardBody, MDBCardText, MDBCardHeader, MDBBtn, MDBCardImage, MDBCol } from "mdbreact";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import deckData from '../../../data/deckData';
+//import deckData from '../../../data/deckData';
 import './DeckStyle.scss';
 
 class Deck extends React.Component{
   state={
-    modal: false
+    dModal: false
   }
 
-  toggle = () => this.setState({ modal: !this.state.modal });
+  toggle = () => this.setState({ dModal: !this.state.dModal });
 
   deleteDeck = () => {
-    deckData.deleteDeck(this.props.userDeck.id)
+    this.setState({ dModal: false });
+    this.props.deleteThisDeck(this.props.userDeck.id)
     this.props.loadDeckCollection();
-    this.toggle();
+    
+  }
+
+  componentDidMount() {
+    this.props.loadDeckCollection();
   }
 
   render() {
@@ -39,7 +44,7 @@ class Deck extends React.Component{
         </MDBCard>
       </MDBCol>
 
-      <Modal isOpen={this.state.modal} toggle={this.toggle}>
+      <Modal isOpen={this.state.dModal} toggle={this.toggle}>
         <button type="button" className="close" aria-label="Close" onClick={this.toggle}>
           <span aria-hidden="true">×</span>
         </button>

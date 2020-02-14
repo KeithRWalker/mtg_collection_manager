@@ -21,6 +21,7 @@ class DeckListItem extends React.Component {
 
   componentDidMount(){
     this.checkMana()
+    this.props.loadDeckInfo();
   }
 
   toggleFace = () => this.setState({ faceAOpen: !this.state.faceAOpen, faceBOpen: !this.state.faceBOpen })
@@ -28,9 +29,9 @@ class DeckListItem extends React.Component {
   
   deleteThisCard = () => {
     const cardId = this.props.card.id;
-    sleeveData.deleteCardFromDeck(cardId)
-      this.props.loadDeckInfo()
-      this.toggle();
+    sleeveData.deleteCardFromDeck(cardId);
+    this.props.loadDeckInfo();
+    this.toggle();
   }
 
   
@@ -212,7 +213,7 @@ class DeckListItem extends React.Component {
           <ModalHeader>Are You Sure?</ModalHeader>
           <ModalBody>Are you sure you want to remove {card.name ? card.name : 'N/A'} from your deck?</ModalBody>
           <ModalFooter>
-            <Button onClick={this.deleteThisCard} color="danger"> Delete </Button>
+            <Button onClick={() => this.deleteThisCard()} color="danger"> Delete </Button>
             <Button onClick={this.toggle} color="secondary">Cancel</Button>
           </ModalFooter>
         </Modal>
@@ -269,7 +270,7 @@ class DeckListItem extends React.Component {
         <ModalHeader>Are You Sure?</ModalHeader>
         <ModalBody>Are you sure you want to remove {card.name ? card.name : ''} from your deck?</ModalBody>
         <ModalFooter>
-          <Button onClick={this.deleteThisCard} color="danger"> Delete </Button>
+          <Button onClick={() => this.deleteThisCard()} color="danger"> Delete </Button>
           <Button onClick={this.toggle} color="secondary">Cancel</Button>
         </ModalFooter>
         </Modal>
